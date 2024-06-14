@@ -2,7 +2,7 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -50,7 +50,7 @@ public class Main {
     }
 
     private static void bfs() {
-        Queue<Info> qu = new ArrayDeque<>();
+        Queue<Info> qu = new LinkedList<>();
 
         for (Point p : tomato) {
             qu.offer(new Info(p.x, p.y, 0));
