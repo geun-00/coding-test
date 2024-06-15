@@ -2,7 +2,7 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -60,7 +60,7 @@ public class Main {
 
     private static void bfs(int[][] map) {
 
-        Queue<Point> qu = new ArrayDeque<>();
+        Queue<Point> qu = new LinkedList<>();
         boolean[][] visit = new boolean[n][m];
 
         for (Point v : virus) {
