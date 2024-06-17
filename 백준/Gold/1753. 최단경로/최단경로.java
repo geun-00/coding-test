@@ -60,11 +60,13 @@ public class Main {
             }
         }
 
-        for (int i = 1; i <= V; i++) {
-            int d = dist[i];
+        StringBuilder sb = new StringBuilder();
 
-            System.out.println(d == Integer.MAX_VALUE ? "INF" : d);
+        for (int i = 1; i < V + 1; i++) {
+            sb.append(visit[i] ? dist[i] : "INF").append("\n");
         }
+
+        System.out.println(sb);
     }
 
     static class Node implements Comparable<Node> {
