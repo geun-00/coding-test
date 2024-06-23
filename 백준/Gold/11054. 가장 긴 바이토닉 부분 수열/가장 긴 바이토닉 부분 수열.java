@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -30,7 +29,7 @@ public class Main {
             }
         }
 
-        for (int i = n - 1; i >= 0; i--) {
+        for (int i = n - 2; i >= 0; i--) {
             for (int j = n - 1; j >= i; j--) {
                 if (arr[i] > arr[j] && dp_r[i] + 1 == dp_r[j] + 1) {
                     dp_r[i] = dp_r[j] + 1;
