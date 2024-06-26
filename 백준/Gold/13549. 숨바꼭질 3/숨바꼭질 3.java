@@ -30,10 +30,7 @@ public class Main {
                 return;
             }
 
-            if (now * 2 <= 100_000 && arr[now * 2] > arr[now]) {
-                arr[now * 2] = arr[now];
-                qu.offer(now * 2);
-            }
+
             if (now + 1 <= 100_000 && arr[now + 1] > arr[now] + 1) {
                 arr[now + 1] = arr[now] + 1;
                 qu.offer(now + 1);
@@ -41,6 +38,10 @@ public class Main {
             if (now - 1 >= 0 && arr[now - 1] > arr[now] + 1) {
                 arr[now - 1] = arr[now] + 1;
                 qu.offer(now - 1);
+            }
+                        if (now * 2 <= 100_000 && arr[now * 2] > arr[now]) {
+                arr[now * 2] = arr[now];
+                qu.offer(now * 2);
             }
         }
     }
