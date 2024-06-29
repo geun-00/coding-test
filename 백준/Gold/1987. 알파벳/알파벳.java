@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -29,24 +28,21 @@ public class Main {
             }
         }
 
-        dfs(0, 0, 0);
+        dfs(0, 0, 1);
 
         System.out.println(max);
     }
 
     private static void dfs(int x, int y, int depth) {
-        if (visit[map[x][y] - 'A']) {
-            max = Math.max(max, depth);
-            return;
-        }
-
+        max = Math.max(max, depth);
         visit[map[x][y] - 'A'] = true;
 
         for (int i = 0; i < 4; i++) {
             int nx = x + dx[i];
             int ny = y + dy[i];
 
-            if (nx >= 0 && ny >= 0 && nx < r && ny < c) {
+            if (nx >= 0 && ny >= 0 && nx < r && ny < c && !visit[map[nx][ny] - 'A']) {
+
                 dfs(nx, ny, depth + 1);
             }
         }
