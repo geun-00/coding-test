@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -38,7 +37,7 @@ public class Main {
 
             map.put(x, rotate);
         }
-        
+
         int d = 0;
 
         int[] dx = {0, 1, 0, -1};
@@ -60,19 +59,15 @@ public class Main {
             int ny = headY + dy[d];
 
             if (nx <= 0 || ny <= 0 || nx > n || ny > n) {
-                break;
+                System.out.println(second);
+                return;
             }
 
-            boolean flag = false;
             for (Point p : snake) {
                 if (p.x == nx && p.y == ny) {
-                    flag = true;
-                    break;
+                    System.out.println(second);
+                    return;
                 }
-            }
-
-            if (flag) {
-                break;
             }
 
             if (apples[nx][ny]) {
@@ -94,7 +89,5 @@ public class Main {
                 }
             }
         }
-
-        System.out.println(second);
     }
 }
