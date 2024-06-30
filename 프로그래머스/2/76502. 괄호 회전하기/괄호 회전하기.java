@@ -9,7 +9,7 @@ class Solution {
                 count++;
             }
 
-            s = s.substring(1) + s.charAt(0);
+            s = s.substring(1) + s.charAt(0); //왼쪽으로 회전
         }
         return count;
     }
