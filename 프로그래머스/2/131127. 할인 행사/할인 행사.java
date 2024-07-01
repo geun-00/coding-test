@@ -12,7 +12,17 @@ class Solution {
                 map.put(discount[j], map.getOrDefault(discount[j], 0) + 1);
             }
 
-            boolean check = true;
+            if (check(want, number, map)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+    
+    public boolean check(String[] want, int[] number, HashMap<String, Integer> map){
+         boolean check = true;
+            
             for (int j = 0; j < want.length; j++) {
                 int num = number[j];
 
@@ -21,12 +31,7 @@ class Solution {
                     break;
                 }
             }
-
-            if (check) {
-                count++;
-            }
-        }
-
-        return count;
+        
+        return check;
     }
 }
