@@ -21,17 +21,15 @@ class Solution {
     }
     
     public boolean check(String[] want, int[] number, HashMap<String, Integer> map){
-         boolean check = true;
-            
-            for (int j = 0; j < want.length; j++) {
-                int num = number[j];
-
-                if (map.getOrDefault(want[j], 0) != num) {
-                    check = false;
-                    break;
-                }
-            }
         
-        return check;
+         for (int j = 0; j < want.length; j++) {
+            int num = number[j];
+
+            if (map.getOrDefault(want[j], 0) != num) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
