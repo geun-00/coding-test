@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,45 +34,36 @@ public class Main {
     }
 
     private static void bfs() {
-        Deque<Point> deque = new ArrayDeque<>();
+
+        Deque<Point> qu = new ArrayDeque<>();
+        boolean[][] visit = new boolean[n][m];
+
+        qu.offerFirst(new Point(0, 0));
+        visit[0][0] = true;
+
         int[][] dist = new int[n][m];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                dist[i][j] = Integer.MAX_VALUE;
-            }
-        }
 
-        deque.offerFirst(new Point(0, 0));
-        dist[0][0] = 0;
-
-        while (!deque.isEmpty()) {
-            Point now = deque.pollFirst();
+        while (!qu.isEmpty()) {
+            Point now = qu.poll();
 
             for (int i = 0; i < 4; i++) {
                 int nx = now.x + dx[i];
                 int ny = now.y + dy[i];
 
-                if (nx >= 0 && ny >= 0 && nx < n && ny < m) {
-                    if (map[nx][ny] == 0 && dist[nx][ny] > dist[now.x][now.y]) {
+                if (nx >= 0 && ny >= 0 && nx < n && ny < m && !visit[nx][ny]) {
+                    if (map[nx][ny] == 0) {
                         dist[nx][ny] = dist[now.x][now.y];
-                        deque.offerFirst(new Point(nx, ny));
-                    } else if (map[nx][ny] == 1 && dist[nx][ny] > dist[now.x][now.y] + 1) {
+                        qu.offerFirst(new Point(nx, ny));
+                    } else if (map[nx][ny] == 1) {
                         dist[nx][ny] = dist[now.x][now.y] + 1;
-                        deque.offerLast(new Point(nx, ny));
+                        qu.offerLast(new Point(nx, ny));
                     }
+
+                    visit[nx][ny] = true;
                 }
             }
         }
 
-        System.out.println(dist[n-1][m-1]);
-    }
-
-    static class Point {
-        int x, y;
-
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
+        System.out.println(dist[n - 1][m - 1]);
     }
 }
