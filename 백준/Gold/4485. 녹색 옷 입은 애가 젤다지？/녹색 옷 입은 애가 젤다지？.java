@@ -39,51 +39,40 @@ public class Main {
                 }
             }
 
-            dijkstra();
 
-            sb.append("Problem ").append(num++).append(": ").append(dist[n - 1][n - 1]).append("\n");
+            sb.append("Problem ").append(num++).append(": ").append(bfs()).append("\n");
         }
 
         System.out.println(sb);
     }
 
-    private static void dijkstra() {
+    private static int bfs() {
+
         PriorityQueue<Node> qu = new PriorityQueue<>();
+        boolean[][] visit = new boolean[n][n];
+
+        visit[0][0] = true;
         qu.offer(new Node(0, 0, cave[0][0]));
 
-        boolean[][] visit = new boolean[n][n];
-        dist[0][0] = cave[0][0];
-
         while (!qu.isEmpty()) {
-
             Node now = qu.poll();
 
-            int x = now.x;
-            int y = now.y;
-            int d = now.d;
-
-            if (visit[x][y]) {
-                continue;
+            if (now.x == n - 1 && now.y == n - 1) {
+                return now.d;
             }
-            visit[x][y] = true;
 
             for (int i = 0; i < 4; i++) {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
+                int nx = now.x + dx[i];
+                int ny = now.y + dy[i];
 
-                if (nx >= 0 && ny >= 0 && nx < n && ny < n) {
-
-                    int newD = d + cave[nx][ny];
-
-                    if (newD < dist[nx][ny]) {
-                        dist[nx][ny] = newD;
-
-                        qu.offer(new Node(nx, ny, newD));
-                    }
+                if (nx >= 0 && ny >= 0 && nx < n && ny < n && !visit[nx][ny]) {
+                    visit[nx][ny] = true;
+                    qu.offer(new Node(nx, ny, now.d + cave[nx][ny]));
                 }
             }
-
         }
+
+        return -1;
     }
 
     static class Node implements Comparable<Node> {
