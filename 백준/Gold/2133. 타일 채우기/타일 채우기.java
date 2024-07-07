@@ -8,6 +8,11 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int n = Integer.parseInt(br.readLine());
+        
+        if (n % 2 == 1) {
+            System.out.println(0);
+            return;
+        }
 
         int[] dp = new int[31];
 
