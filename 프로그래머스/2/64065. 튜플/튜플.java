@@ -17,6 +17,7 @@ class Solution {
                 int num = Integer.parseInt(str);
                 if (set.add(num)) {
                     result[index++] = num;
+                    break;
                 }
             }
         }
