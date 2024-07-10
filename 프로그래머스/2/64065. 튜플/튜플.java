@@ -1,24 +1,26 @@
 import java.util.*;
 
 class Solution {
-    public List<Integer> solution(String s) {
+    public int[] solution(String s) {
         s = s.substring(2, s.length() - 2);
 
-        String[] split = s.split("},\\{");
+        String[] arr = s.split("},\\{");
 
-        Arrays.sort(split, (o1, o2) -> o1.length() - o2.length());
+        Arrays.sort(arr, (o1, o2) -> o1.length() - o2.length());
 
-        ArrayList<Integer> list = new ArrayList<>();
+        HashSet<Integer> set = new HashSet<>();
+        int[] result = new int[arr.length];
 
-        for (String string : split) {
+        int index = 0;
+        for (String string : arr) {
             for (String str : string.split(",")) {
                 int num = Integer.parseInt(str);
-                if (!list.contains(num)) {
-                    list.add(num);
+                if (set.add(num)) {
+                    result[index++] = num;
                 }
             }
         }
         
-        return list;
+        return result;
     }
 }
