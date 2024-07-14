@@ -9,6 +9,7 @@ class Solution {
         str1 = str1.toLowerCase();
         str2 = str2.toLowerCase();
         
+        //다중집합 추출
         for(int i = 0; i < str1.length() - 1; i++){
             char c1 = str1.charAt(i);
             char c2 = str1.charAt(i + 1);
@@ -18,6 +19,7 @@ class Solution {
             }
         }
         
+        //다중집합 추출
         for(int i = 0; i < str2.length() - 1; i++){
             char c1 = str2.charAt(i);
             char c2 = str2.charAt(i + 1);
@@ -41,9 +43,9 @@ class Solution {
         
         if(b == 0){
             return 65536;
-        } else { 
-            return (int) (((double) a / b) * 65536);
         }
+        
+        return (int) (((double) a / b) * 65536);
     }
     
     public boolean isAlpha(char ch){
