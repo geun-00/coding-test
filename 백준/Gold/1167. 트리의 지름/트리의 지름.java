@@ -15,15 +15,15 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int n = Integer.parseInt(br.readLine());
+        int v = Integer.parseInt(br.readLine());
 
-        tree = new ArrayList[n + 1];
+        tree = new ArrayList[v + 1];
 
-        for (int i = 0; i <= n; i++) {
+        for (int i = 1; i <= v; i++) {
             tree[i] = new ArrayList<>();
         }
 
-        for (int i = 0; i < n - 1; i++) {
+        for (int i = 0; i < v; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
 
             int parent = Integer.parseInt(st.nextToken());
@@ -42,10 +42,10 @@ public class Main {
             }
         }
 
-        visit = new boolean[n + 1];
+        visit = new boolean[v + 1];
         dfs(1, 0); //루트 노드에서 가장 멀리 떨어진 노드 찾기
 
-        visit = new boolean[n + 1];
+        visit = new boolean[v + 1];
         dfs(maxNode, 0); //트리의 지름 구하기
 
         System.out.println(max);
