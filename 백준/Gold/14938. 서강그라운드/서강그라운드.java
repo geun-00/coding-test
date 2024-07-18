@@ -26,7 +26,7 @@ public class Main {
         for (int i = 1; i <= n; i++) {
             items[i] = Integer.parseInt(st.nextToken());
             graph[i] = new ArrayList<>();
-            Arrays.fill(dist[i], 1000000);
+            Arrays.fill(dist[i], Integer.MAX_VALUE);
             dist[i][i] = 0;
         }
 
