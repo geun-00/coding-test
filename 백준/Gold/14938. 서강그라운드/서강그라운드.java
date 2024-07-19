@@ -7,6 +7,10 @@ import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
+
+    static int[][] dist;
+    static ArrayList<Node>[] graph;
+
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,16 +21,15 @@ public class Main {
         int r = Integer.parseInt(st.nextToken());
 
         int[] items = new int[n + 1];
-        int[][] dist = new int[n + 1][n + 1];
-        boolean[][] visit = new boolean[n + 1][n + 1];
-        ArrayList<Node>[] graph = new ArrayList[n + 1];
+        dist = new int[n + 1][n + 1];
+        graph = new ArrayList[n + 1];
 
         st = new StringTokenizer(br.readLine());
 
         for (int i = 1; i <= n; i++) {
             items[i] = Integer.parseInt(st.nextToken());
             graph[i] = new ArrayList<>();
-            Arrays.fill(dist[i], Integer.MAX_VALUE);
+            Arrays.fill(dist[i], 100 * 100 * 15 + 1);
             dist[i][i] = 0;
         }
 
@@ -37,9 +40,35 @@ public class Main {
             int b = Integer.parseInt(st.nextToken());
             int l = Integer.parseInt(st.nextToken());
 
+            //다익스트라
             graph[a].add(new Node(b, l));
             graph[b].add(new Node(a, l));
         }
+
+        dijkstra(n);
+
+        printResult(n, m, items);
+    }
+
+    private static void printResult(int n, int m, int[] items) {
+        int max = 0;
+
+        for (int i = 1; i <= n; i++) {
+            int sum = 0;
+            for (int j = 1; j <= n; j++) {
+                if (dist[i][j] <= m) {
+                    sum += items[j];
+                }
+            }
+            max = Math.max(max, sum);
+        }
+
+        System.out.println(max);
+    }
+
+    private static void dijkstra(int n) {
+
+        boolean[][] visit = new boolean[n + 1][n + 1];
 
         for (int i = 1; i <= n; i++) {
             PriorityQueue<Node> qu = new PriorityQueue<>();
@@ -61,19 +90,6 @@ public class Main {
                 }
             }
         }
-
-        int max = 0;
-        for (int i = 1; i <= n; i++) {
-            int sum = 0;
-            for (int j = 1; j <= n; j++) {
-                if (dist[i][j] <= m) {
-                    sum += items[j];
-                }
-            }
-            max = Math.max(max, sum);
-        }
-
-        System.out.println(max);
     }
 
     static class Node implements Comparable<Node> {
