@@ -1,27 +1,20 @@
-import java.util.ArrayList;
-
 class Solution {
-    
-    char[] vowel = {'A', 'E', 'I', 'O', 'U'};
-    ArrayList<String> words = new ArrayList<>();
-    
     public int solution(String word) {
+        char[] vowels = {'A', 'E', 'I', 'O', 'U'};
+        int[] weights = {781, 156, 31, 6, 1};
         
-        dfs(0, "");
+        int index = 0;
         
-        return words.indexOf(word);
-    }
-    
-    public void dfs(int depth, String s){
-        
-        words.add(s);
-        
-        if(depth == 5) {
-            return;
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            for (int j = 0; j < 5; j++) {
+                if (c == vowels[j]) {
+                    index += weights[i] * j;
+                    break;
+                }
+            }
         }
         
-        for(char c : vowel){
-            dfs(depth + 1, s + c);
-        }
+        return index + word.length();
     }
 }
