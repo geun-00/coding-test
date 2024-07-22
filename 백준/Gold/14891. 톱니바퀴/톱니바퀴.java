@@ -21,8 +21,8 @@ public class Main {
         for (int i = 0; i < k; i++) {
 
             StringTokenizer st = new StringTokenizer(br.readLine());
-
             rotation = new boolean[5];
+
             int num = Integer.parseInt(st.nextToken());
             int r = Integer.parseInt(st.nextToken());
 
@@ -42,11 +42,9 @@ public class Main {
                     }
                     if (gear2_2 != gear3_6 && rotation[2]) {
                         rotate(3, r);
-//                        rotation[2] = false;
                     }
                     if (gear3_2 != gear4_6 && rotation[3]) {
                         rotate(4, -r);
-//                        rotation[3] = false;
                     }
                     break;
                 case 2:
@@ -58,7 +56,6 @@ public class Main {
                     }
                     if (gear3_2 != gear4_6 && rotation[3]) {
                         rotate(4, r);
-//                        rotation[3] = false;
                     }
                     break;
                 case 3:
@@ -70,7 +67,6 @@ public class Main {
                     }
                     if (gear1_2 != gear2_6 && rotation[2]) {
                         rotate(1, r);
-//                        rotation[2] = false;
                     }
                     break;
                 case 4:
@@ -79,11 +75,9 @@ public class Main {
                     }
                     if (gear2_2 != gear3_6 && rotation[3]) {
                         rotate(2, r);
-//                        rotation[3] = false;
                     }
                     if (gear1_2 != gear2_6 && rotation[2]) {
                         rotate(1, -r);
-//                        rotation[2] = false;
                     }
                     break;
             }
