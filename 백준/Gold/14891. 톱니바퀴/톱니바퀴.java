@@ -81,6 +81,7 @@ public class Main {
                     }
                     break;
             }
+            rotation = null;
         }
 
         System.out.println(((gears[1].charAt(0) - '0')) +
