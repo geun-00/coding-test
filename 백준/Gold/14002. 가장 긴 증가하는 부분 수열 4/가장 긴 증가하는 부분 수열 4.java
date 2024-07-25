@@ -38,10 +38,9 @@ public class Main {
         }
 
         Deque<Integer> stack = new ArrayDeque<>();
-        stack.push(arr[maxIdx]);
 
-        int idx = max - 1;
-        for (int i = maxIdx - 1; i >= 0; i--) {
+        int idx = max;
+        for (int i = maxIdx; i >= 0; i--) {
             if (dp[i] == idx) {
                 idx--;
                 stack.push(arr[i]);
