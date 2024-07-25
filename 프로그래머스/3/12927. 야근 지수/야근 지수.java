@@ -11,7 +11,7 @@ class Solution {
 
         for (int i = 0; i < n; i++) {
 
-            if (qu.isEmpty() || qu.peek() == 0) {
+            if (qu.peek() == 0) {
                 return 0;
             }
 
