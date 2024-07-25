@@ -20,16 +20,20 @@ class Solution {
         }
 
         for (int i = 0; i < words.length; i++) {
+            
+            if(visit[i]) {
+                continue;
+            }
 
             int diff = 0;
             for (int j = 0; j < now.length(); j++) {
                 if (words[i].charAt(j) != now.charAt(j)) {
                     diff++;
-                    if(diff >= 2) break;
+                    
                 }
             }
 
-            if (diff == 1 && !visit[i]) {
+            if (diff == 1) {
                 visit[i] = true;
                 dfs(words[i], target, words, depth + 1);
                 visit[i] = false;
