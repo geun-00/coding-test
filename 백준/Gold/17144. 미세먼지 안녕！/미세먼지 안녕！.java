@@ -13,6 +13,7 @@ public class Main {
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
     static Point[] airCleaner = new Point[2];
+    static Queue<Dust> dusts = new ArrayDeque<>();
 
     public static void main(String[] args) throws IOException {
 
@@ -43,21 +44,19 @@ public class Main {
         }
 
         while (t-- > 0) {
-            Queue<Dust> qu = new ArrayDeque<>();
 
             for (int i = 0; i < r; i++) {
                 for (int j = 0; j < c; j++) {
                     if (map[i][j] >= 5) {
-                        qu.offer(new Dust(i, j, map[i][j]));
+                        dusts.offer(new Dust(i, j, map[i][j]));
                     }
                 }
             }
 
-            spread(qu);
-
+            spread();
             clean();
         }
-        
+
         int sum = 0;
 
         for (int i = 0; i < r; i++) {
@@ -71,14 +70,16 @@ public class Main {
         System.out.println(sum);
     }
 
-    private static void spread(Queue<Dust> qu) {
+    private static void spread() {
 
-        for (Dust p : qu) {
+        while (!dusts.isEmpty()) {
 
-            int x = p.x;
-            int y = p.y;
+            Dust dust = dusts.poll();
 
-            int spreadAmount = p.amount / 5;
+            int x = dust.x;
+            int y = dust.y;
+
+            int spreadAmount = dust.amount / 5;
             int count = 0;
 
             for (int i = 0; i < 4; i++) {
@@ -99,20 +100,58 @@ public class Main {
     private static void clean() {
 
         // 위쪽 공기청정기 반시계방향 순환
-        int upper = airCleaner[0].x;
-        for (int i = upper - 1; i > 0; i--) map[i][0] = map[i - 1][0];
-        for (int i = 0; i < c - 1; i++) map[0][i] = map[0][i + 1];
-        for (int i = 0; i < upper; i++) map[i][c - 1] = map[i + 1][c - 1];
-        for (int i = c - 1; i > 1; i--) map[upper][i] = map[upper][i - 1];
-        map[upper][1] = 0;
+        cleanUp();
 
         // 아래쪽 공기청정기 시계방향 순환
-        int lower = airCleaner[1].x;
-        for (int i = lower + 1; i < r - 1; i++) map[i][0] = map[i + 1][0];
-        for (int i = 0; i < c - 1; i++) map[r - 1][i] = map[r - 1][i + 1];
-        for (int i = r - 1; i > lower; i--) map[i][c - 1] = map[i - 1][c - 1];
-        for (int i = c - 1; i > 1; i--) map[lower][i] = map[lower][i - 1];
-        map[lower][1] = 0;
+        cleanDown();
+    }
+
+    private static void cleanUp() {
+        
+        int x = airCleaner[0].x;
+
+        // ↓
+        for (int i = x - 1; i > 0; i--) {
+            map[i][0] = map[i - 1][0];
+        }
+        // <-
+        for (int i = 0; i < c - 1; i++) {
+            map[0][i] = map[0][i + 1];
+        }
+        // ↑
+        for (int i = 0; i < x; i++) {
+            map[i][c - 1] = map[i + 1][c - 1];
+        }
+        // ->
+        for (int i = c - 1; i > 1; i--) {
+            map[x][i] = map[x][i - 1];
+        }
+
+        map[x][1] = 0;
+    }
+
+    private static void cleanDown() {
+
+        int x = airCleaner[1].x;
+
+        // ↑
+        for (int i = x + 1; i < r - 1; i++) {
+            map[i][0] = map[i + 1][0];
+        }
+        // <-
+        for (int i = 0; i < c - 1; i++) {
+            map[r - 1][i] = map[r - 1][i + 1];
+        }
+        // ↓
+        for (int i = r - 1; i > x; i--) {
+            map[i][c - 1] = map[i - 1][c - 1];
+        }
+        // ->
+        for (int i = c - 1; i > 1; i--) {
+            map[x][i] = map[x][i - 1];
+        }
+
+        map[x][1] = 0;
     }
 
     static class Dust {
