@@ -30,7 +30,7 @@ public class Main {
         }
 
         for (int s = n - 3; s >= 0; s--) {
-            for (int e = s + 1; e < n; e++) {
+            for (int e = s + 2; e < n; e++) {
                 if (arr[s] == arr[e] && palindrome[s + 1][e - 1]) {
                     palindrome[s][e] = true;
                 }
