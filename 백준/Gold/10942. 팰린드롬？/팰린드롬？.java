@@ -18,6 +18,25 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
+        boolean[][] palindrome = new boolean[n][n];
+
+        for (int i = 0; i < n; i++) {
+            palindrome[i][i] = true;
+            if (i < n - 1) {
+                if (arr[i] == arr[i + 1]) {
+                    palindrome[i][i + 1] = true;
+                }
+            }
+        }
+
+        for (int s = n - 3; s >= 0; s--) {
+            for (int e = s + 1; e < n; e++) {
+                if (arr[s] == arr[e] && palindrome[s + 1][e - 1]) {
+                    palindrome[s][e] = true;
+                }
+            }
+        }
+
         int m = Integer.parseInt(br.readLine());
 
         for (int i = 0; i < m; i++) {
@@ -26,18 +45,7 @@ public class Main {
             int s = Integer.parseInt(st.nextToken()) - 1;
             int e = Integer.parseInt(st.nextToken()) - 1;
 
-            boolean isPalindrome = true;
-
-            while (s < e) {
-                if (arr[s] != arr[e]) {
-                    isPalindrome = false;
-                    break;
-                }
-                s++;
-                e--;
-            }
-
-            sb.append(isPalindrome ? 1 : 0).append("\n");
+            sb.append(palindrome[s][e] ? 1 : 0).append("\n");
         }
 
         System.out.print(sb);
