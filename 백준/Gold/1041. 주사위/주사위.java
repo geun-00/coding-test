@@ -14,11 +14,16 @@ public class Main {
         int[] dice = new int[6];
         StringTokenizer st = new StringTokenizer(br.readLine());
 
+        int sum = 0;
+        int max = 0;
         for (int i = 0; i < 6; i++) {
             dice[i] = Integer.parseInt(st.nextToken());
+            sum += dice[i];
+            max = Math.max(max, dice[i]);
         }
+
         if (n == 1) {
-            System.out.println(Arrays.stream(dice).sum() - Arrays.stream(dice).max().getAsInt());
+            System.out.println(sum - max);
             return;
         }
 
