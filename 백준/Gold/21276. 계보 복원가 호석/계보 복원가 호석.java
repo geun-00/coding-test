@@ -50,20 +50,31 @@ public class Main {
         System.out.println();
 
         people.sort(null);
-        HashMap<String, Boolean> visit = new HashMap<>();
-        for (String person : people) {
-            visit.put(person, false);
-        }
 
         for (String person : people) {
             ArrayList<String> list = yTox.get(person);
-            list.sort(null);
-            System.out.print(person + " " + list.size() + " ");
-            for (String s : list) {
-                if (!visit.get(s)) {
+
+            if (list.size() <= 1) {
+                list.sort(null);
+                System.out.print(person + " " + list.size() + " ");
+                for (String s : list) {
                     System.out.print(s + " ");
-                    visit.put(s, true);
                 }
+                System.out.println();
+                continue;
+            }
+
+            ArrayList<String> temp = new ArrayList<>();
+            for (String s : list) {
+                if (xToy.get(s).size() == 1) {
+                    temp.add(s);
+                }
+            }
+
+            temp.sort(null);
+            System.out.print(person + " " + temp.size() + " ");
+            for (String s : temp) {
+                System.out.print(s + " ");
             }
             System.out.println();
         }
