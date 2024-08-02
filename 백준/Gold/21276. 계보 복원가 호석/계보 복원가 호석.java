@@ -1,82 +1,88 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
         int n = Integer.parseInt(br.readLine());
 
-        HashMap<String, ArrayList<String>> xToy = new HashMap<>();
-        HashMap<String, ArrayList<String>> yTox = new HashMap<>();
+        HashMap<String, ArrayList<String>> parentToChild = new HashMap<>();
+        HashMap<String, ArrayList<String>> result = new HashMap<>();
+        HashMap<String, Integer> inDegree = new HashMap<>();
         ArrayList<String> people = new ArrayList<>();
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
             String name = st.nextToken();
+
             people.add(name);
-            xToy.put(name, new ArrayList<>());
-            yTox.put(name, new ArrayList<>());
+            parentToChild.put(name, new ArrayList<>());
+            result.put(name, new ArrayList<>());
+            inDegree.put(name, 0);
         }
 
         int m = Integer.parseInt(br.readLine());
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
 
-            String x = st.nextToken();
-            String y = st.nextToken();
+            String child = st.nextToken(); //x
+            String parent = st.nextToken(); //y
 
-            xToy.get(x).add(y);
-            yTox.get(y).add(x);
+            parentToChild.get(parent).add(child);
+            inDegree.put(child, inDegree.get(child) + 1);
         }
 
         ArrayList<String> root = new ArrayList<>();
-        for (String key : xToy.keySet()) {
-            if (xToy.get(key).isEmpty()) {
+        Queue<String> qu = new ArrayDeque<>();
+        for (String key : inDegree.keySet()) {
+            if (inDegree.get(key) == 0) {
                 root.add(key);
+                qu.offer(key);
             }
         }
         root.sort(null);
 
-        System.out.println(root.size()); //가문의 개수
+        sb.append(root.size()).append("\n"); //가문의 개수
         for (String r : root) {
-            System.out.print(r + " ");
+            sb.append(r).append(" ");
         }
-        System.out.println();
+        sb.append("\n");
+
+        while (!qu.isEmpty()) {
+            String parent = qu.poll();
+
+            for (String child : parentToChild.get(parent)) {
+                inDegree.put(child, inDegree.get(child) - 1);
+
+                if (inDegree.get(child) == 0) {
+                    result.get(parent).add(child);
+                    qu.offer(child);
+                }
+            }
+        }
 
         people.sort(null);
+        for (String parent : people) {
+            ArrayList<String> list = result.get(parent);
+            list.sort(null);
 
-        for (String person : people) {
-            ArrayList<String> list = yTox.get(person);
+            sb.append(parent).append(" ").append(list.size()).append(" ");
 
-            if (list.size() <= 1) {
-                list.sort(null);
-                System.out.print(person + " " + list.size() + " ");
-                for (String s : list) {
-                    System.out.print(s + " ");
-                }
-                System.out.println();
-                continue;
+            for (String child : list) {
+                sb.append(child).append(" ");
             }
-
-            ArrayList<String> temp = new ArrayList<>();
-            for (String s : list) {
-                if (xToy.get(s).size() == 1) {
-                    temp.add(s);
-                }
-            }
-
-            temp.sort(null);
-            System.out.print(person + " " + temp.size() + " ");
-            for (String s : temp) {
-                System.out.print(s + " ");
-            }
-            System.out.println();
+            sb.append("\n");
         }
+
+        System.out.print(sb);
     }
 }
