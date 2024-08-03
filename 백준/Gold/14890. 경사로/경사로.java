@@ -49,27 +49,23 @@ public class Main {
 
             //내려가야 하는 경우
             if (diff == 1) {
-
                 for (int j = 1; j <= l; j++) {
-                    if (i + j >= n || incline[i + j]) {
+
+                    if (i + j >= n || incline[i + j] || map[r][i] - 1 != map[r][i + j]) {
                         return false;
                     }
-                    if (map[r][i] - 1 != map[r][i + j]) {
-                        return false;
-                    }
+
                     incline[i + j] = true;
                 }
-
+            }
             //올라가야 하는 경우
-            } else if (diff == -1) {
+            else if (diff == -1) {
                 for (int j = 0; j < l; j++) {
 
-                    if (i - j < 0 || incline[i - j]) {
+                    if (i - j < 0 || incline[i - j] || map[r][i] != map[r][i - j]) {
                         return false;
                     }
-                    if (map[r][i] != map[r][i - j]) {
-                        return false;
-                    }
+
                     incline[i - j] = true;
                 }
             }
@@ -80,7 +76,7 @@ public class Main {
 
     private static boolean canCol(int c) {
 
-        boolean[] incline = new boolean[n];
+        boolean[] incline = new boolean[n]; //경사로 설치 여부
 
         for (int i = 0; i < n - 1; i++) {
             int diff = map[i][c] - map[i + 1][c];
@@ -91,27 +87,24 @@ public class Main {
 
             //내려가야 하는 경우
             if (diff == 1) {
-
                 for (int j = 1; j <= l; j++) {
-                    if (i + j >= n || incline[i + j]) {
-                        return false;
-                    }
-                    if (map[i][c] - 1 != map[i + j][c]) {
-                        return false;
-                    }
-                    incline[i + j] = true;
-                }
 
-                //올라가야 하는 경우
-            } else if (diff == -1) {
+                    if (i + j >= n || incline[i + j] || map[i][c] - 1 != map[i + j][c]) {
+                        return false;
+                    }
+
+                    incline[i + j] = true;
+
+                }
+            }
+            //올라가야 하는 경우
+            else if (diff == -1) {
                 for (int j = 0; j < l; j++) {
 
-                    if (i - j < 0 || incline[i - j]) {
+                    if (i - j < 0 || incline[i - j] || map[i][c] != map[i - j][c]) {
                         return false;
                     }
-                    if (map[i][c] != map[i - j][c]) {
-                        return false;
-                    }
+                    
                     incline[i - j] = true;
                 }
             }
