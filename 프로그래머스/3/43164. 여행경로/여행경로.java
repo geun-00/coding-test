@@ -2,33 +2,28 @@ import java.util.*;
 
 class Solution {
     
-    boolean[] visit;
-    ArrayList<String> routes;
+    HashMap<String, PriorityQueue<String>> graph;
+    Deque<String> stack;
     
     public String[] solution(String[][] tickets) {
         
-        visit = new boolean[tickets.length];
-        routes = new ArrayList<>();
+        graph = new HashMap<>();
+        stack = new LinkedList<>();
+        
+        for (String[] ticket : tickets) {
+            graph.putIfAbsent(ticket[0], new PriorityQueue<>());
+            graph.get(ticket[0]).offer(ticket[1]);
+        }
 
-        dfs("ICN", "ICN", 0, tickets);
-
-        routes.sort(null);
-
-        return routes.get(0).split(" ");
+        dfs("ICN");
+        
+        return stack.toArray(new String[0]);
     }
     
-     public void dfs(String now, String path, int depth, String[][] tickets) {
-        if (depth == tickets.length) {
-            routes.add(path);
-            return;
+    public void dfs(String now) {
+        while (graph.containsKey(now) && !graph.get(now).isEmpty()) {
+            dfs(graph.get(now).poll());
         }
-
-        for (int i = 0; i < tickets.length; i++) {
-            if (!visit[i] && tickets[i][0].equals(now)) {
-                visit[i] = true;
-                dfs(tickets[i][1], path + " " + tickets[i][1], depth + 1, tickets);
-                visit[i] = false;
-            }
-        }
+        stack.push(now);
     }
 }
