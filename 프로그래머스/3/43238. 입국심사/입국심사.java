@@ -5,8 +5,8 @@ class Solution {
         
         long s = 1;
         long e = (long) Arrays.stream(times).max().orElse(-1) * n;
-
-        while (s < e) {
+        
+        while (s <=  e) {
             long mid = (s + e) / 2;
 
             long sum = 0;
@@ -18,7 +18,7 @@ class Solution {
             }
 
             if (sum >= n) {
-                e = mid;
+                e = mid - 1;
             } else {
                 s = mid + 1;
             }
