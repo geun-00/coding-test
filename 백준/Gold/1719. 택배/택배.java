@@ -26,7 +26,8 @@ public class Main {
 
         for (int i = 1; i <= n; i++) {
             graph[i] = new ArrayList<>();
-            Arrays.fill(dist[i], Integer.MAX_VALUE);
+            Arrays.fill(dist[i], 1000 * 10000);
+//            dist[i][i] = 0;
         }
 
         for (int i = 0; i < m; i++) {
@@ -36,13 +37,32 @@ public class Main {
             int v = Integer.parseInt(st.nextToken());
             int w = Integer.parseInt(st.nextToken());
 
+            //dijkstra
             graph[u].add(new Node(v, w));
             graph[v].add(new Node(u, w));
+
+            //floyd warshall
+            dist[u][v] = w;
+            dist[v][u] = w;
+
+            result[u][v] = v;
+            result[v][u] = u;
         }
 
-        for (int i = 1; i <= n; i++) {
-            dijkstra(i, n);
+        for (int k = 1; k <= n; k++) {
+            for (int s = 1; s <= n; s++) {
+                for (int e = 1; e <= n; e++) {
+                    if (dist[s][e] > dist[s][k] + dist[k][e]) {
+                        dist[s][e] = dist[s][k] + dist[k][e];
+                        result[s][e] = result[s][k];
+                    }
+                }
+            }
         }
+
+//        for (int i = 1; i <= n; i++) {
+//            dijkstra(i, n);
+//        }
 
         printResult(n);
     }
