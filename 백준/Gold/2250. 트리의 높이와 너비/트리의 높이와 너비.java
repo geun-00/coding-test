@@ -72,17 +72,18 @@ public class Main {
     }
 
     private static void inOrder(int node, int depth) {
-        if (tree[node].left != -1) {
-            inOrder(tree[node].left, depth + 1);
+        
+        if (node == -1) {
+            return;
         }
+        
+        inOrder(tree[node].left, depth + 1);
 
         level[depth].min = Math.min(level[depth].min, order);
         level[depth].max = Math.max(level[depth].max, order);
         order++;
 
-        if (tree[node].right != -1) {
-            inOrder(tree[node].right, depth + 1);
-        }
+        inOrder(tree[node].right, depth + 1);
     }
 
     static class Node {
