@@ -8,8 +8,8 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static ArrayList<Node>[] graph;
     static int start, end;
+    static int[] parent;
 
     public static void main(String[] args) throws IOException {
 
@@ -18,13 +18,9 @@ public class Main {
 
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-
-        graph = new ArrayList[n + 1];
-        for (int i = 1; i <= n; i++) {
-            graph[i] = new ArrayList<>();
-        }
-
         int max = 0;
+
+        ArrayList<Edge> edges = new ArrayList<>();
 
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
@@ -33,8 +29,7 @@ public class Main {
             int b = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
 
-            graph[a].add(new Node(b, c));
-            graph[b].add(new Node(a, c));
+            edges.add(new Edge(a, b, c));
 
             max = Math.max(max, c);
         }
@@ -50,7 +45,19 @@ public class Main {
         while (s <= e) {
 
             int mid = (s + e) / 2;
-            if (bfs(mid, n)) {
+
+            parent = new int[n + 1];
+            for (int i = 1; i <= n; i++) {
+                parent[i] = i;
+            }
+
+            for (Edge edge : edges) {
+                if (edge.weight >= mid && find(edge.from) != find(edge.to)) {
+                    union(edge.from, edge.to);
+                }
+            }
+
+            if (find(start) == find(end)) {
                 result = mid;
                 s = mid + 1;
             } else {
@@ -62,37 +69,26 @@ public class Main {
 
     }
 
-    private static boolean bfs(int weight, int n) {
-
-        Queue<Integer> qu = new ArrayDeque<>();
-        qu.offer(start);
-
-        boolean[] visit = new boolean[n + 1];
-        visit[start] = true;
-
-        while (!qu.isEmpty()) {
-            int now = qu.poll();
-
-            if (now == end) {
-                return true;
-            }
-
-            for (Node next : graph[now]) {
-                if (!visit[next.to] && next.weight >= weight) {
-                    visit[next.to] = true;
-                    qu.offer(next.to);
-                }
-            }
+    private static void union(int a, int b) {
+        a = find(a);
+        b = find(b);
+        if (a != b) {
+            parent[b] = a;
         }
-
-        return false;
     }
 
-    static class Node {
+    private static int find(int a) {
+        if (parent[a] == a) {
+            return a;
+        }
+        return parent[a] = find(parent[a]);
+    }
 
-        int to, weight;
+    static class Edge {
+        int from, to, weight;
 
-        public Node(int to, int weight) {
+        public Edge(int from, int to, int weight) {
+            this.from = from;
             this.to = to;
             this.weight = weight;
         }
