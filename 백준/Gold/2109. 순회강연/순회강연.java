@@ -47,8 +47,8 @@ public class Main {
 
         int sum = 0;
 
-        for (int num : qu) {
-            sum += num;
+        while (!qu.isEmpty()) {
+            sum += qu.poll();
         }
         System.out.println(sum);
     }
