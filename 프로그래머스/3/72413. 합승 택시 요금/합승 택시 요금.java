@@ -1,41 +1,83 @@
-import java.util.Arrays;
+import java.util.*;
 
 class Solution {
+    
+    ArrayList<Node>[] graph;
+    
     public int solution(int n, int s, int a, int b, int[][] fares) {
         
-        int[][] dist = new int[n + 1][n + 1];
-
+       graph = new ArrayList[n + 1];
         for (int i = 1; i <= n; i++) {
-            Arrays.fill(dist[i], 201 * 100_000);
-            dist[i][i] = 0;
+            graph[i] = new ArrayList<>();
         }
-
+        
         for (int[] fare : fares) {
 
             int c = fare[0];
             int d = fare[1];
             int f = fare[2];
 
-            dist[c][d] = f;
-            dist[d][c] = f;
+            graph[c].add(new Node(d, f));
+            graph[d].add(new Node(c, f));
         }
 
-        for (int k = 1; k <= n; k++) {
-            for (int start = 1; start <= n; start++) {
-                for (int end = 1; end <= n; end++) {
-                    if (dist[start][end] > dist[start][k] + dist[k][end]) {
-                        dist[start][end] = dist[start][k] + dist[k][end];
-                    }
+        int[] fromS = dijkstra(s, n);
+        int[] fromA = dijkstra(a, n);
+        int[] fromB = dijkstra(b, n);
+
+        int min = fromS[a] + fromS[b];
+
+        for (int i = 1; i <= n; i++) {
+            min = Math.min(min, fromS[i] + fromA[i] + fromB[i]);
+        }
+
+        return min;
+    }
+    
+    public int[] dijkstra(int start, int n) {
+        
+        PriorityQueue<Node> qu = new PriorityQueue<>();
+        qu.offer(new Node(start, 0));
+
+        boolean[] visit = new boolean[n + 1];
+        int[] dist = new int[n + 1];
+
+        Arrays.fill(dist, 201 * 100_000);
+        dist[start] = 0;
+
+        while (!qu.isEmpty()) {
+
+            Node now = qu.poll();
+
+            if (visit[now.to]) {
+                continue;
+            }
+            visit[now.to] = true;
+
+            for (Node next : graph[now.to]) {
+                if (dist[next.to] > dist[now.to] + next.weight) {
+                    dist[next.to] = dist[now.to] + next.weight;
+
+                    qu.offer(new Node(next.to, dist[next.to]));
                 }
             }
         }
 
-        int min = dist[s][a] + dist[s][b];
+        return dist;
+    }
+}
 
-        for (int i = 1; i <= n; i++) {
-            min = Math.min(min, dist[s][i] + dist[i][a] + dist[i][b]);
-        }
+class Node implements Comparable<Node>{
 
-        return min;
+    int to, weight;
+
+    public Node(int to, int weight) {
+        this.to = to;
+        this.weight = weight;
+    }
+
+    @Override
+    public int compareTo(Node o) {
+        return this.weight - o.weight;
     }
 }
