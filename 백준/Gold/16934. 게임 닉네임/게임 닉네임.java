@@ -26,11 +26,9 @@ public class Main {
     }
 
     static class Node {
-        boolean isEnd;
         Map<Character, Node> child;
 
-        public Node(boolean isEnd) {
-            this.isEnd = isEnd;
+        public Node() {
             child = new HashMap<>();
         }
     }
@@ -40,37 +38,41 @@ public class Main {
         Node node;
 
         public Trie() {
-            this.node = new Node(false);
+            this.node = new Node();
         }
 
         String insert(String name) {
+
             Node now = this.node;
 
-            boolean flag = false;
+            boolean newChild = false;
             int temp = 0;
 
             for (int i = 0; i < name.length(); i++) {
+
                 char ch = name.charAt(i);
 
                 if (!now.child.containsKey(ch)) {
-                    now.child.put(ch, new Node(false));
+                    now.child.put(ch, new Node());
 
-                    if (!flag) {
-                        flag = true;
+                    if (!newChild) { //새로운 경로로 가는 경우
+                        newChild = true;
                         temp = i + 1;
                     }
                 }
-                now = now.child.get(ch);
 
-                if (i == name.length() - 1) {
-                    now.isEnd = true;
-                }
+                now = now.child.get(ch);
             }
 
+            //처음 나온 이름의 경우
             if (!countMap.containsKey(name)) {
                 countMap.put(name, 1);
-                return flag ? name.substring(0, temp) : name;
-            } else {
+                //마지막 예제처럼 어떤 이름의 전체는 아예 다른 이름의 일부가 될 수 있다.
+                //그런 경우 새로운 자식이 생기지 않는다.
+                return newChild ? name.substring(0, temp) : name;
+            }
+            //2번 이상 나온 이름의 경우
+            else {
                 countMap.put(name, countMap.get(name) + 1);
                 return name + countMap.get(name);
             }
