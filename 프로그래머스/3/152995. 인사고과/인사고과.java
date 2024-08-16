@@ -17,21 +17,16 @@ class Solution {
 
         int max = scores[0][1];
 
-        for (int i = 0; i < scores.length; i++) {
+        for (int[] score : scores) {
 
-            int sum = scores[i][0] + scores[i][1];
-
-            if (max > scores[i][1]) {
-
-                if (Arrays.equals(scores[i], wanho)) {
+            if (max > score[1]) {
+                if (Arrays.equals(score, wanho)) {
                     return -1;
                 }
-
-                scores[i][0] = 0;
-                scores[i][1] = 0;
             } else {
-                max = scores[i][1];
+                max = score[1];
 
+                int sum = score[0] + score[1];
                 if (sum > wanhoSum) {
                     result++;
                 }
