@@ -1,4 +1,4 @@
-package Baekjoon.graph;
+package Baekjoon.dp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 /**
- * <a href = "https://www.acmicpc.net/problem/1520">백준 1520번 - 내리막 길</a>
+ * <a href = "https://www.acmicpc.net/problem/1520">백준 1520번 - DP : 내리막 길</a>
  * <br>
  * <a href = "https://velog.io/@jky00914/%EB%B0%B1%EC%A4%80-1520%EB%B2%88-%EB%82%B4%EB%A6%AC%EB%A7%89-%EA%B8%B8">velog</a>
  * @since 2024-06-24
