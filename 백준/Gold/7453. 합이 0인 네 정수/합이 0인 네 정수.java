@@ -26,18 +26,15 @@ public class Main {
         }
 
         int[] AB = new int[n * n];
-        int idx = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                AB[idx++] = A[i] + B[j];
-            }
-        }
-
         int[] CD = new int[n * n];
-        idx = 0;
+
+        int idx = 0;
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                CD[idx++] = C[i] + D[j];
+                AB[idx] = A[i] + B[j];
+                CD[idx] = C[i] + D[j];
+                idx++;
             }
         }
 
