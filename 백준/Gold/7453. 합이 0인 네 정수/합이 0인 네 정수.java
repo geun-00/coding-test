@@ -62,14 +62,14 @@ public class Main {
 
         while (left <= right) {
             int mid = (left + right) / 2;
-            if (arr[mid] > num) {
-                right = mid - 1;
-            } else {
+            if (arr[mid] <= num) {
                 left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
 
-        return right;
+        return left;
     }
 
     private static int lowerBound(int[] arr, int num) {
@@ -79,13 +79,13 @@ public class Main {
 
         while (left <= right) {
             int mid = (left + right) / 2;
-            if (arr[mid] >= num) {
-                right = mid - 1;
-            } else {
+            if (arr[mid] < num) {
                 left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
 
-        return right;
+        return left;
     }
 }
