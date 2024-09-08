@@ -37,8 +37,11 @@ public class Main {
             }
             else {
 
-                if (infos.containsKey(name)) {
+                
                     PriorityQueue<Integer> info = infos.get(name);
+                   if (info == null) {
+                       continue;
+                   }
 
                     if (k >= info.size()) {
                         while (!info.isEmpty()) {
@@ -49,7 +52,7 @@ public class Main {
                             count += info.poll();
                         }
                     }
-                }
+                
             }
         }
 
