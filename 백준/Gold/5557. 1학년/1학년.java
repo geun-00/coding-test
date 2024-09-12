@@ -24,7 +24,7 @@ public class Main {
 
         for (int i = 2; i < n; i++) {
             for (int j = 0; j <= 20; j++) {
-                if (dp[i - 1][j] != 0) {
+                if (dp[i - 1][j] > 0) {
                     if (j + num[i] <= 20) {
                         dp[i][j + num[i]] += dp[i - 1][j];
                     }
