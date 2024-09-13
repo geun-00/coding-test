@@ -72,9 +72,7 @@ public class Main {
 
         @Override
         public int compareTo(Flower o) {
-            if (this.blossomDay == o.blossomDay) {
-                return o.fallDay - this.fallDay;
-            }
+           
             return this.blossomDay - o.blossomDay;
         }
     }
