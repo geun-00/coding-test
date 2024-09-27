@@ -36,10 +36,7 @@ public class Main {
         }
 
         long[] foxDist = foxDijkstra();
-
-
         long[][] wolfDist = wolfDijkstra();
- 
 
         int count = 0;
         for (int i = 2; i <= n; i++) {
@@ -51,11 +48,11 @@ public class Main {
     }
 
     private static long[][] wolfDijkstra() {
+
         PriorityQueue<Node> qu = new PriorityQueue<>();
         qu.offer(new Node(1, 0, 0));
 
         boolean[][] visit = new boolean[n + 1][2];
-
         long[][] dist = new long[n + 1][2];
 
         for (int i = 0; i <= n; i++) {
@@ -75,18 +72,20 @@ public class Main {
             visit[nowTo][state] = true;
 
             for (Node next : graph[nowTo]) {
+                long newDist;
+                int nState;
+
                 if (state == 0) {
-                    long newDist = dist[nowTo][state] + next.weight / 2;
-                    if (dist[next.to][1] > newDist) {
-                        dist[next.to][1] = newDist;
-                        qu.offer(new Node(next.to, newDist, 1));
-                    }
+                    newDist = dist[nowTo][state] + next.weight / 2;
+                    nState = 1;
                 } else {
-                    long newDist = dist[nowTo][state] + next.weight * 2;
-                    if (dist[next.to][0] > newDist) {
-                        dist[next.to][0] = newDist;
-                        qu.offer(new Node(next.to, newDist, 0));
-                    }
+                    newDist = dist[nowTo][state] + next.weight * 2;
+                    nState = 0;
+                }
+
+                if (dist[next.to][nState] > newDist) {
+                    dist[next.to][nState] = newDist;
+                    qu.offer(new Node(next.to, newDist, nState));
                 }
             }
         }
@@ -100,8 +99,8 @@ public class Main {
         qu.offer(new Node(1, 0));
 
         boolean[] visit = new boolean[n + 1];
-
         long[] dist = new long[n + 1];
+
         for (int i = 0; i <= n; i++) {
             dist[i] = Long.MAX_VALUE;
         }
