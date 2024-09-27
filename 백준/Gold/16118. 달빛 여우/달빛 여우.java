@@ -101,9 +101,7 @@ public class Main {
         boolean[] visit = new boolean[n + 1];
         long[] dist = new long[n + 1];
 
-        for (int i = 0; i <= n; i++) {
-            dist[i] = Long.MAX_VALUE;
-        }
+        Arrays.fill(dist, Long.MAX_VALUE);
         dist[1] = 0;
 
         while (!qu.isEmpty()) {
