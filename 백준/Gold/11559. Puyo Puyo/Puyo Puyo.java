@@ -56,20 +56,16 @@ public class Main {
     }
 
     private static void moveDown() {
-        Queue<Character> qu = new ArrayDeque<>();
-        int temp;
-
         for (int i = 0; i < 6; i++) {
+            int temp = 11;
             for (int j = 11; j >= 0; j--) {
                 if (map[j][i] != '.') {
-                    qu.offer(map[j][i]);
+                    if (j != temp) {
+                        map[temp][i] = map[j][i];
+                        map[j][i] = '.';
+                    }
+                    temp--;
                 }
-                map[j][i] = '.';
-            }
-
-            temp = 11;
-            while (!qu.isEmpty()) {
-                map[temp--][i] = qu.poll();
             }
         }
     }
