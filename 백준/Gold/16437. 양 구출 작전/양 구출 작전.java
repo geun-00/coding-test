@@ -23,13 +23,14 @@ public class Main {
         }
 
         for (int i = 2; i <= n; i++) {
+
             StringTokenizer st = new StringTokenizer(br.readLine());
 
             char t = st.nextToken().charAt(0);          //w=늑대, s=양
             int a = Integer.parseInt(st.nextToken());   //마리 수
             int p = Integer.parseInt(st.nextToken());   //연결된 노드 번호
 
-            tree[p].add(new Node(t, i, a));
+            tree[p].add(new Node(i, a));
 
             if (t == 'S') {
                 sheep[i] = a;
@@ -62,12 +63,10 @@ public class Main {
 
     static class Node {
 
-        char c;
         int to;
         int amount;
 
-        public Node(char c, int to, int amount) {
-            this.c = c;
+        public Node(int to, int amount) {
             this.to = to;
             this.amount = amount;
         }
