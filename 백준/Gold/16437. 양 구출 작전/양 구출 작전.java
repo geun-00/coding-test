@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static ArrayList<Node>[] tree;
+    static ArrayList<Integer>[] tree;
     static long[] sheep;
 
     public static void main(String[] args) throws IOException {
@@ -27,15 +27,15 @@ public class Main {
             StringTokenizer st = new StringTokenizer(br.readLine());
 
             char t = st.nextToken().charAt(0);          //w=늑대, s=양
-            int a = Integer.parseInt(st.nextToken());   //마리 수
+            long a = Long.parseLong(st.nextToken());   //마리 수
             int p = Integer.parseInt(st.nextToken());   //연결된 노드 번호
 
-            tree[p].add(new Node(i, a));
+            tree[p].add(i);
 
-            if (t == 'S') {
+            if (t == 'S') {     //양인 경우, 양수로 저장
                 sheep[i] = a;
             } else {
-                sheep[i] = -a;
+                sheep[i] = -a;  //늑대인 경우, 음수로 저장
             }
         }
 
@@ -45,13 +45,17 @@ public class Main {
     private static long dfs(int node) {
 
         long sum = 0;
-        for (Node next : tree[node]) {
-            sum += dfs(next.to);
-        }
 
+        for (int next : tree[node]) { //자식 노드 끝까지 갔다가 부모 노드로 올라오면서 계산
+            sum += dfs(next);
+        }
+        //현재 양인 경우, 그대로 더함
         if (sheep[node] > 0) {
             sum += sheep[node];
-        } else {
+        }
+        //현재 늑대인 경우, 음수가 더해지므로 빼진다.
+        //빼졌을 때 결과가 음수면 늑대가 모든 양을 잡아먹은 것이다.
+        else {
             sum += sheep[node];
             if (sum < 0) {
                 sum = 0;
@@ -59,16 +63,5 @@ public class Main {
         }
 
         return sum;
-    }
-
-    static class Node {
-
-        int to;
-        int amount;
-
-        public Node(int to, int amount) {
-            this.to = to;
-            this.amount = amount;
-        }
     }
 }
