@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -47,11 +48,13 @@ public class Main {
 
         while (A[r][c] != k) {
 
+            //100초가 지나도 해결할 수 없을 때
             if (time > 100) {
                 System.out.println(-1);
                 return;
             }
 
+            //행의 개수 >= 열의 개수인 경우 R 연산, 아닌 경우 C 연산
             if (countRows() >= countCols()) {
                 oper_R();
             } else {
@@ -104,15 +107,22 @@ public class Main {
                 }
             }
 
-            ArrayList<Info> list = new ArrayList<>();
+            Info[] infos = new Info[map.keySet().size()];
+            int idx = 0;
             for (int key : map.keySet()) {
-                list.add(new Info(key, map.get(key)));
+                infos[idx++] = new Info(key, map.get(key));
             }
-            list.sort(null);
+            Arrays.sort(infos);
 
-            int idx = 1;
+//            ArrayList<Info> list = new ArrayList<>();
+//            for (int key : map.keySet()) {
+//                list.add(new Info(key, map.get(key)));
+//            }
+//            list.sort(null);
 
-            for (Info info : list) {
+            idx = 1;
+
+            for (Info info : infos) {
                 if (idx > 100) {
                     break;
                 }
@@ -142,15 +152,22 @@ public class Main {
                 }
             }
 
-            ArrayList<Info> list = new ArrayList<>();
+            Info[] infos = new Info[map.keySet().size()];
+            int idx = 0;
             for (int key : map.keySet()) {
-                list.add(new Info(key, map.get(key)));
+                infos[idx++] = new Info(key, map.get(key));
             }
-            list.sort(null);
+            Arrays.sort(infos);
 
-            int idx = 1;
+//            ArrayList<Info> list = new ArrayList<>();
+//            for (int key : map.keySet()) {
+//                list.add(new Info(key, map.get(key)));
+//            }
+//            list.sort(null);
 
-            for (Info info : list) {
+            idx = 1;
+
+            for (Info info : infos) {
                 if (idx > 100) {
                     break;
                 }
