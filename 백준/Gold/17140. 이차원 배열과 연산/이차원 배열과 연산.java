@@ -97,9 +97,11 @@ public class Main {
 
     private static void oper_R() {
 
+        HashMap<Integer, Integer> map;
+
         for (int i = 1; i <= 100; i++) {
 
-            HashMap<Integer, Integer> map = new HashMap<>();
+            map = new HashMap<>();
 
             for (int j = 1; j <= 100; j++) {
                 if (A[i][j] != 0) {
@@ -113,12 +115,6 @@ public class Main {
                 infos[idx++] = new Info(key, map.get(key));
             }
             Arrays.sort(infos);
-
-//            ArrayList<Info> list = new ArrayList<>();
-//            for (int key : map.keySet()) {
-//                list.add(new Info(key, map.get(key)));
-//            }
-//            list.sort(null);
 
             idx = 1;
 
@@ -142,9 +138,11 @@ public class Main {
 
     private static void oper_C() {
 
+        HashMap<Integer, Integer> map;
+
         for (int i = 1; i <= 100; i++) {
 
-            HashMap<Integer, Integer> map = new HashMap<>();
+            map = new HashMap<>();
 
             for (int j = 1; j <= 100; j++) {
                 if (A[j][i] != 0) {
@@ -158,12 +156,6 @@ public class Main {
                 infos[idx++] = new Info(key, map.get(key));
             }
             Arrays.sort(infos);
-
-//            ArrayList<Info> list = new ArrayList<>();
-//            for (int key : map.keySet()) {
-//                list.add(new Info(key, map.get(key)));
-//            }
-//            list.sort(null);
 
             idx = 1;
 
