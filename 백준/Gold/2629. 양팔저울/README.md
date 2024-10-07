@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 14836 KB, 시간: 116 ms
+메모리: 14760 KB, 시간: 108 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 10월 7일 09:10:09
+2024년 10월 7일 09:10:55
 
 ### 문제 설명
 
@@ -24,7 +24,7 @@
 
 <p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/ce5b29f5-9e03-473b-97db-ce9fd740fde2/-/preview/" style="width: 255px; height: 163px;"></p>
 
-<p style="text-align: center;"><그림 1> 구슬이 3g인지 확인하는 방법 (<mjx-container class="MathJax" jax="CHTML" style="font-size: 101.8%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-menclose><mjx-box style="border: 0.067em solid; padding: 0.2em;"><mjx-texatom texclass="ORD"><mjx-mstyle><mjx-texatom texclass="ORD"><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-texatom></mjx-mstyle></mjx-texatom></mjx-box></mjx-menclose></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><menclose notation="box"><mrow data-mjx-texclass="ORD"><mstyle displaystyle="true" scriptlevel="0"><mrow data-mjx-texclass="ORD"><mn>1</mn></mrow></mstyle></mrow></menclose></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$\boxed{1}$</span></mjx-container>은 1g인 추, <mjx-container class="MathJax" jax="CHTML" style="font-size: 101.8%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-menclose><mjx-box style="border: 0.067em solid; padding: 0.2em;"><mjx-texatom texclass="ORD"><mjx-mstyle><mjx-texatom texclass="ORD"><mjx-mn class="mjx-n"><mjx-c class="mjx-c34"></mjx-c></mjx-mn></mjx-texatom></mjx-mstyle></mjx-texatom></mjx-box></mjx-menclose></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><menclose notation="box"><mrow data-mjx-texclass="ORD"><mstyle displaystyle="true" scriptlevel="0"><mrow data-mjx-texclass="ORD"><mn>4</mn></mrow></mstyle></mrow></menclose></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$\boxed{4}$</span></mjx-container>는 4g인 추, ●은 무게를 확인할 구슬)</p>
+<p style="text-align: center;"><그림 1> 구슬이 3g인지 확인하는 방법 (<mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-menclose><mjx-box style="border: 0.067em solid; padding: 0.2em;"><mjx-texatom texclass="ORD"><mjx-mstyle><mjx-texatom texclass="ORD"><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-texatom></mjx-mstyle></mjx-texatom></mjx-box></mjx-menclose></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><menclose notation="box"><mrow data-mjx-texclass="ORD"><mstyle displaystyle="true" scriptlevel="0"><mrow data-mjx-texclass="ORD"><mn>1</mn></mrow></mstyle></mrow></menclose></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$\boxed{1}$</span></mjx-container>은 1g인 추, <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-menclose><mjx-box style="border: 0.067em solid; padding: 0.2em;"><mjx-texatom texclass="ORD"><mjx-mstyle><mjx-texatom texclass="ORD"><mjx-mn class="mjx-n"><mjx-c class="mjx-c34"></mjx-c></mjx-mn></mjx-texatom></mjx-mstyle></mjx-texatom></mjx-box></mjx-menclose></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><menclose notation="box"><mrow data-mjx-texclass="ORD"><mstyle displaystyle="true" scriptlevel="0"><mrow data-mjx-texclass="ORD"><mn>4</mn></mrow></mstyle></mrow></menclose></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$\boxed{4}$</span></mjx-container>는 4g인 추, ●은 무게를 확인할 구슬)</p>
 
 <p><그림 2>와 같은 방법을 사용하면 구슬이 5g인지도 확인할 수 있다. 구슬이 2g이면 주어진 추를 가지고는 확인할 수 없다.</p>
 

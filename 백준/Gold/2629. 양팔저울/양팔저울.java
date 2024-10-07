@@ -41,14 +41,16 @@ public class Main {
 
         st = new StringTokenizer(br.readLine());
 
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < m; i++) {
             int num = Integer.parseInt(st.nextToken());
 
             if (num <= maxWeight && dp[n][num]) {
-                System.out.print("Y ");
+                sb.append("Y ");
             } else {
-                System.out.print("N ");
+                sb.append("N ");
             }
         }
+        System.out.print(sb);
     }
 }
