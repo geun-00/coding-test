@@ -38,9 +38,9 @@ public class Main {
             }
 
             for (int s = 0; s <= n; s++) {
-                for (int e = 1; e <= n + 1; e++) {
+                for (int e = s+1; e <= n + 1; e++) {
 
-                    if (s == e) continue;
+  
 
                     int dist = Math.abs(points[s].x - points[e].x) + Math.abs(points[s].y - points[e].y);
                     if (dist <= 1000) {
