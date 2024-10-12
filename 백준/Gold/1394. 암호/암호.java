@@ -17,10 +17,9 @@ public class Main {
             map.put(s.charAt(i), i + 1);
         }
 
-        long result = 0;
+        int result = 0;
         int mod = 900528;
         int len = s.length();
-        long temp = 1;
 
         for (int i = 0; i < pw.length(); i++) {
 
