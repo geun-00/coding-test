@@ -22,10 +22,10 @@ public class Main {
         int len = s.length();
         long temp = 1;
 
-        for (int i = pw.length() - 1; i >= 0; i--) {
+        for (int i = 0; i < pw.length(); i++) {
+
             char c = pw.charAt(i);
-            result = (result + map.get(c) * temp) % mod;
-            temp = (temp * len) % mod;
+            result = (result * len + map.get(c)) % mod;
         }
 
         System.out.println(result);
