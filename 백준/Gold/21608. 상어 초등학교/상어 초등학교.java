@@ -6,44 +6,36 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static int[][] board;
-    static boolean[] placed;
-
-    static int[] dx = {-1, 1, 0, 0};
-    static int[] dy = {0, 0, -1, 1};
-
-    static int n;
-
     public static void main(String[] args) throws IOException {
+
+        int[] dx = {-1, 1, 0, 0};
+        int[] dy = {0, 0, -1, 1};
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        n = Integer.parseInt(br.readLine());
+        int n = Integer.parseInt(br.readLine());
 
-        board = new int[n + 1][n + 1];
-        placed = new boolean[n * n + 1];
-
-        int[][] arr = new int[n * n + 1][4];
-        ArrayList<Integer> order = new ArrayList<>();
+        int[][] board = new int[n + 1][n + 1]; //각 학생의 위치
+        int[][] arr = new int[n * n + 1][4];   //각 학생이 좋아하는 4명의 학생
+        int[] order = new int[n * n + 1];
 
         for (int i = 1; i <= n * n; i++) {
+
             StringTokenizer st = new StringTokenizer(br.readLine());
 
-            int num = Integer.parseInt(st.nextToken());
-
-            order.add(num);
+            int s = Integer.parseInt(st.nextToken());
+            order[i] = s;
 
             for (int j = 0; j < 4; j++) {
-                arr[num][j] = Integer.parseInt(st.nextToken());
+                arr[s][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        int first = order.get(0);
+        int first = order[1];
         board[2][2] = first;
-        placed[first] = true;
 
-        for (int i = 1; i < n * n - 1; i++) {
-            int s = order.get(i);
+        for (int i = 2; i < n * n; i++) {
+            int s = order[i];
 
             ArrayList<Point> temp = new ArrayList<>();
 
@@ -90,13 +82,12 @@ public class Main {
 
             Point p = temp.get(0);
             board[p.x][p.y] = s;
-            placed[s] = true;
         }
 
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {
                 if (board[i][j] == 0) {
-                    board[i][j] = order.get(n * n - 1);
+                    board[i][j] = order[n * n];
                     break;
                 }
             }
