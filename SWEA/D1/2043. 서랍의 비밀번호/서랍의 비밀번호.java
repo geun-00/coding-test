@@ -13,12 +13,9 @@ class Solution
         
         int result = 1;
         
-        for(int i = k; i <= p; i++){
-        	if(i == p) {
-                System.out.println(result);
-                break;
-            }
+        for(int i = k; i < p; i++){
             result++;
         }
+        System.out.println(result);
 	}
 }
