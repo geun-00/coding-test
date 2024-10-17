@@ -3,7 +3,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -21,29 +20,34 @@ public class Main {
         int c = Integer.parseInt(st.nextToken());
 
         char[][] map = new char[r][c];
-        boolean[][] fireVisit = new boolean[r][c];
-        boolean[][] jihunVisit = new boolean[r][c];
+        boolean[][] visit = new boolean[r][c];
 
         Queue<Point> fires = new ArrayDeque<>();
         Queue<Jihun> jihun = new ArrayDeque<>();
 
         for (int i = 0; i < r; i++) {
+
             char[] arr = br.readLine().toCharArray();
+
             for (int j = 0; j < c; j++) {
+
                 map[i][j] = arr[j];
+
                 if (map[i][j] == 'J') {
                     jihun.offer(new Jihun(i, j, 0));
-                    jihunVisit[i][j] = true;
-                } else if (map[i][j] == 'F') {
+                    visit[i][j] = true;
+                }
+                else if (map[i][j] == 'F') {
                     fires.offer(new Point(i, j));
-                    fireVisit[i][j] = true;
                 }
             }
         }
 
         while (!jihun.isEmpty()) {
 
+            //불 먼저 확산
             int fireSize = fires.size();
+
             for (int i = 0; i < fireSize; i++) {
                 Point f = fires.poll();
 
@@ -51,14 +55,14 @@ public class Main {
                     int nx = f.x + dx[d];
                     int ny = f.y + dy[d];
 
-                    if (nx >= 0 && ny >= 0 && nx < r && ny < c && map[nx][ny] == '.' && !fireVisit[nx][ny]) {
-                        fireVisit[nx][ny] = true;
+                    if (nx >= 0 && ny >= 0 && nx < r && ny < c && map[nx][ny] == '.') {
                         map[nx][ny] = 'F';
                         fires.offer(new Point(nx, ny));
                     }
                 }
             }
 
+            //지훈 이동
             int jihunSize = jihun.size();
             for (int i = 0; i < jihunSize; i++) {
                 Jihun j = jihun.poll();
@@ -72,8 +76,8 @@ public class Main {
                         return;
                     }
 
-                    if (map[nx][ny] == '.' && !jihunVisit[nx][ny]) {
-                        jihunVisit[nx][ny] = true;
+                    if (map[nx][ny] == '.' && !visit[nx][ny]) {
+                        visit[nx][ny] = true;
                         jihun.offer(new Jihun(nx, ny, j.count + 1));
                     }
                 }
