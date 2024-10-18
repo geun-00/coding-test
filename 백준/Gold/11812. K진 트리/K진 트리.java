@@ -42,10 +42,7 @@ public class Main {
         System.out.print(sb);
     }
 
-    private static long getParent(long node, int k) {
-        if (node == 1) {
-            return 1;
-        }
+    private static long getParent(long node, int k) { 
         return (node - 2) / k + 1;
     }
 }
