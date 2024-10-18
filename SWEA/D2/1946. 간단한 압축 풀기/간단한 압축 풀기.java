@@ -13,9 +13,6 @@ class Solution
             int n = Integer.parseInt(br.readLine());
 
             char[][] arr = new char[20][10];
-            for (char[] chars : arr) {
-                Arrays.fill(chars, ' ');
-            }
 
             int rowIdx = 0;
             int colIdx = 0;
