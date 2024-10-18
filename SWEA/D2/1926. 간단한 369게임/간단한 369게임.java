@@ -24,11 +24,10 @@ class Solution
             if (count == 0) {
                 System.out.print(i + " ");
             } else {
-                String temp = "";
                 for (int j = 0; j < count; j++) {
-                    temp += "-";
+                    System.out.print("-");
                 }
-                System.out.print(temp + " ");
+                System.out.print(" ");
             }
 	}
 }
