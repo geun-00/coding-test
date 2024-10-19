@@ -31,15 +31,19 @@ public class Main {
         ArrayList<Integer> left = new ArrayList<>();
         ArrayList<Integer> right = new ArrayList<>();
 
-        solve(0, n / 2, 0, left);
-        solve(n / 2, n, 0, right);
+        //0 ~ (2/N - 1) 부분
+        dfs(0, n / 2, 0, left);
+
+        //2/N ~ N-1 부분
+        dfs(n / 2, n, 0, right);
 
         int count = 0;
 
+        //이분 탐색을 위해 정렬
         Collections.sort(right);
 
         for (int num : left) {
-            count += upperBound(c - num, right);
+            count += upperBound(c - num, right); //다른 한쪽에서 c-num 이하의 값들의 개수를 더해준다.
         }
 
         bw.write(String.valueOf(count));
@@ -68,7 +72,7 @@ public class Main {
         return left;
     }
 
-    private static void solve(int s, int e, int sum, ArrayList<Integer> list) {
+    private static void dfs(int s, int e, int sum, ArrayList<Integer> list) {
 
         if (sum > c) {
             return;
@@ -80,9 +84,9 @@ public class Main {
         }
 
         //현재 물건을 넣지 않는 경우
-        solve(s + 1, e, sum, list);
+        dfs(s + 1, e, sum, list);
 
         //현재 물건을 넣는 경우
-        solve(s + 1, e, sum + arr[s], list);
+        dfs(s + 1, e, sum + arr[s], list);
     }
 }
