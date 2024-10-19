@@ -34,11 +34,11 @@ public class Main {
         solve(0, n / 2, 0, left);
         solve(n / 2, n, 0, right);
 
-        long count = 0;
+        int count = 0;
 
         Collections.sort(right);
 
-        for (long num : left) {
+        for (int num : left) {
             count += upperBound(c - num, right);
         }
 
@@ -49,7 +49,7 @@ public class Main {
         br.close();
     }
 
-    private static int upperBound(long target, ArrayList<Integer> list) {
+    private static int upperBound(int target, ArrayList<Integer> list) {
 
         int left = 0;
         int right = list.size() - 1;
