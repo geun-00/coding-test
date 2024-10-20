@@ -13,12 +13,12 @@ import java.util.StringTokenizer;
 public class Main {
 
     static int n, m;
-    static int[] parent;
+    static int[] parent; //MST용 배열
     static int[][] map;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
     static boolean[][] visit;
-    static ArrayList<ArrayList<Point>> lands = new ArrayList<>();
+    static ArrayList<ArrayList<Point>> lands = new ArrayList<>(); //각 나라의 모든 섬
 
     public static void main(String[] args) throws IOException {
 
@@ -39,6 +39,7 @@ public class Main {
             }
         }
 
+        //BFS로 섬을 구분하면서 모든 섬의 위치 저장
         int num = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
@@ -48,6 +49,7 @@ public class Main {
             }
         }
 
+        //MST용 배열 초기화
         parent = new int[num + 1];
         for (int i = 1; i <= num; i++) {
             parent[i] = i;
@@ -55,9 +57,11 @@ public class Main {
 
         PriorityQueue<Edge> qu = new PriorityQueue<>();
 
+        //섬에서 다른 섬으로 이동하는 다리 우선순위 큐에 저장
         for (ArrayList<Point> land : lands) {
             for (Point p : land) {
 
+                //현재 섬의 번호
                 int nowLand = map[p.x][p.y];
 
                 for (int i = 0; i < 4; i++) {
@@ -67,17 +71,17 @@ public class Main {
                     int len = 0;
 
                     while (nx >= 0 && ny >= 0 && nx < n && ny < m) {
-                        if (map[nx][ny] == nowLand) {
+                        if (map[nx][ny] == nowLand) { //같은 번호의 섬을 만나면 break
                             break;
                         }
                         if (map[nx][ny] != 0) {
-                            if (len >= 2) {
+                            if (len >= 2) { //다른 번호의 섬을 만나고 연결된 다리의 길이가 2 이상이면 큐에 저장
                                 qu.offer(new Edge(nowLand, map[nx][ny], len));
                             }
                             break;
-                        } else {
-                            len++;
                         }
+
+                        len++;
                         nx += dx[i];
                         ny += dy[i];
                     }
@@ -85,9 +89,10 @@ public class Main {
             }
         }
 
-        int used = 0;
-        int result = 0;
+        int used = 0;   //설치한 다리 개수
+        int result = 0; //설치된 다리의 총 길이
 
+        //유니온 파인드로 다리 길이 최솟값 구하기
         while (!qu.isEmpty()) {
             Edge e = qu.poll();
 
@@ -98,7 +103,8 @@ public class Main {
             }
         }
 
-        if (used != num - 1) {
+        //설치된 다리 개수가 (나라 개수 - 1)이 안되면 모든 나라를 연결하지 못한 것이다.
+        if (used < num - 1) {
             result = -1;
         }
 
@@ -144,6 +150,7 @@ public class Main {
                 if (nx < 0 || ny < 0 || nx >= n || ny >= m || visit[nx][ny] || map[nx][ny] == 0) {
                     continue;
                 }
+
                 map[nx][ny] = num;
                 visit[nx][ny] = true;
                 qu.offer(new Point(nx, ny));
