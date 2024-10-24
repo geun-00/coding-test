@@ -47,15 +47,18 @@ public class Main {
         for (int i = 0; i < q; i++) {
             String query = br.readLine();
 
-            String[] split = query.split("/");
+            int index = query.lastIndexOf("/");
+            String s = query.substring(index + 1);
 
-            Folder folder = folderMap.get("main");
-            for (int j = 1; j < split.length; j++) {
-                folder = folder.folders.get(split[j]);   
-            }
+            Folder folder = folderMap.get(s);
+
             FileInfo info = folder.getFileInfo();
 
-            sb.append(info.files.size()).append(" ").append(info.fileCount).append("\n");
+            sb
+                    .append(info.files.size())
+                    .append(" ")
+                    .append(info.fileCount)
+                    .append("\n");
         }
 
         System.out.print(sb);
