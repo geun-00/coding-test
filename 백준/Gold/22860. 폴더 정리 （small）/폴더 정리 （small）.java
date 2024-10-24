@@ -51,9 +51,7 @@ public class Main {
 
             Folder folder = folderMap.get("main");
             for (int j = 1; j < split.length; j++) {
-                if (folder.folders.get(split[j]) != null) {
-                    folder = folder.folders.get(split[j]);
-                }
+                folder = folder.folders.get(split[j]);   
             }
             FileInfo info = folder.getFileInfo();
 
