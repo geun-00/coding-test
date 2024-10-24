@@ -31,10 +31,7 @@ public class Main {
             Folder parentFolder = folderMap.get(p);
 
             if ("1".equals(c)) {
-                Folder folder = new Folder();
-                if (folderMap.get(f) != null) {
-                    folder = folderMap.get(f);
-                }
+                Folder folder = folderMap.getOrDefault(f, new Folder());
                 parentFolder.addFolder(f, folder);
                 folderMap.put(f, folder);
             } else {
