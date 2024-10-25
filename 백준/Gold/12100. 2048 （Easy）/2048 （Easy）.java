@@ -40,9 +40,7 @@ public class Main {
         int[][] temp = new int[n][n];
 
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                temp[i][j] = board[i][j];
-            }
+            System.arraycopy(board[i], 0, temp[i], 0, n);
         }
 
         for (int i = 0; i < 4; i++) {
@@ -50,9 +48,7 @@ public class Main {
             solve(depth + 1);
 
             for (int j = 0; j < n; j++) {
-                for (int k = 0; k < n; k++) {
-                    board[j][k] = temp[j][k];
-                }
+                System.arraycopy(temp[j], 0, board[j], 0, n);
             }
         }
     }
