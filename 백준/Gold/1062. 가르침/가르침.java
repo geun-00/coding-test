@@ -5,8 +5,7 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static boolean[] select = new boolean[26];
-    static String[] words;
+    static int[] words;
     static int max = Integer.MIN_VALUE;
 
     public static void main(String[] args) throws IOException {
@@ -17,9 +16,10 @@ public class Main {
         int n = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
 
-        words = new String[n];
+        words = new int[n];
         for (int i = 0; i < n; i++) {
-            words[i] = br.readLine();
+            String s = br.readLine();
+            words[i] = getBit(s);
         }
 
         if (k < 5) {
@@ -27,49 +27,44 @@ public class Main {
             return;
         }
 
-        select['a' - 'a'] = true;
-        select['n' - 'a'] = true;
-        select['t' - 'a'] = true;
-        select['i' - 'a'] = true;
-        select['c' - 'a'] = true;
+        int base = (1 << 'a' - 'a') | (1 << 'n' - 'a') | (1 << 't' - 'a') | (1 << 'i' - 'a') | (1 << 'c' - 'a');
 
-        teach(0, 0, k - 5);
+        teach(0, 0, k - 5, base);
 
         System.out.println(max);
     }
 
-    private static void teach(int start, int depth, int limit) {
+    private static int getBit(String s) {
+        int bit = 0;
+        for (char c : s.toCharArray()) {
+            bit |= (1 << c - 'a');
+        }
+        return bit;
+    }
+
+    private static void teach(int start, int depth, int limit, int mask) {
         if (depth == limit) {
-            int read = readWords();
+            int read = readWords(mask);
             max = Math.max(max, read);
             return;
         }
 
         for (int i = start; i < 26; i++) {
-            if (!select[i]) {
-                select[i] = true;
-                teach(i + 1, depth + 1, limit);
-                select[i] = false;
+            if ((mask & (1 << i)) == 0) {
+                teach(i + 1, depth + 1, limit, mask | (1 << i));
             }
         }
     }
 
-    private static int readWords() {
+    private static int readWords(int mask) {
 
         int count = 0;
 
-        for (String w : words) {
+        for (int w : words) {
 
-            boolean possible = true;
-
-            for (char c : w.toCharArray()) {
-                if (!select[c - 'a']) {
-                    possible = false;
-                    break;
-                }
+            if ((w & mask) == w) {
+                count++;
             }
-
-            if (possible) count++;
         }
 
         return count;
