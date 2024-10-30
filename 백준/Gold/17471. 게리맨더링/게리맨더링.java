@@ -75,25 +75,18 @@ public class Main {
     private static boolean isConnected(int a) {
 
         int start = -1;
-
+        int temp = 0;
+        
         for (int i = 0; i < n; i++) {
             if (area[i] == a) {
                 start = i;
-                break;
-            }
-        }
-
-        visit = new boolean[n];
-        int count = dfs(start, a);
-
-        int temp = 0;
-        for (int i = 0; i < n; i++) {
-            if (area[i] == a) {
                 temp++;
             }
         }
 
-        return count == temp;
+        visit = new boolean[n];
+
+        return dfs(start, a) == temp;
     }
 
     private static int dfs(int now, int a) {
