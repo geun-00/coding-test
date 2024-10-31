@@ -54,7 +54,17 @@ public class Main {
         }
 
         System.out.println(sum);
+    }
 
+    private static void move() {
+
+        for (Fireball f : fireballs) {
+
+            f.x = (f.x + dx[f.d] * (f.s % n) + n) % n;
+            f.y = (f.y + dy[f.d] * (f.s % n) + n) % n;
+
+            map[f.x][f.y].offer(f);
+        }
     }
 
     private static void afterMove() {
@@ -63,54 +73,38 @@ public class Main {
             for (int j = 0; j < n; j++) {
 
                 Queue<Fireball> qu = map[i][j];
+                int size = qu.size();
 
-                if (qu.size() < 2) {
+                if (size < 2) {
                     qu.clear();
                     continue;
                 }
 
                 int sum_m = 0;
                 int sum_s = 0;
-                int size = qu.size();
                 int even = 0, odd = 0;
 
                 while (!qu.isEmpty()) {
+
                     Fireball f = qu.poll();
                     sum_m += f.m;
                     sum_s += f.s;
 
-                    if (f.d % 2 == 0) {
-                        even++;
-                    } else {
-                        odd++;
-                    }
+                    if (f.d % 2 == 0) even++;
+                    else odd++;
+
                     fireballs.remove(f);
                 }
 
                 sum_m /= 5;
                 sum_s /= size;
+
                 if (sum_m > 0) {
-                    if (even == size || odd == size) {
-                        for (int d = 0; d < 8; d += 2) {
-                            fireballs.add(new Fireball(i, j, sum_m, sum_s, d));
-                        }
-                    } else {
-                        for (int d = 1; d < 8; d += 2) {
-                            fireballs.add(new Fireball(i, j, sum_m, sum_s, d));
-                        }
+                    for (int d = (even == size || odd == size) ? 0 : 1; d < 8; d += 2) {
+                        fireballs.add(new Fireball(i, j, sum_m, sum_s, d));
                     }
                 }
             }
-        }
-    }
-
-    private static void move() {
-        for (Fireball f : fireballs) {
-
-            f.x = (f.x + dx[f.d] * (f.s % n) + n) % n;
-            f.y = (f.y + dy[f.d] * (f.s % n) + n) % n;
-
-            map[f.x][f.y].offer(f);
         }
     }
 
