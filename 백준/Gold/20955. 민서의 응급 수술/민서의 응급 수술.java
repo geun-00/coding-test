@@ -14,7 +14,7 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int n = Integer.parseInt(st.nextToken());
-        long m = Long.parseLong(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
 
         parent = new int[n + 1];
         for (int i = 1; i <= n; i++) {
@@ -22,7 +22,7 @@ public class Main {
         }
 
         int cut = 0;
-        for (long i = 0; i < m; i++) {
+        for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
 
             int u = Integer.parseInt(st.nextToken());
