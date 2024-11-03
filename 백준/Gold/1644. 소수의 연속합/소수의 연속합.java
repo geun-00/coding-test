@@ -19,13 +19,11 @@ public class Main {
             }
         }
 
-        int[] prime = list.stream().mapToInt(Integer::intValue).toArray();
-
-        int m = prime.length;
+        int m = list.size();
         int[] sum = new int[m + 1];
 
         for (int i = 1; i <= m; i++) {
-            sum[i] = sum[i - 1] + prime[i - 1];
+            sum[i] = sum[i - 1] + list.get(i - 1);
         }
 
         int left = 1, right = 1;
