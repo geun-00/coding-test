@@ -55,8 +55,8 @@ public class Main {
 
         int size = virus.size();
 
-        bitCount(size, empty);
-//        backTrack(0, 0, size, empty);
+
+        backTrack(0, 0, size, empty);
 
         System.out.println(min == INF ? -1 : min);
     }
@@ -71,25 +71,6 @@ public class Main {
         for (int i = start; i < size; i++) {
             selected[idx] = i;
             backTrack(i + 1, idx + 1, size, empty);
-        }
-    }
-
-    private static void bitCount(int size, int empty) {
-
-        for (int i = 0; i < (1 << size); i++) {
-
-            if (Integer.bitCount(i) == m) {
-
-                int idx = 0;
-
-                for (int j = 0; j < size; j++) {
-                    if ((i & (1 << j)) != 0) {
-                        selected[idx++] = j;
-                    }
-                }
-
-                bfs(empty);
-            }
         }
     }
 
@@ -108,9 +89,6 @@ public class Main {
 
         while (!qu.isEmpty()) {
 
-            if (count >= min) {
-                return;
-            }
 
             int size = qu.size();
             for (int i = 0; i < size; i++) {
