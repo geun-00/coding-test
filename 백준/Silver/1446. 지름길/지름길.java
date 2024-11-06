@@ -39,14 +39,11 @@ public class Main {
 
         for (int i = 0; i < d; i++) {
 
-            if (dist[i + 1] > dist[i] + 1) {
-                dist[i + 1] = dist[i] + 1;
-            }
+            dist[i + 1] = Math.min(dist[i] + 1, dist[i + 1]);
 
             for (Node adj : graph[i]) {
-                if (dist[adj.to] > dist[i] + adj.w) {
-                    dist[adj.to] = dist[i] + adj.w;
-                }
+                if (adj.to > d) continue;
+                dist[adj.to] = Math.min(dist[adj.to], dist[i] + adj.w);
             }
         }
 
