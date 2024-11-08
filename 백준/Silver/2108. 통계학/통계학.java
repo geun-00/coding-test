@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -12,42 +10,53 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
 
-        int[] arr = new int[n];
         int[] counting = new int[8001];
-
+        int min = 4001, max = -4001;
         double sum = 0;
+        int maxFreq = 0;
+        int first = 4001, second = 4001;
+
         for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
-            sum += arr[i];
-            counting[arr[i] + 4000]++;
-        }
+            int num = Integer.parseInt(br.readLine());
 
-        sb.append(Math.round(sum / n)).append("\n");
+            sum += num;
+            counting[num + 4000]++;
 
-        Arrays.sort(arr);
+            min = Math.min(min, num);
+            max = Math.max(max, num);
 
-        sb.append(arr[n / 2]).append("\n");
-
-        int freq = 0;
-        for (int i = 0; i <= 8000; i++) {
-            freq = Math.max(freq, counting[i]);
-        }
-
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i <= 8000; i++) {
-            if (counting[i] == freq) {
-                list.add(i - 4000);
+            if (counting[num + 4000] > maxFreq) {
+                maxFreq = counting[num + 4000];
+                first = num;
+                second = 4001;
+            } else if (counting[num + 4000] == maxFreq) {
+                if (num < first) {
+                    second = first;
+                    first = num;
+                } else if (num < second) {
+                    second = num;
+                }
             }
         }
 
-        if (list.size() == 1) {
-            sb.append(list.get(0)).append("\n");
-        } else {
-            list.sort(null);
-            sb.append(list.get(1)).append("\n");
+        //산술평균
+        sb.append(Math.round(sum / n)).append("\n");
+
+        //중앙값
+        int count = 0;
+        for (int i = 0; i <= 8000; i++) {
+            count += counting[i];
+
+            if (count >= (n + 1) / 2) {
+                sb.append(i - 4000).append("\n");
+                break;
+            }
         }
 
-        sb.append(arr[n - 1] - arr[0]);
+        sb.append(second == 4001 ? first : second).append("\n");
+
+        //범위
+        sb.append(max - min);
 
         System.out.print(sb);
     }
