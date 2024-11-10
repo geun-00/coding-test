@@ -24,36 +24,20 @@ public class Main {
             arr[i][1] = Integer.parseInt(st.nextToken());
         }
 
-        for (int i = 1; i <= n; i++) {
-            int[] pick = new int[i];
-            solve(0, 0, i, pick);
+        for (int i = 1; i < (1 << n); i++) {
+            int s = 1;
+            int b = 0;
+
+            for (int j = 0; j < n; j++) {
+                if ((i & (1 << j)) != 0) {
+                    s *= arr[j][0];
+                    b += arr[j][1];
+                }
+            }
+
+            min = Math.min(min, Math.abs(s - b));
         }
 
         System.out.println(min);
-    }
-
-    private static void solve(int start, int depth, int pickNum, int[] pick) {
-        if (depth == pickNum) {
-            min = Math.min(min, getDiff(pick));
-            return;
-        }
-
-        for (int i = start; i < n; i++) {
-            pick[depth] = i;
-            solve(i + 1, depth + 1, pickNum, pick);
-        }
-    }
-
-    private static int getDiff(int[] pick) {
-
-        int s = 1;
-        int b = 0;
-
-        for (int i = 0; i < pick.length; i++) {
-            s *= arr[pick[i]][0];
-            b += arr[pick[i]][1];
-        }
-
-        return Math.abs(s - b);
-    }
+    }   
 }
