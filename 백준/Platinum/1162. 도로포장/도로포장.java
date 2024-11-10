@@ -49,12 +49,11 @@ public class Main {
     private static long[][] dijkstra(int n, int k) {
 
         long[][] dist = new long[n + 1][k + 1];
+
         for (int i = 1; i <= n; i++) {
             Arrays.fill(dist[i], Long.MAX_VALUE);
         }
         dist[1][0] = 0;
-
-        boolean[][] visit = new boolean[n + 1][k + 1];
 
         PriorityQueue<Node> qu = new PriorityQueue<>();
         qu.offer(new Node(1, 0, 0));
@@ -63,21 +62,27 @@ public class Main {
 
             Node now = qu.poll();
 
-            if (visit[now.adj][now.count]) {
-                continue;
-            }
-            visit[now.adj][now.count] = true;
+            int count = now.count;
+            int nowNode = now.adj;
 
-            for (Node next : graph[now.adj]) {
+            if (dist[nowNode][count] < now.dist) continue;
 
-                if (now.count < k && dist[next.adj][now.count + 1] > dist[now.adj][now.count]) {
-                    dist[next.adj][now.count + 1] = dist[now.adj][now.count];
-                    qu.offer(new Node(next.adj, now.count + 1, dist[next.adj][now.count + 1]));
+            for (Node next : graph[nowNode]) {
+
+                int nextNode = next.adj;
+
+                long nowDist = dist[nowNode][count];
+
+                if (count < k && dist[nextNode][count + 1] > nowDist) {
+                    dist[nextNode][count + 1] = nowDist;
+                    qu.offer(new Node(nextNode, count + 1, dist[nextNode][count + 1]));
                 }
 
-                if (dist[next.adj][now.count] > dist[now.adj][now.count] + next.dist) {
-                    dist[next.adj][now.count] = dist[now.adj][now.count] + next.dist;
-                    qu.offer(new Node(next.adj, now.count, dist[next.adj][now.count]));
+                long newDist = nowDist + next.dist;
+
+                if (dist[nextNode][count] > newDist) {
+                    dist[nextNode][count] = newDist;
+                    qu.offer(new Node(nextNode, count, newDist));
                 }
             }
         }
