@@ -41,10 +41,10 @@ public class Main {
                 count--;
             }
 
-            if (sushi[arr[addIdx]] == 0) {
+            sushi[arr[addIdx]]++;
+            if (sushi[arr[addIdx]] == 1) {
                 count++;
             }
-            sushi[arr[addIdx]]++;
 
             max = Math.max(max, count + (sushi[c] == 0 ? 1 : 0));
         }
