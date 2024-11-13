@@ -90,19 +90,16 @@ public class Main {
         }
 
         for (int i = k - 1; i >= 0; i--) {
+            if (a == b) {
+                break;
+            }
             if (parent[i][a] != parent[i][b]) {
                 a = parent[i][a];
                 b = parent[i][b];
             }
         }
 
-        int lca = a;
-        if (a != b) {
-            lca = parent[0][lca];
-        }
-
-        return lca;
-
+        return a != b ? parent[0][a] : a;
     }
 
     private static void bfs() {
@@ -137,20 +134,6 @@ public class Main {
                 count = 0;
                 size = qu.size();
                 level++;
-            }
-        }
-    }
-
-    private static void dfs(int now, int level) {
-
-        visit[now] = true;
-        depth[now] = level;
-
-        for (int adj : tree[now]) {
-            if (!visit[adj]) {
-
-                parent[0][adj] = now;
-                dfs(adj, level + 1);
             }
         }
     }
