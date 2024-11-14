@@ -50,12 +50,7 @@ public class Main {
         }
 
         for (int i = 1; i <= 16; i++) {
-            Fish f = fish[i];
-            if (f != null) {
-                copy_fish[i] = new Fish(f.x, f.y, f.dir);
-            } else {
-                copy_fish[i] = null;
-            }
+            copy_fish[i] = fish[i];
         }
 
         //물고기 이동
