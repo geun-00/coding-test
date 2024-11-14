@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -39,16 +38,17 @@ public class Main {
         int rooms = 0;
         int max = 0;
 
-        ArrayList<Integer> roomsSize = new ArrayList<>();
-        roomsSize.add(0);
+        int[] roomsSize = new int[n * m + 1];
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if (!visit[i][j]) {
                     rooms++;
+
                     int size = bfs(i, j, rooms);
                     max = Math.max(max, size);
-                    roomsSize.add(size);
+
+                    roomsSize[rooms] = size;
                 }
             }
         }
@@ -80,7 +80,7 @@ public class Main {
 
                         if (set.add(s)) {
 
-                            max = Math.max(max, roomsSize.get(nowRoom) + roomsSize.get(nextRoom));
+                            max = Math.max(max, roomsSize[nowRoom] + roomsSize[nextRoom]);
                         }
                     }
                 }
