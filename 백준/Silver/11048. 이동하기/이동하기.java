@@ -17,30 +17,22 @@ public class Main {
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
 
-        map = new int[n][m];
-        dp = new int[n][m];
+        map = new int[n + 1][m + 1];
+        dp = new int[n + 1][m + 1];
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i <= n; i++) {
             st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < m; j++) {
+            for (int j = 1; j <= m; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
-                dp[i][j] = -1;
             }
         }
 
-        System.out.println(dfs(0, 0));
-    }
-
-    private static int dfs(int x, int y) {
-        if (x >= n || y >= m) {
-            return 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                dp[i][j] = map[i][j] + Math.max(dp[i - 1][j], Math.max(dp[i][j - 1], dp[i - 1][j - 1]));
+            }
         }
 
-        if (dp[x][y] != -1) {
-            return dp[x][y];
-        }
-
-        return dp[x][y] = map[x][y] + Math.max(dfs(x, y + 1), Math.max(dfs(x + 1, y), dfs(x + 1, y + 1)));
-
+        System.out.println(dp[n][m]);
     }
 }
