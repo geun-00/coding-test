@@ -20,7 +20,7 @@ public class Main {
             int m = Integer.parseInt(st.nextToken());
 
             int[] a = new int[n];
-            int[] b = new int[m + 1];
+            int[] b = new int[m];
 
             st = new StringTokenizer(br.readLine());
 
@@ -30,24 +30,24 @@ public class Main {
 
             st = new StringTokenizer(br.readLine());
 
-            for (int i = 1; i <= m; i++) {
+            for (int i = 0; i < m; i++) {
                 b[i] = Integer.parseInt(st.nextToken());
             }
 
+            Arrays.sort(a);
             Arrays.sort(b);
 
             int count = 0;
+            int i = 0, j = 0;
 
-            for (int i = 0; i < n; i++) {
-                int target = a[i];
+            while (i < n) {
 
-                int idx = 0;
-
-                while (idx + 1 <= m && b[idx + 1] < target) {
-                    idx++;
+                while (j < m && b[j] < a[i]) {
+                    j++;
                 }
 
-                count += idx;
+                count += j;
+                i++;
             }
 
             sb.append(count).append("\n");
