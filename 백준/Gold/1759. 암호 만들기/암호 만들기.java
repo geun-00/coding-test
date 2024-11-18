@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static char[] arr;
+    static char[] arr, pwd;
     static int l, c;
     static StringBuilder sb = new StringBuilder();
 
@@ -21,6 +21,7 @@ public class Main {
         st = new StringTokenizer(br.readLine());
 
         arr = new char[c];
+        pwd = new char[l];
 
         for (int i = 0; i < c; i++) {
             arr[i] = st.nextToken().charAt(0);
@@ -28,33 +29,35 @@ public class Main {
 
         Arrays.sort(arr);
 
-        solve("", 0, 0, 0);
+        solve(0, 0);
 
         System.out.print(sb);
     }
 
-    private static void solve(String pwd, int depth, int vc, int cc) {
+    private static void solve(int depth, int start) {
 
         if (depth == l) {
-            if (vc >= 1 && cc >= 2) {
+
+            int v = 0, c = 0;
+            for (char ch : pwd) {
+                if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+                    v++;
+                } else {
+                    c++;
+                }
+            }
+
+            if (v >= 1 && c >= 2) {
                 sb.append(pwd).append("\n");
             }
+
             return;
         }
 
-        for (int i = 0; i < c; i++) {
+        for (int i = start; i < c; i++) {
 
-            if (!pwd.isEmpty() && arr[i] <= pwd.charAt(pwd.length() - 1)) {
-                continue;
-            }
-
-            char ch = arr[i];
-
-            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
-                solve(pwd + ch, depth + 1, vc + 1, cc);
-            } else {
-                solve(pwd + ch, depth + 1, vc, cc + 1);
-            }
+            pwd[depth] = arr[i];
+            solve(depth + 1, i + 1);
         }
     }
 }
