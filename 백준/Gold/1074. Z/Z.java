@@ -22,11 +22,8 @@ public class Main {
     private static void solve(int n, int x, int y, int count) {
 
         if (n == 0) {
-            if (x == r && y == c) {
-                System.out.println(count);
-                System.exit(0);
-            }
-            return;
+            System.out.println(count);
+            System.exit(0);
         }
 
         int half = (1 << (n - 1));
