@@ -9,9 +9,11 @@ public class Main {
 
     static ArrayList<Pair>[] tree;
     static int[] depth;
-    static int[] parent;
+    static int[][] parent;
     static int[] dist;
     static boolean[] visit;
+
+    static int k;
 
     public static void main(String[] args) throws IOException {
 
@@ -19,9 +21,15 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
 
+        k = 1;
+
+        while ((1 << k) < n) {
+            k++;
+        }
+
         tree = new ArrayList[n];
         depth = new int[n];
-        parent = new int[n];
+        parent = new int[k][n];
         dist = new int[n];
         visit = new boolean[n];
 
@@ -42,6 +50,12 @@ public class Main {
 
         bfs();
 
+        for (int i = 1; i < k; i++) {
+            for (int j = 0; j < n; j++) {
+                parent[i][j] = parent[i - 1][parent[i - 1][j]];
+            }
+        }
+
         int m = Integer.parseInt(br.readLine());
 
         StringBuilder sb = new StringBuilder();
@@ -53,6 +67,7 @@ public class Main {
             int b = Integer.parseInt(st.nextToken()) - 1;
 
             int lca = getLCA(a, b);
+
             sb.append(dist[a] + dist[b] - (2 * dist[lca])).append("\n");
         }
 
@@ -67,16 +82,23 @@ public class Main {
             b = temp;
         }
 
-        while (depth[a] != depth[b]) {
-            b = parent[b];
+        for (int i = k - 1; i >= 0; i--) {
+            if ((1 << i) <= depth[b] - depth[a]) {
+                b = parent[i][b];
+            }
         }
 
-        while (a != b) {
-            a = parent[a];
-            b = parent[b];
+        for (int i = k - 1; i >= 0; i--) {
+            if (a == b) {
+                break;
+            }
+            if (parent[i][a] != parent[i][b]) {
+                a = parent[i][a];
+                b = parent[i][b];
+            }
         }
 
-        return a;
+        return a != b ? parent[0][a] : a;
     }
 
     private static void bfs() {
@@ -99,7 +121,7 @@ public class Main {
                     visit[next] = true;
                     qu.offer(next);
 
-                    parent[next] = now;
+                    parent[0][next] = now;
                     depth[next] = depth[now] + 1;
                     dist[next] = dist[now] + p.val;
                 }
