@@ -24,11 +24,6 @@ public class Main {
             }
         }
 
-        if (n == 1) {
-            System.out.println(0);
-            return;
-        }
-
         int count = 0;
 
         while (!qu.isEmpty() && dasom <= qu.peek()) {
