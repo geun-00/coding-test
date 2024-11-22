@@ -26,26 +26,26 @@ public class Main {
 
             StringTokenizer st = new StringTokenizer(br.readLine());
 
-            h = Integer.parseInt(st.nextToken());
-            w = Integer.parseInt(st.nextToken());
+            h = Integer.parseInt(st.nextToken()) + 2;
+            w = Integer.parseInt(st.nextToken()) + 2;
 
-            map = new char[h + 2][w + 2];
+            map = new char[h][w];
 
-            for (int i = 0; i < h + 2; i++) {
+            for (int i = 0; i < h; i++) {
                 Arrays.fill(map[i], '.');
             }
 
             int idx = 0;
 
-            for (int i = 1; i <= h; i++) {
+            for (int i = 1; i <= h - 2; i++) {
                 char[] arr = br.readLine().toCharArray();
 
-                for (int j = 1; j <= w; j++) {
+                for (int j = 1; j <= w - 2; j++) {
 
                     map[i][j] = arr[j - 1];
 
                     if (map[i][j] == '$') {
-                        points[idx++] = i * (w + 2) + j;
+                        points[idx++] = i * w  + j;
                     }
                 }
             }
@@ -56,8 +56,8 @@ public class Main {
 
             int min = Integer.MAX_VALUE;
 
-            for (int i = 0; i < h + 2; i++) {
-                for (int j = 0; j < w + 2; j++) {
+            for (int i = 0; i < h; i++) {
+                for (int j = 0; j < w; j++) {
 
                     if (map[i][j] == '*') continue;
 
@@ -79,18 +79,18 @@ public class Main {
 
     private static int[][] bfs(int p) {
 
-        int[][] arr = new int[h + 2][w + 2];
+        int[][] arr = new int[h][w];
+        boolean[][] visit = new boolean[h][w];
 
-        for (int i = 0; i < h + 2; i++) {
+        for (int i = 0; i < h; i++) {
             Arrays.fill(arr[i], 9999);
         }
 
-        boolean[][] visit = new boolean[h + 2][w + 2];
+        int x = p / w;
+        int y = p % w;
 
-        int x = p / (w + 2);
-        int y = p % (w + 2);
-        visit[x][y] = true;
         arr[x][y] = 0;
+        visit[x][y] = true;
 
         Deque<Integer> qu = new ArrayDeque<>();
         qu.offer(p);
@@ -98,26 +98,26 @@ public class Main {
         while (!qu.isEmpty()) {
 
             int now = qu.poll();
-            x = now / (w + 2);
-            y = now % (w + 2);
+            x = now / w;
+            y = now % w;
 
             for (int i = 0; i < 4; i++) {
 
                 int nx = x + dx[i];
                 int ny = y + dy[i];
-                int next = nx * (w + 2) + ny;
+                int next = nx * w + ny;
 
-                if (nx < 0 || ny < 0 || nx >= h + 2 || ny >= w + 2 || map[nx][ny] == '*' || visit[nx][ny]) {
+                if (nx < 0 || ny < 0 || nx >= h || ny >= w || map[nx][ny] == '*' || visit[nx][ny]) {
                     continue;
                 }
 
                 visit[nx][ny] = true;
 
                 if (map[nx][ny] == '.' || map[nx][ny] == '$') {
-
                     arr[nx][ny] = arr[x][y];
                     qu.offerFirst(next);
-                } else if (map[nx][ny] == '#') {
+                }
+                else if (map[nx][ny] == '#') {
                     arr[nx][ny] = arr[x][y] + 1;
                     qu.offerLast(next);
                 }
