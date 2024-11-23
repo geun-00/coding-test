@@ -43,8 +43,6 @@ public class Main {
                 double dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 
                 qu.offer(new Edge(i, j, dist));
-                qu.offer(new Edge(j, i, dist));
-
             }
         }
 
