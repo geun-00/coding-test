@@ -30,23 +30,21 @@ public class Main {
 
         PriorityQueue<Edge> qu = new PriorityQueue<>();
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n - 1; i++) {
             double x1 = arr[i][0];
             double y1 = arr[i][1];
 
-            for (int j = 0; j < n; j++) {
+            for (int j = i + 1; j < n; j++) {
 
                 double x2 = arr[j][0];
                 double y2 = arr[j][1];
 
-                if (i != j) {
 
-                    double dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                double dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 
-                    qu.offer(new Edge(i, j, dist));
-                    qu.offer(new Edge(j, i, dist));
+                qu.offer(new Edge(i, j, dist));
+                qu.offer(new Edge(j, i, dist));
 
-                }
             }
         }
 
