@@ -19,7 +19,7 @@ class Solution {
             int b = line[i][1];
             int e = line[i][2];
             
-            for(int j = i + 1; j < n; j++) {                            
+            for(int j = i + 1; j < n; j++) {  
                 
                 int c = line[j][0];
                 int d = line[j][1];
@@ -55,10 +55,17 @@ class Solution {
             arr[y][x] = '*';
         }
         
+        StringBuilder sb = new StringBuilder();
+        
         String[] ans = new String[arr.length];
         
-        for(int i = 0; i < ans.length; i++) {
-            ans[i] = new String(arr[i]);
+        for(int i = 0; i <= height; i++) {
+            sb.setLength(0);
+            
+            for(int j = 0; j <= width; j++) {
+                sb.append(arr[i][j]);
+            }
+            ans[i] = sb.toString();
         }
         
         return ans;
@@ -68,6 +75,7 @@ class Solution {
         
         long adbc = (long) a * d - (long) b * c;
         
+        //예외 방지
         if(adbc == 0) {
             return null;
         }
@@ -75,6 +83,7 @@ class Solution {
         long bfed = (long) b * f - (long) e * d;
         long ecaf = (long) e * c - (long) a * f;
         
+        //정수인 좌표만 반환
         if(bfed % adbc != 0 || ecaf % adbc != 0) {
             return null;
         }
