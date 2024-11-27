@@ -1,7 +1,6 @@
-import java.util.*;
-
 class Solution {
     
+    //상, 좌, 우, 하
     static int[] dx = {-1, 0, 0, 1};
     static int[] dy = {0, -1, 1, 0};
     
