@@ -1,3 +1,4 @@
+import re
+
 def solution(s):
-    answer = True
-    return answer
+    return bool(re.fullmatch(r'\d{4}|\d{6}', s))
