@@ -1,6 +1,7 @@
 import java.util.*;
 
 class Solution {
+    
     public int solution(String s) {
         
         int ans = Integer.MAX_VALUE;
@@ -23,8 +24,33 @@ class Solution {
             list.add(s.substring(i, j));
         }
         
-        System.out.println(list);
+        StringBuilder sb = new StringBuilder();
         
-        return 0;
+        String prev = "";
+        int count = 0;
+        
+        for(String str : list) {
+            if(str.equals(prev)) {
+                count++;
+            } 
+            else {
+                
+                if(count >= 2) {
+                    sb.append(count);
+                }
+                
+                sb.append(prev);
+                prev = str;
+                count = 1;
+            }
+        }
+        
+        if(count >= 2) {
+            sb.append(count);
+        }
+        
+        sb.append(prev);
+        
+        return sb.length();
     }
 }
