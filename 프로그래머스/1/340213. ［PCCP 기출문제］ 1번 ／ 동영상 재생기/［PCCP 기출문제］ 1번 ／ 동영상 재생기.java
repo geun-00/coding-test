@@ -1,19 +1,15 @@
 import java.util.*;
 
 class Solution {
+    
+    static final int MINUTE = 60;
+    
     public String solution(String video_len, String pos, String op_start, String op_end, String[] commands) {
-        
-        StringTokenizer st = new StringTokenizer(video_len, ":");
-        int video_min = stoi(st.nextToken()) * 60 + stoi(st.nextToken());
-        
-        st = new StringTokenizer(pos, ":");
-        int pos_min = stoi(st.nextToken()) * 60 + stoi(st.nextToken());
-        
-        st = new StringTokenizer(op_start, ":");
-        int start_min = stoi(st.nextToken()) * 60 + stoi(st.nextToken());
-        
-        st = new StringTokenizer(op_end, ":");
-        int end_min = stoi(st.nextToken()) * 60 + stoi(st.nextToken());
+
+        int video_min = convert(video_len);
+        int pos_min = convert(pos);
+        int start_min = convert(op_start);
+        int end_min = convert(op_end);
         
         if(start_min <= pos_min && pos_min <= end_min) {
             pos_min = end_min;
@@ -48,7 +44,10 @@ class Solution {
         return min + ":" + sec;
     }
     
-    public int stoi(String token){
-        return Integer.parseInt(token);
+    public int convert(String s){
+        
+        StringTokenizer st = new StringTokenizer(s, ":");
+        
+        return Integer.parseInt(st.nextToken()) * MINUTE + Integer.parseInt(st.nextToken());
     }
 }
