@@ -1,5 +1,3 @@
-import java.util.stream.IntStream;
-
 class Solution {
     public int[] solution(int[] answers) {
         
@@ -24,11 +22,23 @@ class Solution {
             }
         }
         
-        final int ansMax = max;
+        int count = 0;
         
-        return IntStream.range(0, 3)
-                        .filter(i -> temp[i] == ansMax)
-                        .map(i -> i + 1)
-                        .toArray();
+        for(int i : temp) {
+            if(i == max) {
+                count++;
+            }
+        }
+        
+        int[] ans = new int[count];
+        int idx = 0;
+        
+        for(int i = 0; i < 3; i++) {
+            if(temp[i] == max) {
+                ans[idx++] = i + 1;
+            }
+        }
+        
+        return ans;
     }
 }
