@@ -11,9 +11,9 @@ class Solution {
             time_arr[i + 1] = times[i];
         }    
         
-        int left = 0;
-        int right = Integer.MAX_VALUE;
-        int ans = 0;
+        int left = 1;
+        int right = 100_000_000;
+        int ans = -1;
         
         while(left <= right) {
             
@@ -29,7 +29,7 @@ class Solution {
             }
         }
         
-        return Math.max(1, ans);
+        return ans;
     }
     
     public long solve(int level, int[] diff_arr, int[] time_arr) {
@@ -43,6 +43,7 @@ class Solution {
             }
             else {
                 int diff = diff_arr[i] - level;
+                
                 ret += time_arr[i - 1] * diff;
                 ret += time_arr[i] * (diff + 1);
             }
