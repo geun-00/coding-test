@@ -12,7 +12,7 @@ class Solution {
         }    
         
         int left = 1;
-        int right = 100_000_000;
+        int right = 100_000;
         int ans = -1;
         
         while(left <= right) {
