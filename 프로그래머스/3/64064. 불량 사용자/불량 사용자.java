@@ -22,7 +22,7 @@ class Solution {
     
     public void solve(int depth, String s){
         if (depth == banned.length) {
-            String[] split = s.split("");
+            String[] split = s.split(" ");
             Arrays.sort(split);
 
             StringBuilder sb = new StringBuilder();
@@ -38,7 +38,7 @@ class Solution {
 
             if (!visit[i] && check(user[i], banned[depth])) {
                 visit[i] = true;
-                solve(depth + 1, s + user[i]);
+                solve(depth + 1, s + " " + user[i]);
                 visit[i] = false;
             }
         }
