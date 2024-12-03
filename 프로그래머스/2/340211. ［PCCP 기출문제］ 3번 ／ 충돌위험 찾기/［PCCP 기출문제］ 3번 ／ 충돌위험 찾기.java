@@ -10,6 +10,7 @@ class Solution {
     public int solution(int[][] points, int[][] routes) {
         
         int n = points.length;
+        int m = routes.length;
         
         int[] point = new int[n];
         
@@ -20,10 +21,8 @@ class Solution {
             point[i] = r * C + c;
         }
         
-        int m = routes.length;
-        
         Deque<Integer>[] route = new ArrayDeque[m];
-
+        
         for(int i = 0; i < m; i++) {
 
             route[i] = new ArrayDeque<>();
@@ -63,58 +62,61 @@ class Solution {
         return ans;
     }
     
-    public void bfs(int start_idx, int target_idx, Deque<Integer> route) {
-        
+    public static void bfs(int start_idx, int target_idx, Deque<Integer> route) {
+
         int sx = start_idx / C;
         int sy = start_idx % C;
 
-        boolean[][] visit = new boolean[R + 1][C + 1];
-        visit[sx][sy] = true;
-        
+        boolean[] visit = new boolean[R * C];
+        visit[start_idx] = true;
+
         Queue<Integer> qu = new ArrayDeque<>();
         qu.offer(start_idx);
-        
-        int[][] prev = new int[R + 1][C + 1];
-        
+
+        int[] prev = new int[R * C];
+
         while(!qu.isEmpty()) {
-            
+
             int now = qu.poll();
             int x = now / C;
             int y = now % C;
-            
+
             if(now == target_idx) break;
-            
+
             for(int i = 0; i < 4; i++) {
-                
+
                 int nx = x + dx[i];
                 int ny = y + dy[i];
-                
-                if(nx < 0|| ny < 0 || nx >= R || ny >= C || visit[nx][ny]) continue;
-                
-                visit[nx][ny] = true;
-                prev[nx][ny] = i;
-                qu.offer(nx * C + ny);                
+                int next = nx * C + ny;
+
+                if(nx < 0|| ny < 0 || nx >= R || ny >= C || visit[next]) continue;
+
+                visit[next] = true;
+                prev[next] = i;
+                qu.offer(nx * C + ny);
             }
         }
-        
+
         Deque<Integer> stk = new ArrayDeque<>();
-        
+
         int x = target_idx / C;
         int y = target_idx % C;
-        
+        int idx = target_idx;
+
         while(!(x == sx && y == sy)) {
             stk.push(x * C + y);
-            int dir = prev[x][y];
+            int dir = prev[idx];
             x -= dx[dir];
             y -= dy[dir];
+            idx = x * C + y;
         }
-        
+
         if (!route.isEmpty() && route.peekLast() == start_idx) {
             route.pollLast();
         }
 
         stk.push(start_idx);
-        
+
         while(!stk.isEmpty()) {
             route.offer(stk.pop());
         }
