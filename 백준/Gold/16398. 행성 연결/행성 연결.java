@@ -25,14 +25,11 @@ public class Main {
 
             for (int j = 0; j < n; j++) {
 
-                if (i == j) {
-                    st.nextToken();
-                    continue;
-                }
-
                 int cost = Integer.parseInt(st.nextToken());
 
-                qu.offer(new Edge(i, j, cost));
+                if (i < j) {
+                    qu.offer(new Edge(i, j, cost));
+                }
             }
         }
 
