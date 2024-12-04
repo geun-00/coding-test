@@ -4,7 +4,7 @@ from queue import PriorityQueue
 input = sys.stdin.readline
 
 n = int(input())
-qu = PriorityQueue()
+qu = []
 parent = [0] * n
 
 for i in range(n):
@@ -12,7 +12,9 @@ for i in range(n):
     costs = list(map(int, input().split()))
 
     for j in range(i + 1, n):
-        qu.put((costs[j], i, j))
+        qu.append((costs[j], i, j))
+
+qu.sort()
 
 
 def find(a):
@@ -31,9 +33,7 @@ def union(a, b):
 
 ans = 0
 
-while not qu.empty():
-    cost, s, e = qu.get()
-
+for cost, s, e in qu:
     if find(s) != find(e):
         union(s, e)
         ans += cost
