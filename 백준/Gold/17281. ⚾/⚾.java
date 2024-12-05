@@ -66,29 +66,22 @@ public class Main {
                         break;
                     case 1: // 안타
                         score += (base >> 2) & 1;
-                        base = ((base << 1) & 0b111) | 0b1;
+                        base = ((base << 1) & ((1 << 3) - 1)) | ((1 << 1) - 1);
                         break;
 
                     case 2: // 2루타
                         score += (base >> 1) & 1;
                         score += (base >> 2) & 1;
-                        base = ((base << 2) & 0b111) | 0b10;
+                        base = ((base << 2) & ((1 << 3) - 1)) | (1 << 1);
                         break;
 
                     case 3: // 3루타
-                        score += base & 1;
-                        score += (base >> 1) & 1;
-                        score += (base >> 2) & 1;
-
-                        base = 0b100;
+                        score += Integer.bitCount(base);
+                        base = (1 << 2);
                         break;
 
                     case 4: // 홈런
-                        score += base & 1;
-                        score += (base >> 1) & 1;
-                        score += (base >> 2) & 1;
-                        score += 1;
-
+                        score += Integer.bitCount(base) + 1;
                         base = 0;
                         break;
                 }
