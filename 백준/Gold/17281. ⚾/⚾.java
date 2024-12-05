@@ -16,7 +16,7 @@ public class Main {
 
         n = Integer.parseInt(br.readLine());
 
-        player = new int[n][10];
+        player = new int[n][9];
 
         for (int i = 0; i < n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -31,9 +31,9 @@ public class Main {
         System.out.println(ans);
     }
 
-    private static void solve(int now_order, int visit) {
+    private static void solve(int nowOrder, int visit) {
 
-        if (now_order == 9) {
+        if (nowOrder == 9) {
             ans = Math.max(ans, play());
             return;
         }
@@ -42,8 +42,8 @@ public class Main {
 
             if ((visit & (1 << i)) != 0) continue;
 
-            order[i] = now_order;
-            solve(now_order + 1, visit | (1 << i));
+            order[i] = nowOrder;
+            solve(nowOrder + 1, visit | (1 << i));
         }
     }
 
@@ -55,7 +55,7 @@ public class Main {
         for (int inning = 0; inning < n; inning++) {
 
             int out = 0;
-            int[] base = new int[4];
+            int base = 0;
 
             while (out < 3) {
 
@@ -65,28 +65,31 @@ public class Main {
                         out++;
                         break;
                     case 1: // 안타
-                        score += base[3];
-                        base[3] = base[2];
-                        base[2] = base[1];
-                        base[1] = 1;
+                        score += (base >> 2) & 1;
+                        base = ((base << 1) & 0b111) | 0b1;
                         break;
 
                     case 2: // 2루타
-                        score += base[2] + base[3];
-                        base[3] = base[1];
-                        base[2] = 1;
-                        base[1] = 0;
+                        score += (base >> 1) & 1;
+                        score += (base >> 2) & 1;
+                        base = ((base << 2) & 0b111) | 0b10;
                         break;
 
                     case 3: // 3루타
-                        score += base[1] + base[2] + base[3];
-                        base[1] = base[2] = 0;
-                        base[3] = 1;
+                        score += base & 1;
+                        score += (base >> 1) & 1;
+                        score += (base >> 2) & 1;
+
+                        base = 0b100;
                         break;
 
                     case 4: // 홈런
-                        score += base[1] + base[2] + base[3] + 1;
-                        base[1] = base[2] = base[3] = 0;
+                        score += base & 1;
+                        score += (base >> 1) & 1;
+                        score += (base >> 2) & 1;
+                        score += 1;
+
+                        base = 0;
                         break;
                 }
 
