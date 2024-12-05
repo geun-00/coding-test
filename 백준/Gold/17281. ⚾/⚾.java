@@ -3,6 +3,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+/**
+ * <a href = "https://www.acmicpc.net/problem/17281">백준 17281번 - 구현 : ⚾</a>
+ * <br>
+ * <a href = "">velog</a>
+ *
+ * @since 2024-12-05
+ */
 public class Main {
 
     static int[][] player;
@@ -49,13 +56,21 @@ public class Main {
 
     private static int play() {
 
-        int now = 0;
-        int score = 0;
+        int now = 0;    //현재 타순
+        int score = 0;  //정해진 타순으로 얻는 점수
 
         for (int inning = 0; inning < n; inning++) {
 
-            int out = 0;
-            int base = 0;
+            int out = 0;        //아웃 카운트
+            int base = 0b000;
+            /**
+             * 진루 상태를 비트로 표현
+             * 0b001 = 1루 진출
+             * 0b010 = 2루 진출
+             * 0b100 = 3루 진출
+             * 0b011 = 1, 2루 진출
+             * ...
+             */
 
             while (out < 3) {
 
@@ -65,24 +80,24 @@ public class Main {
                         out++;
                         break;
                     case 1: // 안타
-                        score += (base >> 2) & 1;
-                        base = ((base << 1) & ((1 << 3) - 1)) | ((1 << 1) - 1);
+                        score += (base >> 2) & 1;   //3루에 주자가 있는지 확인
+                        base = ((base << 1) & 0b111) | 0b001;   //모든 주자 한 루씩 진루하고 타자 1루 진출
                         break;
 
                     case 2: // 2루타
-                        score += (base >> 1) & 1;
-                        score += (base >> 2) & 1;
-                        base = ((base << 2) & ((1 << 3) - 1)) | (1 << 1);
+                        score += (base >> 1) & 1;   //2루에 주자가 있는지 확인
+                        score += (base >> 2) & 1;   //3루에 주자가 있는지 확인
+                        base = ((base << 2) & 0b111) | 0b010;   //모든 주자 두 루씩 진루하고 타자 2루 진출
                         break;
 
                     case 3: // 3루타
-                        score += Integer.bitCount(base);
-                        base = (1 << 2);
+                        score += Integer.bitCount(base);    //모든 루에 주자가 있다면 최대 3점 획득
+                        base = 0b100;   //루에 있던 주자들은 모두 홈으로 나가고 타자 3루 진출
                         break;
 
                     case 4: // 홈런
-                        score += Integer.bitCount(base) + 1;
-                        base = 0;
+                        score += Integer.bitCount(base) + 1;    //모든 루에 주자가 있다면 타자 포함 최대 4점 획득
+                        base = 0b000;   //타자 포함 모든 주자가 홈으로 나간다
                         break;
                 }
 
