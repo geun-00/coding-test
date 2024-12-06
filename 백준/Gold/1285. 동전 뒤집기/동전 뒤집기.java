@@ -9,55 +9,27 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
 
-        int[][] arr = new int[n][n];
+        int[] arr = new int[n];
+        int ans = n * n;
 
         for (int i = 0; i < n; i++) {
             char[] chars = br.readLine().toCharArray();
             for (int j = 0; j < n; j++) {
-                arr[i][j] = (chars[j] == 'H') ? 0 : 1;
+                if (chars[j] == 'T') {
+                    arr[i] += (1 << j);
+                }
             }
         }
 
-        int ans = n * n;
-
-        for (int bit = 0; bit < (1 << n); bit++) {
-            turnRows(arr, n, bit);
-            ans = Math.min(ans, solve(arr, n));
-            turnRows(arr, n, bit);
+        for (int i = 0; i < (1 << n); i++) {
+            int sum = 0;
+            for (int j = 0; j < n; j++) {
+                int temp = Integer.bitCount(arr[j] ^ i);
+                sum += Math.min(temp, n - temp);
+            }
+            ans = Math.min(ans, sum);
         }
 
         System.out.println(ans);
-    }
-
-    private static void turnRows(int[][] arr, int n, int bit) {
-
-        for (int i = 0; i < n; i++) {
-
-            if (((bit & (1 << i)) != 0)) {
-                for (int j = 0; j < n; j++) {
-
-                    arr[i][j] = 1 - arr[i][j];
-                }
-            }
-
-        }
-    }
-
-    private static int solve(int[][] arr, int n) {
-
-        int total = 0;
-
-        for (int i = 0; i < n; i++) {
-            int count = 0;
-            for (int j = 0; j < n; j++) {
-                if (arr[j][i] == 1) {
-                    count++;
-                }
-            }
-
-            total += Math.min(count, n - count);
-        }
-
-        return total;
     }
 }
