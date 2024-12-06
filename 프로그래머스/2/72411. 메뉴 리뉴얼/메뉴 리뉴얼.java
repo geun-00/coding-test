@@ -11,6 +11,7 @@ class Solution {
 
             for (String order : orders) {
                 char[] items = order.toCharArray();
+                if(items.length < size) continue;
                 Arrays.sort(items);
                 solve(items, size, combsCount);
             }
@@ -23,7 +24,7 @@ class Solution {
             }
 
             for (String key : combsCount.keySet()) {
-                if (combsCount.get(key) == max && max >= 2) {
+                if (combsCount.get(key) == max) {
                     result.add(key);
                 }
             }
@@ -43,7 +44,7 @@ class Solution {
 
         ArrayList<String> combs = new ArrayList<>();
 
-        getCombs(items, size,0,"", combs);
+        getCombs(items, size, 0, "", combs);
 
         for (String comb : combs) {
             combsCount.put(comb, combsCount.getOrDefault(comb, 0) + 1);
