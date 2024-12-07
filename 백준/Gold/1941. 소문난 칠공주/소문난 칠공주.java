@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
-import java.util.HashSet;
 import java.util.Queue;
 
 public class Main {
@@ -49,7 +48,6 @@ public class Main {
             } else {
                 ans += getAns(i + 1, depth + 1, countY, countS + 1);
             }
-
         }
 
         return ans;
@@ -58,15 +56,16 @@ public class Main {
     private static boolean bfs() {
 
         Queue<Integer> qu = new ArrayDeque<>();
-        HashSet<Integer> selected = new HashSet<>();
-        HashSet<Integer> visit = new HashSet<>();
+        boolean[] selected = new boolean[N * N];
+        boolean[] visit = new boolean[N * N];
 
         for (int p : pick) {
-            selected.add(p);
+            selected[p] = true;
         }
 
-        visit.add(pick[0]);
-        qu.offer(pick[0]);
+        int start = pick[0];
+        visit[start] = true;
+        qu.offer(start);
 
         int connectedCount = 1;
 
@@ -84,7 +83,8 @@ public class Main {
 
                 if (nx < 0 || ny < 0 || nx >= N || ny >= N) continue;
 
-                if (selected.contains(next) && visit.add(next)) {
+                if (selected[next] && !visit[next]) {
+                    visit[next] = true;
                     qu.offer(next);
                     connectedCount++;
                 }
