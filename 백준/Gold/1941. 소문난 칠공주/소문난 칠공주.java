@@ -29,13 +29,16 @@ public class Main {
 
     private static int getAns(int start, int depth, int countY, int countS) {
 
+        if (countY > 3) return 0;
+
         if (depth == 7) {
-            return countS >= 4 && bfs() ? 1 : 0;
+            return (countS >= 4 && bfs()) ? 1 : 0;
         }
 
         int ans = 0;
 
         for (int i = start; i < N * N; i++) {
+
             pick[depth] = i;
 
             int x = i / N;
