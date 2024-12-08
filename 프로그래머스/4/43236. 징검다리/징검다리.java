@@ -9,7 +9,7 @@ class Solution {
         
         arr[arr.length - 1] = distance;
         
-        Arrays.sort(rocks);
+        Arrays.sort(arr);
         
         int low = 1;
         int high = distance;
@@ -22,7 +22,7 @@ class Solution {
             int removed = 0;
             int last = 0;
             
-            for(int rock : rocks) {
+            for(int rock : arr) {
                 
                 if(rock - last < mid) {
                     removed++;
@@ -30,9 +30,7 @@ class Solution {
                 }
                 
                 last = rock;
-            }
-            
-            if(distance - last < mid) removed++;
+            }        
             
             if(removed <= n) {
                 ans = mid;
