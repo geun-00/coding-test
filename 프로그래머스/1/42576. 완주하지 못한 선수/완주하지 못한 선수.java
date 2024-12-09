@@ -20,10 +20,6 @@ class Solution {
             }
         }
         
-        for(String s : map.keySet()) {
-            return s;
-        }
-        
-        return "";
+        return map.keySet().iterator().next();
     }
 }
