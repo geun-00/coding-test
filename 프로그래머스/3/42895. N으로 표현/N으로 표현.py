@@ -18,6 +18,9 @@ def solution(N, number):
                         dp[i].add(b // a)
                     if b != 0:
                         dp[i].add(a // b)
+                        
+            if j == i - j - 1:
+                break
         
         if number in dp[i]:
             return i + 1
