@@ -8,15 +8,8 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int n = Integer.parseInt(br.readLine());
-        int num = Integer.parseInt(br.readLine(), 2);
+        String k = br.readLine();
 
-        int count = 0;
-        while (num != 0) {
-
-            num = num - (num & ((~(num) + 1)));
-            count++;
-        }
-
-        System.out.println(count);
+        System.out.println(k.chars().filter(ch -> ch == '1').count());
     }
 }
