@@ -51,11 +51,6 @@ public class Main {
         }
 
         for (int i = start; i < n; i++) {
-
-            if ((visit & (1 << i)) != 0) {
-                continue;
-            }
-
             solve(depth + 1, limit, visit | (1 << i), i + 1);
         }
     }
