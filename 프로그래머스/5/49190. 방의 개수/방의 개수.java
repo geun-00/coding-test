@@ -2,9 +2,6 @@ import java.util.*;
 
 class Solution {
     
-    static int[] dx = {-1, -1, 0, 1, 1, 1, 0, -1};
-    static int[] dy = {0, 1, 1, 1, 0, -1, -1, -1};
-    
     static class Node {
         
         int x, y;
@@ -20,31 +17,42 @@ class Solution {
     }
     
     public int solution(int[] arrows) {
-        int count = 0;
-
+        
+        int[] dx = {-1, -1, 0, 1, 1, 1, 0, -1};
+        int[] dy = {0, 1, 1, 1, 0, -1, -1, -1};
+        
         Map<String, Node> map = new HashMap<>();
-        Node v = new Node(0, 0);
-        map.put(v.id, v);
+        
+        Node prevNode = new Node(0, 0);
+        map.put(prevNode.id, prevNode);
+        
+        int count = 0;
 
         for (int d : arrows) {
             for (int i = 0; i < 2; i++) {
 
-                int x = v.x + dx[d];
-                int y = v.y + dy[d];
-                String id = x + "," + y;
+                int nx = prevNode.x + dx[d];
+                int ny = prevNode.y + dy[d];
+                String newId = nx + "," + ny;
 
-                if (!map.containsKey(id)) {
-                    map.put(id, new Node(x, y));
-                } else if (!v.connectedNode.contains(id)) {
+                //처음 이동한 좌표
+                if (!map.containsKey(newId)) {
+                    map.put(newId, new Node(nx, ny));
+                }
+                //이미 한번 이동한 좌표
+                else if (!prevNode.connectedNode.contains(newId)) {
                     count++;
                 }
 
-                Node u = map.get(id);
-                v.connectedNode.add(u.id);
-                u.connectedNode.add(v.id);
-                v = map.get(id);
+                Node nextNode = map.get(newId);
+
+                //두 좌표 연결
+                prevNode.connectedNode.add(nextNode.id);
+                nextNode.connectedNode.add(prevNode.id);
+
+                prevNode = nextNode;
             }
-        }
+        }                
 
         return count;
     }
