@@ -1,9 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -58,12 +59,18 @@ public class Main {
             min = Math.min(min, arr[i]);
         }
 
-        final int mmin = min;
-        long count = Arrays.stream(arr).filter(num -> num == mmin).count();
+        List<Integer> list = new ArrayList<>();
 
-        System.out.println(min + " " + count);
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == min) {
+                list.add(i + 1);
+            }
+        }
 
-        IntStream.range(0, n).filter(i -> arr[i] == mmin).forEach(i -> System.out.print((i + 1) + " "));
+        System.out.println(min + " " + list.size());
 
+        for (int i : list) {
+            System.out.print(i + " ");
+        }
     }
 }
