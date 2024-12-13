@@ -14,7 +14,7 @@ class Solution {
         int total = 0;
         int process = 0;
 
-        while (process < jobNums) {
+        while (jobIdx < jobNums) {
 
             while (jobIdx < jobNums && jobs[jobIdx][0] <= curTime) {
                 jobQu.offer(jobs[jobIdx++]);
