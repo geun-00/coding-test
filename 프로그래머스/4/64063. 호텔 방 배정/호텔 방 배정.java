@@ -11,34 +11,33 @@ class Solution {
         for (int i = 0; i < room_number.length; i++) {
 
             long num = room_number[i];
+            long found = find(num);
 
-            long temp = find(num);
-            ans[i] = temp;
+            ans[i] = found;
 
-            union(num, temp + 1);
+            union(num, found + 1);
         }
 
         return ans;
     }
-    
-    public void union(long a, long b) {
-        a = find(a);
-        b = find(b);
-        if (a != b) {
-            parent.put(a, b);
-        }
-    }
 
     public long find(long num) {
+
         if (!parent.containsKey(num)) {
-            parent.put(num, num);
-        }
-        if (parent.get(num) == num) {
             return num;
         }
 
         long root = find(parent.get(num));
         parent.put(num, root);
         return root;
+    }
+
+    public void union(long a, long b) {
+        a = find(a);
+        b = find(b);
+
+        if (a != b) {
+            parent.put(a, b);
+        }
     }
 }

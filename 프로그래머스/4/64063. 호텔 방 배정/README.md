@@ -1,10 +1,10 @@
 # [level 4] 호텔 방 배정 - 64063 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/64063?language=python3) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/64063?language=java) 
 
 ### 성능 요약
 
-메모리: 46.9 MB, 시간: 427.44 ms
+메모리: 171 MB, 시간: 367.89 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 12월 14일 13:54:30
+2024년 12월 14일 13:56:48
 
 ### 문제 설명
 
