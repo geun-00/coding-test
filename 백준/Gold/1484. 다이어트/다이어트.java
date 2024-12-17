@@ -11,12 +11,12 @@ public class Main {
 
         int g = Integer.parseInt(br.readLine());
 
-        long s = 1, e = 1;
-        List<Long> ans = new ArrayList<>();
+        int s = 1, e = 1;
+        List<Integer> ans = new ArrayList<>();
 
         while (e < g) {
 
-            long diff = e * e - s * s;
+            int diff = e * e - s * s;
 
             if (diff == g) {
                 ans.add(e);
@@ -31,7 +31,7 @@ public class Main {
         if (ans.isEmpty()) {
             System.out.println(-1);
         } else {
-            for (long a : ans) {
+            for (int a : ans) {
                 System.out.println(a);
             }
         }
