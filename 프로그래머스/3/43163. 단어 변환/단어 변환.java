@@ -29,7 +29,9 @@ class Solution {
             for (int j = 0; j < now.length(); j++) {
                 if (words[i].charAt(j) != now.charAt(j)) {
                     diff++;
-                    
+                    if (diff >= 2) {
+                        break;
+                    }
                 }
             }
 
