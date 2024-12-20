@@ -15,7 +15,7 @@ class Solution {
             boolean isIn = tokens[2].equals("IN");
 
             if (!cars.containsKey(carNumber)) {
-                cars.put(carNumber, new Car(fee));
+                cars.put(carNumber, new Car());
             }
 
             Car car = cars.get(carNumber);
@@ -35,11 +35,11 @@ class Solution {
         int[] ans = new int[cars.size()];
 
         for (int i = 0; i < ans.length; i++) {
-            Map.Entry<String, Car> entry = cars.pollFirstEntry();
 
+            Map.Entry<String, Car> entry = cars.pollFirstEntry();
             Car car = entry.getValue();
 
-            ans[i] = car.getCost();
+            ans[i] = car.getCost(fee);
         }
 
         return ans;
@@ -68,11 +68,8 @@ class Solution {
 
             int fee = baseFee;
 
-            time -= baseTime;
-            while (time > 0) {
-                fee += unitFee;
-                time -= unitTime;
-            }
+            int exceedTime = Math.max(0, time - baseTime);
+            fee += Math.ceil(exceedTime * 1.0 / unitTime) * unitFee;
 
             return fee;
         }
@@ -80,15 +77,10 @@ class Solution {
 
     static class Car {
 
-        Fee fee;
         int inTime;
         int totalCost;
         int totalTime;
         boolean isOut;
-
-        public Car(Fee fee) {
-            this.fee = fee;
-        }
 
         public void in(int time) {
             this.isOut = false;
@@ -102,7 +94,7 @@ class Solution {
             this.totalTime += (outTime - inTime);
         }
 
-        public int getCost() {
+        public int getCost(Fee fee) {
             return fee.calculateCost(totalTime);
         }
     }
