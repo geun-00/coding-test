@@ -19,15 +19,14 @@ public class Main {
         dp[5] = "2";
         dp[6] = "6";
         dp[7] = "8";
-        dp[8] = "10";
 
-        String[] arr = {"1", "7", "4", "2", "0", "8"};
+        String[] arr = {"", "", "1", "7", "4", "2", "0", "8"};
 
-        for (int i = 9; i <= 100; i++) {
+        for (int i = 8; i <= 100; i++) {
             for (int j = 2; j <= 7; j++) {
 
                 String original = dp[i];
-                String newNum = dp[i - j] + arr[j - 2];
+                String newNum = dp[i - j] + arr[j];
 
                 if (original.length() < newNum.length()) continue;
 
