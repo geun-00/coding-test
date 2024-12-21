@@ -14,9 +14,7 @@ class Solution {
             String carNumber = tokens[1];
             boolean isIn = tokens[2].equals("IN");
 
-            if (!cars.containsKey(carNumber)) {
-                cars.put(carNumber, new Car());
-            }
+            cars.putIfAbsent(carNumber, new Car());
 
             Car car = cars.get(carNumber);
 
@@ -77,21 +75,18 @@ class Solution {
 
     static class Car {
 
-        int inTime;
-        int totalCost;
+        int lastInTime;
         int totalTime;
-        boolean isOut;
 
-        public void in(int time) {
-            this.isOut = false;
-            this.inTime = time;
+        public void in(int inTime) {
+            this.lastInTime = inTime;
         }
 
         public void out(int outTime) {
-            if (isOut) return;
+            if (lastInTime == -1) return;
 
-            this.isOut = true;
-            this.totalTime += (outTime - inTime);
+            this.totalTime += (outTime - lastInTime);
+            this.lastInTime = -1;
         }
 
         public int getCost(Fee fee) {
