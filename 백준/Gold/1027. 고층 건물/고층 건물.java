@@ -19,7 +19,7 @@ public class Main {
 
         int ans = 0;
         int x1, y1, x2, y2;
-        double slope, maxSlope;
+        double slope, maxSlope, minSlope;
 
         for (int i = 0; i < n; i++) {
 
@@ -28,14 +28,14 @@ public class Main {
             x1 = i;
             y1 = height[i];
 
-            maxSlope = Double.POSITIVE_INFINITY;
+            minSlope = Double.POSITIVE_INFINITY;
             for (int j = i - 1; j >= 0; j--) {
                 x2 = j;
                 y2 = height[j];
 
                 slope = (double) (y2 - y1) / (x2 - x1);
-                if (maxSlope > slope) {
-                    maxSlope = slope;
+                if (minSlope > slope) {
+                    minSlope = slope;
                     count++;
                 }
             }
