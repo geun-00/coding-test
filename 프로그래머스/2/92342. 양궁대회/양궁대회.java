@@ -10,34 +10,40 @@ class Solution {
         return ans;
     }
     
-    public void solve(int index, int[] hits, int n, int[] apeach) {
+    public void solve(int index, int[] ryan, int n, int[] apeach) {
 
-        if (index == hits.length) {
+        if (index == ryan.length) {
+            
+            //남은 화살이 있을 때
             if (n > 0) return;
 
-            int diff = getDiff(hits, apeach);
+            //라이언과 어피치의 점수 차
+            int diff = getDiff(ryan, apeach);
+            
             if (diff <= 0 || diff < maxDiff) {
                 return;
             }
 
-            if (diff > maxDiff || check(ans, hits)) {
+            if (diff > maxDiff || check(ryan)) {
                 maxDiff = diff;
                 
                 if (ans == IMPOSSIBLE) ans = new int[11];
 
-                System.arraycopy(hits, 0, ans, 0, hits.length);
+                System.arraycopy(ryan, 0, ans, 0, ryan.length);
+                // ans = ryan; 주의! 얕은 복사 X
             }
+            
             return;
         }
 
         for (int i = 0; i <= n; i++) {
-            hits[index] = i;
-            solve(index + 1, hits, n - i, apeach);
-            hits[index] = 0;
+            ryan[index] = i;  //각 점수에 0개 ~ N개를 맞힐 수 있다.
+            solve(index + 1, ryan, n - i, apeach);
+            ryan[index] = 0;  //원상복구
         }
     }
     
-    public boolean check(int[] ans, int[] ryan) {
+    public boolean check(int[] ryan) {
 
         for (int i = 10; i >= 0; i--) {
             if (ans[i] == ryan[i]) continue;
