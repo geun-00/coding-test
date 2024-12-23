@@ -57,12 +57,10 @@ public class Main {
         for (Node child : tree[node]) {
             int nextNode = child.node;
 
-            int cost = 0;
             if (nextNode != parent) {
-                cost = dfs(nextNode, node, tree);
+                int cost = dfs(nextNode, node, tree);
+                dp[node] += Math.min(cost, child.dynamite);
             }
-
-            dp[node] += Math.min(cost, child.dynamite);
         }
 
         return dp[node];
