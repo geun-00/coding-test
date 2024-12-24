@@ -25,7 +25,7 @@ public class Main {
             int n = Integer.parseInt(st.nextToken());
             int k = Integer.parseInt(st.nextToken());
 
-            tree = new long[getTreeSize(n)];
+            tree = new long[4 * n];
 
             long[] arr = new long[n];
 
@@ -119,13 +119,5 @@ public class Main {
         if (value > 0) return 1;
         if (value < 0) return -1;
         return 0;
-    }
-
-    private static int getTreeSize(int n) {
-        int level = 0;
-        while ((1 << level) < n) {
-            level++;
-        }
-        return 1 << (level + 1);
     }
 }
