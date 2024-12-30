@@ -2,10 +2,10 @@ import java.util.*;
 
 class Solution {
     public int solution(int[][] rectangle, int characterX, int characterY, int itemX, int itemY) {
-       final int N = 100;
+        
+        final int N = 100;
 
         int[][] map = new int[N + 1][N + 1];
-        boolean[][] visit = new boolean[N + 1][N + 1];
 
         for (int[] a : rectangle) {
             int x1 = a[0] * 2;
@@ -27,11 +27,19 @@ class Solution {
                 }
             }
         }
+        
+        return bfs(characterX, characterY, itemX, itemY, N, map);     
+    }
+    
+    public int bfs(int characterX, int characterY, int itemX, int itemY, int N, int[][] map) {
 
         Queue<Point> qu = new ArrayDeque<>();
-        qu.offer(new Point(characterX * 2, characterY * 2, 0));
+        boolean[][] visit = new boolean[N + 1][N + 1];
 
-        visit[characterX * 2][characterY * 2] = true;
+        int sx = characterX * 2;
+        int sy = characterY * 2;
+        qu.offer(new Point(sx, sy, 0));
+        visit[sx][sy] = true;
 
         int[] dx = {-1, 1, 0, 0};
         int[] dy = {0, 0, -1, 1};
