@@ -16,13 +16,14 @@ class Solution {
             for (int x = x1; x <= x2; x++) {
                 for (int y = y1; y <= y2; y++) {
 
+                    //가장자리 부분
                     if (x == x1 || x == x2 || y == y1 || y == y2) {
                         if (map[x][y] == 0) {
                             map[x][y] = 1;
                         }
                     }
                     else {
-                        map[x][y] = 2;
+                        map[x][y] = -1;
                     }
                 }
             }
