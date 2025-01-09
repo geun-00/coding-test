@@ -49,18 +49,17 @@ public class Main {
 
             for (int i = 0; i < 4; i++) {
 
-                int origin = (num / (int) Math.pow(10, i)) % 10;
+                int base = (int) Math.pow(10, i);
+                int origin = num / base % 10;
 
                 for (int j = 0; j < 10; j++) {
+
                     if (i == 3 && j == 0) continue;
                     if (origin == j) continue;
+                    
+                    int nextNum = num - (origin * base) + (j * base);
 
-                    int base = (int) Math.pow(10, i);
-                    int nextNum = num - (num / base % 10) * base + j * base;
-
-                    if (!primes[nextNum] || visit[nextNum]) {
-                        continue;
-                    }
+                    if (!primes[nextNum] || visit[nextNum]) continue;
 
                     visit[nextNum] = true;
                     qu.offer(new State(nextNum, change + 1));
