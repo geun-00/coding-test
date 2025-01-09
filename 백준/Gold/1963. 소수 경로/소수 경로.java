@@ -27,7 +27,6 @@ public class Main {
         }
 
         System.out.print(sb);
-
     }
 
     private static String bfs(int a, int b, boolean[] primes) {
@@ -48,31 +47,28 @@ public class Main {
                 return String.valueOf(change);
             }
 
-            for (int i = 1001; i < primes.length; i++) {
+            for (int i = 0; i < 4; i++) {
 
-                if (!primes[i] || visit[i]) continue;
-                if (!check(num, i)) continue;
+                int origin = (num / (int) Math.pow(10, i)) % 10;
 
-                visit[i] = true;
-                qu.offer(new State(i, change + 1));
+                for (int j = 0; j < 10; j++) {
+                    if (i == 3 && j == 0) continue;
+                    if (origin == j) continue;
+
+                    int base = (int) Math.pow(10, i);
+                    int nextNum = num - (num / base % 10) * base + j * base;
+
+                    if (!primes[nextNum] || visit[nextNum]) {
+                        continue;
+                    }
+
+                    visit[nextNum] = true;
+                    qu.offer(new State(nextNum, change + 1));
+                }
             }
         }
 
         return "Impossible";
-    }
-
-    private static boolean check(int num, int i) {
-
-        int count = 0;
-
-        while (num > 0) {
-            if (num % 10 != i % 10) count++;
-            
-            i /= 10;
-            num /= 10;
-        }
-
-        return count == 1;
     }
 
     private static boolean[] getPrimes() {
