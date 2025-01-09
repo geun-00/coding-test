@@ -18,18 +18,6 @@ def get_primes():
     return primes
 
 
-def check(num, i):
-    count = 0
-
-    while num > 0:
-        if num % 10 != i % 10:
-            count += 1
-        num //= 10
-        i //= 10
-
-    return count == 1
-
-
 def bfs(a, b, primes):
     qu = deque([(a, 0)])
     visit = [False] * len(primes)
@@ -41,14 +29,23 @@ def bfs(a, b, primes):
         if num == b:
             return str(change)
 
-        for i in range(1001, len(primes)):
-            if not primes[i] or visit[i]:
-                continue
-            if not check(num, i):
-                continue
+        for i in range(4):
+            base = int(math.pow(10, i))
+            origin = num // base % 10
 
-            visit[i] = True
-            qu.append((i, change + 1))
+            for j in range(10):
+                if i == 3 and j == 0:
+                    continue
+                if origin == j:
+                    continue
+
+                next_num = num - (origin * base) + (j * base)
+
+                if not primes[next_num] or visit[next_num]:
+                    continue
+
+                visit[next_num] = True
+                qu.append((next_num, change + 1))
 
     return "Impossible"
 
