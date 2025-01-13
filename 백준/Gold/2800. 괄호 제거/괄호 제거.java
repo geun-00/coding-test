@@ -5,6 +5,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -26,7 +27,7 @@ public class Main {
             }
         }
 
-        List<String> ans = new ArrayList<>();
+        TreeSet<String> ans = new TreeSet<>();
 
         for (int i = 1; i < (1 << pairs.size()); i++) {
 
@@ -38,13 +39,14 @@ public class Main {
                     sb.setCharAt(pairs.get(j).closeIdx, ' ');
                 }
             }
+
             ans.add(sb.toString().replace(" ", ""));
         }
 
-        ans.stream()
-           .distinct()
-           .sorted()
-           .forEach(System.out::println);
+        for (String an : ans) {
+            System.out.println(an);
+        }
+
     }
 
     static class Pair {
