@@ -4,20 +4,20 @@ import java.util.regex.*;
 class Solution {
     public String[] solution(String[] files) {
                 
-        File[] arr = new File[files.length];
+        Pattern pattern = Pattern.compile("(\\D+)(\\d{1,5})(.*)");
 
-        for (int i = 0; i < files.length; i++) {
-            Pattern pattern = Pattern.compile("^(\\D+)(\\d{1,5})(.*)$");
-            Matcher matcher = pattern.matcher(files[i]);
+        File[] arr = Arrays.stream(files)
+                             .map(s -> {
+                                 Matcher matcher = pattern.matcher(s);
+                                 matcher.find();
 
-            if (matcher.matches()) {
-                String head = matcher.group(1);
-                String number = matcher.group(2);
-                String tail = matcher.group(3);
+                                 String head = matcher.group(1);
+                                 String number = matcher.group(2);
+                                 String tail = matcher.group(3);
 
-                arr[i] = new File(head, number, tail);
-            }
-        }
+                                 return new File(head, number, tail);
+                             })
+                             .toArray(File[]::new);
 
         return Arrays.stream(arr)
                      .sorted((f1, f2) -> {
