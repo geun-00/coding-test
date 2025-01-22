@@ -10,10 +10,11 @@ class Solution {
         }
 
         int ans = 0;
+        Queue<Character> qu = new ArrayDeque<>();
+        boolean[][] mark = new boolean[m][n];
 
         while (true) {
 
-            boolean[][] mark = new boolean[m][n];
             boolean flag = true;
 
             for (int i = 0; i < m - 1; i++) {
@@ -38,27 +39,27 @@ class Solution {
                     if (mark[i][j]) {
                         ans++;
                         map[i][j] = empty;
+                        mark[i][j] = false;
                     }
                 }
             }
 
             for (int i = 0; i < n; i++) {
-                Queue<Character> qu = new ArrayDeque<>();
+
                 for (int j = m - 1; j >= 0; j--) {
                     if (map[j][i] != empty) {
                         qu.offer(map[j][i]);
                     }
                 }
 
-                int index = m - 1;
-                while (!qu.isEmpty()) {
-                    map[index--][i] = qu.poll();
-                }
-                while (index >= 0) {
-                    map[index--][i] = empty;
+                for (int j = m - 1; j >= 0; j--) {
+                    if (qu.isEmpty()) {
+                        map[j][i] = empty;
+                    } else {
+                        map[j][i] = qu.poll();
+                    }
                 }
             }
-
         }
 
         return ans;
