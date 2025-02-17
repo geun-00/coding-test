@@ -6,8 +6,7 @@ SELECT
 FROM
     DOCTOR
 WHERE
-    MCDP_CD = 'CS' or
-    MCDP_CD = 'GS'
+    MCDP_CD IN ('CS', 'GS')
 ORDER BY
-    HIRE_YMD desc,
-    DR_NAME
+    4 desc,
+    1
