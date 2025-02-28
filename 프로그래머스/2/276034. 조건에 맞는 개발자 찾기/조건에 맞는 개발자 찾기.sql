@@ -3,9 +3,10 @@ SELECT
     EMAIL, 
     FIRST_NAME, 
     LAST_NAME
-    # NAME
 FROM 
     DEVELOPERS D
         JOIN SKILLCODES S ON D.SKILL_CODE & S.CODE
-WHERE NAME IN ('Python', 'C#')
-ORDER BY ID
+WHERE 
+    NAME IN ('Python', 'C#')
+ORDER BY 
+    1
