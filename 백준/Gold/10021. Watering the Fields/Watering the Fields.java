@@ -54,6 +54,7 @@ public class Main {
                 ans += e.w;
                 connected++;
             }
+            if (connected == n - 1) break;
         }
 
         System.out.println(connected == n - 1 ? ans : -1);
