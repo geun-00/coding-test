@@ -66,44 +66,47 @@ public class Main {
 
     private static void moveDown() {
 
-        List<List<Point>> targets = new ArrayList<>();
+        List<Point> target = new ArrayList<>();
         boolean[][] visit = new boolean[r][c];
 
         for (int i = 0; i < r; i++) {
             for (int j = 0; j < c; j++) {
                 if (!visit[i][j] && cave[i][j] == 'x') {
-                    bfs(i, j, visit, targets);
+                    List<Point> result = bfs(i, j, visit);
+                    if (!result.isEmpty()) {
+                        target = result;
+                        break;
+                    }
                 }
             }
         }
 
-        for (List<Point> target : targets) {
-            int minDrop = Integer.MAX_VALUE;
-            boolean[][] isMineral = new boolean[r][c];
+        int minDrop = Integer.MAX_VALUE;
+        boolean[][] isMineral = new boolean[r][c];
 
-            for (Point p : target) {
-                isMineral[p.x][p.y] = true;
-            }
-
-            for (Point p : target) {
-                int drop = 0;
-                for (int i = p.x + 1; i < r; i++) {
-                    if (cave[i][p.y] == 'x' && !isMineral[i][p.y]) break;
-                    drop++;
-                }
-                minDrop = Math.min(minDrop, drop);
-            }
-
-            for (Point p : target) {
-                cave[p.x][p.y] = '.';
-            }
-            for (Point p : target) {
-                cave[p.x + minDrop][p.y] = 'x';
-            }
+        for (Point p : target) {
+            isMineral[p.x][p.y] = true;
         }
+
+        for (Point p : target) {
+            int drop = 0;
+            for (int i = p.x + 1; i < r; i++) {
+                if (cave[i][p.y] == 'x' && !isMineral[i][p.y]) break;
+                drop++;
+            }
+            minDrop = Math.min(minDrop, drop);
+        }
+
+        for (Point p : target) {
+            cave[p.x][p.y] = '.';
+        }
+        for (Point p : target) {
+            cave[p.x + minDrop][p.y] = 'x';
+        }
+
     }
 
-    private static void bfs(int i, int j, boolean[][] visit, List<List<Point>> targets) {
+    private static List<Point> bfs(int i, int j, boolean[][] visit) {
         List<Point> target = new ArrayList<>();
         target.add(new Point(i, j));
 
@@ -133,8 +136,9 @@ public class Main {
         target.sort((a, b) -> b.x - a.x);
 
         if (target.get(0).x < r - 1) {
-            targets.add(target);
+            return target;
         }
+        return new ArrayList<>();
     }
 
     static class Point {
