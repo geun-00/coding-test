@@ -114,6 +114,7 @@ public class Main {
         Queue<Integer> qu = new ArrayDeque<>();
         qu.offer(i);
         qu.offer(j);
+        int bottom = i;
 
         while (!qu.isEmpty()) {
             int x = qu.poll();
@@ -130,12 +131,11 @@ public class Main {
                 target.add(new Point(nx, ny));
                 qu.offer(nx);
                 qu.offer(ny);
+                bottom = Math.max(bottom, nx);
             }
         }
 
-        target.sort((a, b) -> b.x - a.x);
-
-        if (target.get(0).x < r - 1) {
+        if (bottom < r - 1) {
             return target;
         }
         return new ArrayList<>();
