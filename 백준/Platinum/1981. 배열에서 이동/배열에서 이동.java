@@ -47,19 +47,15 @@ public class Main {
 
         for (int minVal = 0; minVal <= max - limit; minVal++) {
             int maxVal = minVal + limit;
-            if (arr[0][0] < minVal || arr[0][0] > maxVal) {
-                continue;
-            }
-            if (bfs(minVal, maxVal)) {
-                return true;
-            }
-
+            if (bfs(minVal, maxVal)) return true;
         }
 
         return false;
     }
 
     private static boolean bfs(int minVal, int maxVal) {
+
+        if (arr[0][0] < minVal || arr[0][0] > maxVal) return false;
 
         Queue<Integer> qu = new ArrayDeque<>();
         qu.offer(0);
@@ -71,20 +67,14 @@ public class Main {
             int x = qu.poll();
             int y = qu.poll();
 
-            if (x == n - 1 && y == n - 1) {
-                return true;
-            }
+            if (x == n - 1 && y == n - 1) return true;
 
             for (int i = 0; i < 4; i++) {
                 int nx = x + dx[i];
                 int ny = y + dy[i];
 
-                if (nx < 0 || ny < 0 || nx >= n || ny >= n) {
-                    continue;
-                }
-                if (visit[nx][ny] || arr[nx][ny] < minVal || arr[nx][ny] > maxVal) {
-                    continue;
-                }
+                if (nx < 0 || ny < 0 || nx >= n || ny >= n) continue;
+                if (visit[nx][ny] || arr[nx][ny] < minVal || arr[nx][ny] > maxVal) continue;
 
                 qu.offer(nx);
                 qu.offer(ny);
