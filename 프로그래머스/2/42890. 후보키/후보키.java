@@ -3,13 +3,12 @@ import java.util.*;
 class Solution {
     public int solution(String[][] relation) {
         int col = relation[0].length;
-
-        List<List<Integer>> candidateKeys = new ArrayList<>();
+        List<Set<Integer>> candidateKeys = new ArrayList<>();
 
         iter:
-        for (int i = 1; i < (1 << col) - 1; i++) {
+        for (int i = 1; i < (1 << col); i++) {
 
-            List<Integer> list = new ArrayList<>();
+            Set<Integer> list = new HashSet<>();
 
             for (int j = 0; j < col; j++) {
                 if ((i & (1 << j)) != 0) {
@@ -30,7 +29,7 @@ class Solution {
             }
 
             // 최소성 검사
-            for (List<Integer> key : candidateKeys) {
+            for (Set<Integer> key : candidateKeys) {
                 if (list.containsAll(key)) {
                     continue iter;
                 }
@@ -39,6 +38,6 @@ class Solution {
             candidateKeys.add(list);
         }
 
-        return Math.max(candidateKeys.size(), 1);
+        return candidateKeys.size();
     }
 }
