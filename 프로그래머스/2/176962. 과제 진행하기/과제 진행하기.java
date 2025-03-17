@@ -14,13 +14,15 @@ class Solution {
         Deque<Task> deferredTasks = new ArrayDeque<>();
 
         Task currentTask = tasks.poll();
-        List<String> result = new ArrayList<>();
+
+        String[] ans = new String[plans.length];
+        int index = 0;
 
         while (!tasks.isEmpty() || !deferredTasks.isEmpty()) {
             Task nextTask = !tasks.isEmpty() ? tasks.peek() : null;
 
             if (nextTask == null || currentTask.start + currentTask.remain <= nextTask.start) {
-                result.add(currentTask.name);
+                ans[index++] = currentTask.name;
                 int end = currentTask.start + currentTask.remain;
                 currentTask = null;
 
@@ -33,7 +35,7 @@ class Solution {
                         break;
                     }
                     end += task.remain;
-                    result.add(task.name);
+                    ans[index++] = task.name;
                 }
 
                 if (currentTask == null && !tasks.isEmpty()) {
@@ -48,10 +50,10 @@ class Solution {
         }
 
         if (currentTask != null) {
-            result.add(currentTask.name);
+            ans[index] = currentTask.name;
         }
 
-        return result.toArray(String[]::new);
+        return ans;
     }
 
     static class Task {
