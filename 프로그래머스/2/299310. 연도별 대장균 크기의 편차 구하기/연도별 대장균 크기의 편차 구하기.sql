@@ -6,7 +6,7 @@
 #     (
 #         SELECT *, MAX(SIZE_OF_COLONY) OVER (PARTITION BY YEAR(DIFFERENTIATION_DATE)) AS MAX_SIZE
 #         FROM ECOLI_DATA
-#     ) AS E
+#     ) 
 # ORDER BY
 #     1, 2
 
@@ -27,4 +27,3 @@ FROM
     ) AS B ON YEAR(A.DIFFERENTIATION_DATE) = B.YEAR
 ORDER BY
     1, 2
-    
