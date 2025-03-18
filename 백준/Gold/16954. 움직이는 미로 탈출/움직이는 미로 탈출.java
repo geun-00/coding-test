@@ -36,10 +36,7 @@ public class Main {
                 int x = now[0], y = now[1];
 
                 if (chess[x][y] == '#') continue;
-
-                if (x == 0 && y == C - 1) {
-                    return 1;
-                }
+                if (x == 0 && y == C - 1) return 1;               
 
                 for (int d = 0; d < dx.length; d++) {
                     int nx = x + dx[d];
