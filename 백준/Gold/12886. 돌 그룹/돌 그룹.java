@@ -16,24 +16,19 @@ public class Main {
 
         int total = A + B + C;
 
-        if (total % 3 != 0) {
-            System.out.println(0);
-            return;
-        }
-
         boolean[][] visit = new boolean[1501][1501];
         visit[A][B] = true;
         visit[A][C] = true;
         visit[B][C] = true;
 
         Queue<int[]> qu = new ArrayDeque<>();
-        qu.offer(new int[]{A, B, C});
+        qu.offer(new int[]{A, B});
 
         while (!qu.isEmpty()) {
             int[] stone = qu.poll();
             int a = stone[0];
             int b = stone[1];
-            int c = stone[2];
+            int c = total - (a + b);
 
             if (a == b && b == c) {
                 System.out.println(1);
@@ -49,11 +44,10 @@ public class Main {
 
                     int nx = (x > y) ? x - y : x + x;
                     int ny = (x > y) ? y + y : y - x;
-                    int nz = total - (nx + ny);
 
                     if (!visit[nx][ny]) {
                         visit[nx][ny] = true;
-                        qu.offer(new int[]{nx, ny, nz});
+                        qu.offer(new int[]{nx, ny});
                     }
                 }
             }
