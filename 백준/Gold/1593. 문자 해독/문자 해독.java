@@ -31,7 +31,7 @@ public class Main {
         }
 
         int ans = 0;
-        if (Arrays.equals(arr, window)) {
+        if (equals(arr, window)) {
             ans++;
         }
 
@@ -42,11 +42,20 @@ public class Main {
             window[getIndex(prev)]--;
             window[getIndex(current)]++;
 
-            if (Arrays.equals(arr, window)) {
+            if (equals(arr, window)) {
                 ans++;
             }
         }
         System.out.println(ans);
+    }
+
+    private static boolean equals(int[] arr, int[] window) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != window[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static int getIndex(char c) {
