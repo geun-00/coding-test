@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -29,30 +30,24 @@ public class Main {
         int firstA = solve(points[0], points[1], points[2], points[3]);
         int firstB = solve(points[2], points[3], points[0], points[1]);
 
-        if (firstA < INF || firstB < INF) {
-            System.out.println(Math.min(firstA, firstB));
-        } else {
-            System.out.println("IMPOSSIBLE");
-        }
+        int result = Math.min(firstA, firstB);
+        System.out.println(result < INF ? result : "IMPOSSIBLE");
     }
 
     private static int solve(int[] p1, int[] p2, int[] p3, int[] p4) {
-        int[] path = new int[m * n];
+        int[] path = new int[n * m];
+        Arrays.fill(path, -1);
         int length_1 = bfs(path, p1, p2, p3, p4);
 
         boolean[][] visit = new boolean[n][m];
         int end = (p2[0] * m + p2[1]);
-        int start = (p1[0] * m + p1[1]);
 
-        while (end != start) {
+        while (end != -1) {
             int x = end / m;
             int y = end % m;
             visit[x][y] = true;
             end = path[end];
         }
-        int x = end / m;
-        int y = end % m;
-        visit[x][y] = true;
 
         int length_2 = bfs(p3, p4, visit);
 
