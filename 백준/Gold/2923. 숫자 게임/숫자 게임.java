@@ -19,10 +19,7 @@ public class Main {
             A[Integer.parseInt(st.nextToken())]++;
             B[Integer.parseInt(st.nextToken())]++;
 
-            sb.append(Math.min(
-                  getMax(A, B, i + 1),
-                  getMax(B, A, i + 1)
-              ))
+            sb.append(getMax(A, B, i + 1))
               .append("\n");
         }
 
