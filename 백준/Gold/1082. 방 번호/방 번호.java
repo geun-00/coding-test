@@ -29,11 +29,7 @@ public class Main {
 
         // 2. 최대 자릿수 계산
         int length = m / minCost;
-        if (length == 0) {
-            System.out.println(0); // 아무것도 못 사는 경우
-            return;
-        }
-
+        
         // 3. minNum으로 초기화
         int[] result = new int[length];
         Arrays.fill(result, minNum);
@@ -45,7 +41,8 @@ public class Main {
             for (int j = n - 1; j >= 0; j--) {
                 if (price[j] <= m + minCost) {
                     result[i] = j;
-                    m += (minCost - price[j]);
+                    m += minCost;
+                    m -= price[j];    
                     break;
                 }
             }
