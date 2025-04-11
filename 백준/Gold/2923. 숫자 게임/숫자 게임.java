@@ -38,8 +38,6 @@ public class Main {
             while (xIdx <= 100 && x[xIdx] == 0) xIdx++;
             while (yIdx >= 1 && y[yIdx] == 0) yIdx--;
 
-            if (xIdx > 100 || yIdx < 1) break;
-
             int use = Math.min(x[xIdx], y[yIdx]);
             use = Math.min(use, total - used);
 
