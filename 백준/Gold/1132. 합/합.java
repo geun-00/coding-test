@@ -24,11 +24,11 @@ public class Main {
         boolean[] used = new boolean[10];
 
         long ans = 0;
-        for (int i = 0; i < 10; i++) {
-            for (int j = (int) alphas[i][0]; j < 10; j++) {
+        for (long[] alpha : alphas) {
+            for (int j = (int) alpha[0]; j < 10; j++) {
                 if (!used[j]) {
                     used[j] = true;
-                    ans += alphas[i][1] * (long) j;
+                    ans += alpha[1] * (long) j;
                     break;
                 }
             }
