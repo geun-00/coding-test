@@ -1,11 +1,16 @@
 SELECT
-    A.FOOD_TYPE, A.REST_ID, A.REST_NAME, A.FAVORITES
+    A.FOOD_TYPE, 
+    A.REST_ID, 
+    A.REST_NAME, 
+    A.FAVORITES
 FROM
-    REST_INFO A
+    REST_INFO AS A
         JOIN 
-            ( SELECT FOOD_TYPE, MAX(FAVORITES) AS BEST
+            ( 
+              SELECT FOOD_TYPE, MAX(FAVORITES) AS BEST
               FROM REST_INFO
-              GROUP BY FOOD_TYPE ) B
+              GROUP BY FOOD_TYPE 
+            ) AS B
         ON A.FOOD_TYPE = B.FOOD_TYPE AND A.FAVORITES = B.BEST
 ORDER BY 
-    A.FOOD_TYPE DESC;
+    1 DESC

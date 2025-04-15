@@ -11,4 +11,5 @@ WHERE
                 WHERE CATEGORY IN ('과자', '국', '김치', '식용유')
                 GROUP BY CATEGORY
     )
-ORDER BY 2 DESC
+ORDER BY 
+    2 DESC
