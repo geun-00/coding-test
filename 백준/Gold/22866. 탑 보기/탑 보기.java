@@ -2,9 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -19,37 +17,17 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= n; i++) {
             top[i] = Integer.parseInt(st.nextToken());
-            ans[i] = -1;
+            ans[i] = Integer.MAX_VALUE;
         }
 
         Deque<Integer> right = new ArrayDeque<>();
         for (int i = n; i > 0; i--) {
-            while (!right.isEmpty() && top[right.peek()] <= top[i]) {
-                right.pop();
-            }
-            counting[i] += right.size();
-            if (!right.isEmpty()) {
-                ans[i] = right.peek();
-            }
-
-            right.push(i);
+            solve(top, ans, counting, right, i);
         }
 
         Deque<Integer> left = new ArrayDeque<>();
         for (int i = 1; i <= n; i++) {
-            while (!left.isEmpty() && top[left.peek()] <= top[i]) {
-                left.pop();
-            }
-            counting[i] += left.size();
-            if (!left.isEmpty()) {
-                if (ans[i] == -1 || Math.abs(i - left.peek()) < Math.abs(i - ans[i])) {
-                    ans[i] = left.peek();
-                } else if (Math.abs(i - left.peek()) == Math.abs(i - ans[i])) {
-                    ans[i] = Math.min(ans[i], left.peek());
-                }
-            }
-
-            left.push(i);
+            solve(top, ans, counting, left, i);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -63,5 +41,22 @@ public class Main {
         }
 
         System.out.print(sb);
+    }
+
+    private static void solve(int[] top, int[] ans, int[] counting, Deque<Integer> stk, int i) {
+        while (!stk.isEmpty() && top[stk.peek()] <= top[i]) {
+            stk.pop();
+        }
+        counting[i] += stk.size();
+        if (!stk.isEmpty()) {
+            int dist = Math.abs(i - stk.peek());
+            int origin = Math.abs(i - ans[i]);
+
+            if (dist < origin || dist == origin && stk.peek() < ans[i]) {
+                ans[i] = stk.peek();
+            }
+        }
+
+        stk.push(i);
     }
 }
