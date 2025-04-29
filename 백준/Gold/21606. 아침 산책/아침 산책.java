@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int ans = 0;
     static char[] arr;
     static List<Integer>[] tree;
     static boolean[] visit;
@@ -22,6 +21,8 @@ public class Main {
             tree[i] = new ArrayList<>();
         }
 
+        int ans = 0;
+
         for (int i = 0; i < n - 1; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken()) - 1;
@@ -29,31 +30,36 @@ public class Main {
 
             tree[u].add(v);
             tree[v].add(u);
+
+            if (arr[u] == '1' && arr[v] == '1') {
+                ans += 2;
+            }
         }
 
+        visit = new boolean[n];
+
         for (int i = 0; i < n; i++) {
-            if (arr[i] == '1') {
-                visit = new boolean[n];
-                solve(i, arr[i]);
+            if (arr[i] == '0' && !visit[i]) {
+                int count = dfs(i);
+                ans += count * (count - 1);
             }
         }
 
         System.out.println(ans);
     }
 
-    private static void solve(int node, char c) {
+    private static int dfs(int node) {
         visit[node] = true;
+        int count = 0;
 
         for (int next : tree[node]) {
-            if (!visit[next]) {
-                if (arr[next] == '0') {
-                    solve(next, arr[next]);
-                } else {
-                    ans++;
-                }
+            if (arr[next] == '1') {
+                count++;
+            } else if (!visit[next]) {
+                count += dfs(next);
             }
         }
 
-        visit[node] = false;
+        return count;
     }
 }
