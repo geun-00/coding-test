@@ -2,8 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -29,6 +27,7 @@ public class Main {
         for (int i = 0; i < r; i++) {
             board[i] = br.readLine()
                          .toCharArray();
+
             for (int j = 0; j < c; j++) {
                 if (board[i][j] == 'I') {
                     x = i;
@@ -39,7 +38,8 @@ public class Main {
             }
         }
 
-        char[] arr = br.readLine().toCharArray();
+        char[] arr = br.readLine()
+                       .toCharArray();
 
         for (int i = 0; i < arr.length; i++) {
             int dir = arr[i] - '0' - 1;
@@ -67,7 +67,8 @@ public class Main {
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < r; i++) {
-            sb.append(board[i]).append("\n");
+            sb.append(board[i])
+              .append("\n");
         }
         System.out.print(sb);
     }
@@ -81,19 +82,24 @@ public class Main {
 
             board[ax][ay] = '.';
 
-            int[][] temp = new int[9][2];
+            int dir = -1;
+            int minDist = Integer.MAX_VALUE;
+
             for (int i = 0; i < 9; i++) {
                 int nx = ax + dx[i];
                 int ny = ay + dy[i];
-                temp[i][0] = (nx >= 0 && nx < r) ? nx : 1000;
-                temp[i][1] = (ny >= 0 && ny < c) ? ny : 1000;
+                if (nx < 0 || ny < 0 || nx >= r || ny >= c) continue;
+
+                int dist = Math.abs(x - nx) + Math.abs(y - ny);
+                if (dist < minDist) {
+                    minDist = dist;
+                    dir = i;
+                }
+
+                if (minDist == 0) return false;
             }
 
-            Arrays.sort(temp, Comparator.comparingInt(
-                a -> Math.abs(x - a[0]) + Math.abs(y - a[1]))
-            );
-
-            count[temp[0][0]][temp[0][1]]++;
+            count[ax + dx[dir]][ay + dy[dir]]++;
         }
 
         List<int[]> next = new ArrayList<>();
