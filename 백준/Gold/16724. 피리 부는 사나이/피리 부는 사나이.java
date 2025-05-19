@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
@@ -57,7 +58,10 @@ public class Main {
             }
         }
 
-        Set<Integer> set = Arrays.stream(parent).boxed().collect(Collectors.toSet());
+        Set<Integer> set = new HashSet<>();
+        for (int root : parent) {
+            set.add(root);
+        }
         System.out.println(set.size());
     }
 
