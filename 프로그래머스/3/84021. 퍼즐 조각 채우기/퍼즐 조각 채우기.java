@@ -101,7 +101,7 @@ class Solution {
             pos[0] -= minX;
             pos[1] -= minY;
         }
-
+        
         temp.sort((a, b) -> {
             if (a[0] != b[0]) {
                 return a[0] - b[0];
