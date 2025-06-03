@@ -40,43 +40,12 @@ class Solution {
         return ans.toArray(String[]::new);
     }
 
-    private void print(String[] arr, List<String> ans) {
-        int r = Integer.parseInt(arr[1]) - 1;
-        int c = Integer.parseInt(arr[2]) - 1;
-        ans.add(excel[parent[r][c] / C][parent[r][c] % C]);
-    }
-
-    private void unmerge(String[] arr) {
-        int r = Integer.parseInt(arr[1]) - 1;
-        int c = Integer.parseInt(arr[2]) - 1;
-
-        int root = find(r, c);
-        String value = excel[root / C][root % C];
-        
-        for (int i = 0; i < R; i++) {
-            for (int j = 0; j < C; j++) {
-                find(i, j);
-            }
-        }
-
-        for (int i = 0; i < R; i++) {
-            for (int j = 0; j < C; j++) {
-                if (parent[i][j] == root) {
-                    parent[i][j] = i * C + j;
-                    excel[i][j] = "EMPTY";
-                }
-            }
-        }
-
-        excel[r][c] = value;
-    }
-
     public void update(String[] arr) {
         if (arr.length == 4) {
             int r = Integer.parseInt(arr[1]) - 1;
             int c = Integer.parseInt(arr[2]) - 1;
             excel[parent[r][c] / C][parent[r][c] % C] = arr[3];
-        } 
+        }
         else {
             String value1 = arr[1];
             String value2 = arr[2];
@@ -100,8 +69,40 @@ class Solution {
         int c1 = Integer.parseInt(arr[2]) - 1;
         int r2 = Integer.parseInt(arr[3]) - 1;
         int c2 = Integer.parseInt(arr[4]) - 1;
-        
+
         union(r1, c1, r2, c2);
+    }
+
+    private void unmerge(String[] arr) {
+        int r = Integer.parseInt(arr[1]) - 1;
+        int c = Integer.parseInt(arr[2]) - 1;
+
+        int root = find(r, c);
+        String value = excel[root / C][root % C];
+
+        // for (int i = 0; i < R; i++) {
+        //     for (int j = 0; j < C; j++) {
+        //         find(i, j);
+        //     }
+        // }
+
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                if (parent[i][j] == root) {
+                    parent[i][j] = i * C + j;
+                    excel[i][j] = "EMPTY";
+                }
+            }
+        }
+
+        excel[r][c] = value;
+    }
+
+    private void print(String[] arr, List<String> ans) {
+        int r = Integer.parseInt(arr[1]) - 1;
+        int c = Integer.parseInt(arr[2]) - 1;
+        int p = find(r, c);
+        ans.add(excel[p / C][p % C]);
     }
 
     public void union(int r1, int c1, int r2, int c2) {
@@ -112,15 +113,15 @@ class Solution {
 
         int ar = a / C, ac = a % C;
         int br = b / C, bc = b % C;
-    
+
         // 어떤 값을 사용할지 결정
         String valA = excel[ar][ac];
         String valB = excel[br][bc];
         String newValue = !"EMPTY".equals(valA) ? valA : valB;
-    
+
         // 병합
         parent[br][bc] = a;
-    
+
         // 모든 셀의 parent 갱신
         for (int r = 0; r < R; r++) {
             for (int c = 0; c < C; c++) {
@@ -129,7 +130,7 @@ class Solution {
                 }
             }
         }
-    
+
         // 병합 후 루트에 값 저장
         excel[ar][ac] = newValue;
     }
