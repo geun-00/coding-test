@@ -51,7 +51,7 @@ public class Main {
         }
 
         int max = Arrays.stream(dist).max().orElse(0);
-        int num = IntStream.range(1, n + 1).filter(i -> dist[i] == max).min().orElse(0);
+        int num = IntStream.range(1, n + 1).filter(i -> dist[i] == max).findFirst().orElse(0);
         long count = Arrays.stream(dist).filter(i -> i == max).count();
 
         System.out.println(num + " " + max + " " + count);
