@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
+import java.util.stream.IntStream;
 
 public class Main {
 
@@ -50,14 +51,7 @@ public class Main {
         }
 
         int max = Arrays.stream(dist).max().orElse(0);
-        int num = 0;
-        for (int i = 1; i <= n; i++) {
-            if (dist[i] == max) {
-                num = i;
-                break;
-            }
-        }
-
+        int num = IntStream.range(1, n + 1).filter(i -> dist[i] == max).min().orElse(0);
         long count = Arrays.stream(dist).filter(i -> i == max).count();
 
         System.out.println(num + " " + max + " " + count);
