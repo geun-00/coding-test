@@ -2,29 +2,35 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] priorities, int location) {
-        
-        PriorityQueue<Integer> qu = new PriorityQueue<>(Collections.reverseOrder());
+        Queue<int[]> tasks = new ArrayDeque<>();
+        int[] priority = new int[10];
 
-        for (int p : priorities) {
-            qu.offer(p);
+        for (int i = 0; i < priorities.length; i++) {
+            tasks.offer(new int[]{i, priorities[i]});
+            priority[priorities[i]]++;
         }
 
-        int result = 0;
+        int ans = 0;
 
-        while (!qu.isEmpty()) {
+        loop:
+        while (!tasks.isEmpty()) {
+            int[] task = tasks.poll();
 
-            for (int i = 0; i < priorities.length; i++) {
-                if (!qu.isEmpty() && qu.peek() == priorities[i]) {
-                    qu.poll();
-                    result++;
-
-                    if (i == location) {
-                        return result;
-                    }
+            for (int i = task[1] + 1; i < 10; i++) {
+                if (priority[i] > 0) {
+                    tasks.offer(task);
+                    continue loop;
                 }
+            }
+
+            priority[task[1]]--;
+            ans++;
+
+            if (task[0] == location) {
+                return ans;
             }
         }
 
-        return result;
+        return ans;
     }
 }
