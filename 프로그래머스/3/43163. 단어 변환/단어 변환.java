@@ -1,45 +1,55 @@
+import java.util.*;
+
 class Solution {
-    
-    int min = Integer.MAX_VALUE;
-    boolean[] visit;
-    
     public int solution(String begin, String target, String[] words) {
         
-        min = Integer.MAX_VALUE;
-        visit = new boolean[words.length];
-
-        dfs(begin, target, words, 0);
-
-        return min == Integer.MAX_VALUE ? 0 : min;
+        int n = words.length;
+        
+        Queue<State> qu = new ArrayDeque<>();
+        qu.offer(new State(begin, 0));
+        
+        boolean[] visit = new boolean[n];
+        
+        while(!qu.isEmpty()) {
+            
+            State state = qu.poll();
+            
+            if(state.word.equals(target)) return state.step;
+            
+            for(int i = 0; i < n; i++) {
+                
+                if(visit[i] || !check(state.word, words[i])){
+                    continue;
+                }
+                
+                visit[i] = true;
+                qu.offer(new State(words[i], state.step + 1));
+            }
+        }
+        
+        return 0;
     }
     
-    public void dfs(String now, String target, String[] words, int depth) {
-        if (now.equals(target)) {
-            min = Math.min(min, depth);
-            return;
+    public boolean check(String word, String next) {
+        
+        int diff = 0;
+        
+        for(int i = 0; i < word.length(); i++) {
+            if(word.charAt(i) != next.charAt(i)){
+                diff++;
+            }
         }
-
-        for (int i = 0; i < words.length; i++) {
-            
-            if(visit[i]) {
-                continue;
-            }
-
-            int diff = 0;
-            for (int j = 0; j < now.length(); j++) {
-                if (words[i].charAt(j) != now.charAt(j)) {
-                    diff++;
-                    if (diff >= 2) {
-                        break;
-                    }
-                }
-            }
-
-            if (diff == 1) {
-                visit[i] = true;
-                dfs(words[i], target, words, depth + 1);
-                visit[i] = false;
-            }
+        
+        return diff == 1;
+    }
+    
+    static class State {
+        String word;
+        int step;
+        
+        public State(String word, int step) {
+            this.word = word;
+            this.step = step;
         }
     }
 }
