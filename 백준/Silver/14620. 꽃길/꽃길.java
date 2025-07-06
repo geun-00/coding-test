@@ -24,50 +24,58 @@ public class Main {
         }
 
         boolean[][] visit = new boolean[n][n];
-        solve(visit, n, arr, 0);
+        solve(visit, n, arr, 0, 0);
 
         System.out.println(ans);
     }
 
-    private static void solve(boolean[][] visit, int n, int[][] arr, int depth) {
+    private static void solve(boolean[][] visit, int n, int[][] arr, int depth, int sum) {
         if (depth == 3) {
-            calculate(visit, n, arr);
+            ans = Math.min(ans, sum);
             return;
         }
 
         for (int i = 1; i < n - 1; i++) {
             for (int j = 1; j < n - 1; j++) {
-                if (!visit[i][j]) {
-                    visit[i][j] = true;
-                    solve(visit, n, arr, depth + 1);
-                    visit[i][j] = false;
+                if (check(i, j, visit)) {
+                    int cost = mark(i, j, arr, visit);
+                    solve(visit, n, arr, depth + 1, sum + cost);
+                    unmark(i, j, visit);
                 }
             }
         }
     }
 
-    private static void calculate(boolean[][] visit, int n, int[][] arr) {
-        int[][] count = new int[n][n];
+    private static void unmark(int x, int y, boolean[][] visit) {
+        for (int i = 0; i < 5; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            visit[nx][ny] = false;
+        }
+    }
+
+    private static int mark(int x, int y, int[][] arr, boolean[][] visit) {
         int cost = 0;
 
-        for (int i = 1; i < n - 1; i++) {
-            for (int j = 1; j < n - 1; j++) {
-                if (visit[i][j]) {
-                    for (int d = 0; d < 5; d++) {
-                        int nx = i + dx[d];
-                        int ny = j + dy[d];
+        for (int i = 0; i < 5; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
 
-                        if (count[nx][ny] > 0) {
-                            return;
-                        }
-
-                        count[nx][ny]++;
-                        cost += arr[nx][ny];
-                    }
-                }
-            }
+            cost += arr[nx][ny];
+            visit[nx][ny] = true;
         }
 
-        ans = Math.min(ans, cost);
+        return cost;
+    }
+
+    private static boolean check(int x, int y, boolean[][] visit) {
+        for (int i = 0; i < 5; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if (visit[nx][ny]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
