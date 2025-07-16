@@ -1,17 +1,41 @@
+import java.util.*;
+
 class Solution {
+    int ans = 0;
     
     public int solution(int n) {
-        return solve(0, 0, n);
+        solve(n, n, "", n);
+        return ans;
+    }
+    
+    public void solve(int open, int close, String s, int n) {
+        if (s.length() == n * 2) {
+            ans += check(s);
+            return;
+        }
+
+        if (open > 0) {
+            solve(open - 1, close, s + "(", n);
+        }
+        if (close > 0) {
+            solve(open, close - 1, s + ")", n);
+        }
     }
 
-    public int solve(int open, int close, int n) {
-        if (open == n && close == n) {
-            return 1;
-        }
-        if (open > n || open < close) {
-            return 0 ;
+    public int check(String s) {
+        Deque<Character> stack = new ArrayDeque<>();
+
+        for (Character c : s.toCharArray()) {
+            if (c == '(') {
+                stack.push(c);
+            } else {
+                if (stack.isEmpty() || stack.peek() != '(') {
+                    return 0;
+                }
+                stack.pop();
+            }
         }
 
-        return solve(open + 1, close, n) + solve(open, close + 1, n);
+        return stack.isEmpty() ? 1 : 0;
     }
 }
