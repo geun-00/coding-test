@@ -43,8 +43,8 @@ class Solution {
             int start = i;
 
             for (int f : friends) {
-                while (f - arr[start %= length] >= 0) {
-                    f -= arr[start++];
+                while (f - arr[start % length] >= 0) {
+                    f -= arr[start++ % length];
                     covered++;
                 }
                 start++;
