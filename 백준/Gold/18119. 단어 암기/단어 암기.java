@@ -46,6 +46,9 @@ public class Main {
         int bit = 0;
         for (char c : word.toCharArray()) {
             bit |= (1 << (c - 'a'));
+            if (bit == ((1 << 26) - 1)) {
+                return bit;
+            }
         }
         return bit;
     }
