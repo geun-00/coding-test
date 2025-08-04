@@ -28,24 +28,21 @@ public class Main {
         }
 
         Arrays.sort(trees, (a, b) -> {
+            if (a.x1 == b.x1) {
+                return Integer.compare((b.x2 - b.x1), (a.x2 - a.x1));
+            }
             return Integer.compare(a.x1, b.x1);
         });
 
-        for (int i = 0; i < n - 1; i++) {
-            Tree a = trees[i];
-            Tree b = trees[i + 1];
+        Tree last = trees[0];
 
-            if (a.x2 >= b.x1) {
-                int u = a.number;
-                int v = b.number;
+        for (int i = 1; i < n; i++) {
+            if (trees[i].x1 <= last.x2) {
+                union(trees[i].number, last.number);
+            }
 
-                if (u > v) {
-                    int temp = u;
-                    u = v;
-                    v = temp;
-                }
-
-                union(u, v);
+            if (last.x2 < trees[i].x2) {
+                last = trees[i];
             }
         }
 
