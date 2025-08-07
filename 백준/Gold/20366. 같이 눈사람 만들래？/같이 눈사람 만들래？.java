@@ -34,6 +34,8 @@ public class Main {
         for (int i = 0; i < sums.size() - 1; i++) {
             int[] a = sums.get(i);
             int[] b = sums.get(i + 1);
+            
+            if (ans == 0) break;
 
             if (a[0] != b[0] && a[0] != b[1] && a[1] != b[0] && a[1] != b[1]) {
                 ans = Math.min(ans, b[2] - a[2]);
