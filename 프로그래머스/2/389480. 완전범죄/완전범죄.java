@@ -10,14 +10,11 @@ class Solution {
     }
 
     public void solve(int[][] info, int n, int m, int a, int b, int depth) {
-        if (a >= n || b >= m) {
-            return;
-        }
-
-        if (ans > -1 && ans < a) {
-            return;
-        }
-
+        
+        if (a >= n || b >= m) return;
+        
+        if (ans > -1 && ans < a) return;
+        
         if (depth == info.length) {
             if (ans == -1 || a < ans) {
                 ans = a;
@@ -25,9 +22,8 @@ class Solution {
             return;
         }
         
-        if (visit[depth][a][b]) {
-            return;
-        }
+        if (visit[depth][a][b]) return;
+        
         visit[depth][a][b] = true;
 
         solve(info, n, m, a + info[depth][0], b, depth + 1);
