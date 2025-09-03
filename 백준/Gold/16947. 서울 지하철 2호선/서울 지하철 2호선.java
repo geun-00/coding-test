@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -23,6 +24,8 @@ public class Main {
             graph[i] = new ArrayList<>();
         }
 
+        int[] in = new int[n + 1];
+
         for (int i = 0; i < n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken());
@@ -30,22 +33,33 @@ public class Main {
 
             graph[u].add(v);
             graph[v].add(u);
+
+            in[u]++;
+            in[v]++;
+        }
+
+        Queue<Integer> qu = new ArrayDeque<>();
+        for (int i = 1; i <= n; i++) {
+            if (in[i] == 1) {
+                qu.offer(i);
+            }
         }
 
         isCycle = new boolean[n + 1];
+        Arrays.fill(isCycle, true);
 
-        for (int i = 1; i <= n; i++) {
-            visit = new boolean[n + 1];
+        while (!qu.isEmpty()) {
+            int cur = qu.poll();
+            isCycle[cur] = false;
 
-            dfs(i, i, 0);
+            for (int next : graph[cur]) {
+                if (--in[next] == 1) {
+                    qu.offer(next);
+                }
+            }
         }
 
-        int[] ans = new int[n + 1];
-        for (int i = 1; i <= n; i++) {
-            visit = new boolean[n + 1];
-
-            ans[i] = bfs(i);
-        }
+        int[] ans = bfs(n);
 
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i <= n; i++) {
@@ -55,51 +69,47 @@ public class Main {
         System.out.print(sb);
     }
 
-    public static boolean dfs(int node, int start, int parent) {
-        if (node == start && visit[node]) {
-            isCycle[node] = true;
-            return true;
-        }
-
-        if (visit[node]) {
-            return false;
-        }
-
+    public static boolean dfs(int node, int parent) {
         visit[node] = true;
 
         for (int next : graph[node]) {
-            if (next != parent) {
-                if (dfs(next, start, node)) {
+            if (!visit[next] && dfs(next, node)) {
+                if (!isCycle[node]) {
+                    isCycle[node] = true;
                     return true;
                 }
+            } else if (next != parent) {
+                isCycle[node] = true;
+                return true;
             }
         }
 
-        return false;
+        return isCycle[node];
     }
 
-    public static int bfs(int target) {
-        visit[target] = true;
-        Queue<int[]> qu = new ArrayDeque<>();
-        qu.offer(new int[]{target, 0});
+    public static int[] bfs(int n) {
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, -1);
+
+        Queue<Integer> qu = new ArrayDeque<>();
+        for (int i = 1; i <= n; i++) {
+            if (isCycle[i]) {
+                dist[i] = 0;
+                qu.offer(i);
+            }
+        }
 
         while (!qu.isEmpty()) {
-            int[] cur = qu.poll();
-            int node = cur[0];
-            int depth = cur[1];
-
-            if (isCycle[node]) {
-                return depth;
-            }
+            int node = qu.poll();
 
             for (int next : graph[node]) {
-                if (!visit[next]) {
-                    visit[next] = true;
-                    qu.offer(new int[]{next, depth + 1});
+                if (dist[next] == -1) {
+                    dist[next] = dist[node] + 1;
+                    qu.offer(next);
                 }
             }
         }
 
-        return 0;
+        return dist;
     }
 }
