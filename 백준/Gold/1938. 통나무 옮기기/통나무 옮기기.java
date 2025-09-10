@@ -93,19 +93,9 @@ public class Main {
                 int[][] turn = new int[3][2];
 
                 if (pos[1][0] == pos[0][0]) {
-
-                    turn[0][0] = pos[1][0] - 1;
-                    turn[1][0] = pos[1][0];
-                    turn[2][0] = pos[1][0] + 1;
-
-                    turn[0][1] = turn[1][1] = turn[2][1] = pos[1][1];
+                    turn(turn, 0, pos, 1);
                 } else if (pos[1][1] == pos[0][1]) {
-
-                    turn[0][1] = pos[1][1] - 1;
-                    turn[1][1] = pos[1][1];
-                    turn[2][1] = pos[1][1] + 1;
-
-                    turn[0][0] = turn[1][0] = turn[2][0] = pos[1][0];
+                    turn(turn, 1, pos, 0);
                 }
 
                 if (canVisit(turn)) {
@@ -115,6 +105,14 @@ public class Main {
         }
 
         return 0;
+    }
+
+    private static void turn(int[][] turn, int i, int[][] pos, int j) {
+        turn[0][i] = pos[1][i] - 1;
+        turn[1][i] = pos[1][i];
+        turn[2][i] = pos[1][i] + 1;
+
+        turn[0][j] = turn[1][j] = turn[2][j] = pos[1][j];
     }
 
     private static boolean canTurn(int[][] pos) {
