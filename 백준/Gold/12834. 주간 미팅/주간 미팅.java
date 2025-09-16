@@ -42,11 +42,13 @@ public class Main {
             graph[x].add(new int[]{u, l});
         }
 
+        int[] fromKist = dijkstra(graph, v, a);
+        int[] fromCR = dijkstra(graph, v, b);
+
         int ans = 0;
         for (int h : homes) {
-            int[] dist = dijkstra(graph, v, h);
-            ans += (dist[a] == Integer.MAX_VALUE ? -1 : dist[a]);
-            ans += (dist[b] == Integer.MAX_VALUE ? -1 : dist[b]);
+            ans += (fromKist[h] == Integer.MAX_VALUE ? -1 : fromKist[h]);
+            ans += (fromCR[h] == Integer.MAX_VALUE ? -1 : fromCR[h]);
         }
 
         System.out.println(ans);
