@@ -7,30 +7,28 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String s = br.readLine();
 
-        System.out.println(solve(s) ? "AKARAKA" : "IPSELENTI");
+        System.out.println(solve(s.toCharArray(), 0, s.length() - 1) ? "AKARAKA" : "IPSELENTI");
     }
 
-    private static boolean solve(String s) {
-        if (s.length() == 1) {
+    private static boolean solve(char[] arr, int left, int right) {
+        int length = right - left + 1;
+
+        if (length == 1) {
             return true;
         }
 
-        if (!isPalindrome(s)) {
+        if (!isPalindrome(arr, left, right)) {
             return false;
         }
 
-        int mid = s.length() / 2;
-        String head = s.substring(0, mid);
-        String tail = s.substring(s.length() - mid);
+        int half = length / 2;
 
-        return solve(head) && solve(tail);
+        return solve(arr, left, left + half - 1) && solve(arr, right - half + 1, right);
     }
 
-    private static boolean isPalindrome(String s) {
-        int left = 0;
-        int right = s.length() - 1;
+    private static boolean isPalindrome(char[] arr, int left, int right) {
         while (left < right) {
-            if (s.charAt(left) != s.charAt(right)) {
+            if (arr[left] != arr[right]) {
                 return false;
             }
             left++;
