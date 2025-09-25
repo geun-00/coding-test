@@ -25,7 +25,7 @@ public class Main {
             list.add(arr[i][1]);
         }
 
-        List<Integer> sorted = list.stream().distinct().sorted().collect(Collectors.toList());
+        List<Integer> sorted = list.stream().sorted().collect(Collectors.toList());
         int m = sorted.size();
 
         Map<Integer, Integer> map = new HashMap<>();
