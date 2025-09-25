@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -25,12 +24,12 @@ public class Main {
             list.add(arr[i][1]);
         }
 
-        List<Integer> sorted = list.stream().sorted().collect(Collectors.toList());
-        int m = sorted.size();
+        list.sort(null);
+        int m = list.size();
 
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < m; i++) {
-            map.put(sorted.get(i), i);
+            map.put(list.get(i), i);
         }
 
         int[] diff = new int[m];
@@ -47,15 +46,15 @@ public class Main {
 
             if (max < cur) {
                 max = cur;
-                start = sorted.get(i);
+                start = list.get(i);
                 end = -1;
             } else if (cur < max && end == -1) {
-                end = sorted.get(i);
+                end = list.get(i);
             }
         }
 
         if (end == -1) {
-            end = sorted.get(m - 1);
+            end = list.get(m - 1);
         }
 
         System.out.println(max);
