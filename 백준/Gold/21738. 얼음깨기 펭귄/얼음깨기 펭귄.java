@@ -51,9 +51,7 @@ public class Main {
         }
 
         int[] stand = new int[s + 1];
-        for (int i = 1; i <= s; i++) {
-            stand[i] = dist[i];
-        }
+        System.arraycopy(dist, 1, stand, 1, s);
 
         Arrays.sort(stand);
 
