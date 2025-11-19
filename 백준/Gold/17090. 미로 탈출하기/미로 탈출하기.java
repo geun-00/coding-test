@@ -51,9 +51,6 @@ public class Main {
         int nx = x + dx[dir.indexOf(map[x][y])];
         int ny = y + dy[dir.indexOf(map[x][y])];
 
-        memo[x][y] = dfs(nx, ny);
-        visit[x][y] = false;
-
-        return memo[x][y];
+        return memo[x][y] = dfs(nx, ny);
     }
 }
