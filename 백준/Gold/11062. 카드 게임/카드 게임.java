@@ -1,57 +1,49 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    static int[] cards, prefix;
+    static int[][] dp;
+
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
 
-        int T = Integer.parseInt(br.readLine());
+        int t = Integer.parseInt(br.readLine());
 
-        while (T-- > 0) {
-            int N = Integer.parseInt(br.readLine());
-            int[] a = new int[N];
+        while (t-- > 0) {
+            int n = Integer.parseInt(br.readLine());
 
+            cards = new int[n];
             StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int i = 0; i < N; i++) {
-                a[i] = Integer.parseInt(st.nextToken());
+
+            for (int i = 0; i < n; i++) {
+                cards[i] = Integer.parseInt(st.nextToken());
             }
 
-            // prefix sum
-            int[] prefix = new int[N + 1];
-            for (int i = 0; i < N; i++) {
-                prefix[i + 1] = prefix[i] + a[i];
+            prefix = new int[n + 1];
+            for (int i = 1; i <= n; i++) {
+                prefix[i] = prefix[i - 1] + cards[i - 1];
             }
 
-            // 구간 합 함수: [l..r]
-            // rangeSum = prefix[r+1] - prefix[l]
+            dp = new int[n][n];
+            System.out.println(solve(0, n - 1));
+        }
+    }
 
-            int[][] dp = new int[N][N];
-
-            // 길이 1 구간
-            for (int i = 0; i < N; i++) {
-                dp[i][i] = a[i];
-            }
-
-            // 길이 2 이상 구간
-            for (int len = 2; len <= N; len++) {
-                for (int i = 0; i + len - 1 < N; i++) {
-                    int j = i + len - 1;
-
-                    int sumLeftRest = prefix[j + 1] - prefix[i + 1]; // sum(i+1..j)
-                    int sumRightRest = prefix[j] - prefix[i];        // sum(i..j-1)
-
-                    int takeLeft  = a[i] + (sumLeftRest  - dp[i + 1][j]);
-                    int takeRight = a[j] + (sumRightRest - dp[i][j - 1]);
-
-                    dp[i][j] = Math.max(takeLeft, takeRight);
-                }
-            }
-
-            int geunwoo = dp[0][N - 1];
-            sb.append(geunwoo).append('\n');
+    private static int solve(int i, int j) {
+        if (i == j) {
+            return cards[i];
+        }
+        
+        if (dp[i][j] != 0) {
+            return dp[i][j];
         }
 
-        System.out.print(sb);
+        int left = cards[i] + ((prefix[j + 1] - prefix[i + 1]) - solve(i + 1, j));
+        int right = cards[j] + ((prefix[j] - prefix[i]) - solve(i, j - 1));
+
+        return dp[i][j] = Math.max(left, right);
     }
 }
