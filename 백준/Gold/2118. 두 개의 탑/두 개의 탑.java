@@ -17,10 +17,16 @@ public class Main {
         }
 
         int ans = 0;
-        for (int i = 1; i < n; i++) {
-            for (int j = i + 1; j <= n; j++) {
-                int clock = prefix[j - 1] - prefix[i - 1];
-                ans = Math.max(ans, Math.min(clock, total - clock));
+        int left = 1, right = 1;
+
+        while (right <= n) {
+            int clock = prefix[right] - prefix[left - 1];
+            ans = Math.max(ans, Math.min(clock, total - clock));
+
+            if (clock > total / 2) {
+                left++;
+            } else {
+                right++;
             }
         }
 
