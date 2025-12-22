@@ -24,15 +24,14 @@ public class Main {
             words[i] = bit;
         }
 
-        used = new int[1 << n];
         solve(0, 0, 0);
         System.out.println(ans);
     }
 
     private static void solve(int index, int bit, int use) {
-        if (used[use] == 0 && bit == (1 << 26) - 1) {
-            used[use] = 1;
-            ans++;
+        if (bit == (1 << 26) - 1) {
+            ans += (1 << (n - index));
+            return;
         }
 
         if (index == n) {
