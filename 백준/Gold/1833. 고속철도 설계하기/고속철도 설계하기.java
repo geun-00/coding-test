@@ -40,7 +40,6 @@ public class Main {
             }
         }
 
-
         List<int[]> m = new ArrayList<>();
 
         while (!pq.isEmpty()) {
@@ -56,10 +55,14 @@ public class Main {
             }
         }
 
-        System.out.println(c + " " + m.size());
+        StringBuilder sb = new StringBuilder();
+        sb.append(c).append(" ").append(m.size()).append("\n");
+
         for (int[] edges : m) {
-            System.out.println(edges[0] + " " + edges[1]);
+            sb.append(edges[0]).append(" ").append(edges[1]).append("\n");
         }
+
+        System.out.println(sb);
     }
 
     private static void initParent(int n) {
