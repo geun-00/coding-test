@@ -43,11 +43,14 @@ public class Main {
         }
 
         int ans = 0;
+        Set<Integer> set = new HashSet<>();
+
         for (int x = 0; x < n; x++) {
             for (int y = 0; y < m; y++) {
                 if (arr[x][y] == 1) continue;
 
-                Set<Integer> set = new HashSet<>();
+                set.clear();
+                int count = 1;
 
                 for (int i = 0; i < 4; i++) {
                     int nx = x + dx[i];
@@ -55,12 +58,9 @@ public class Main {
 
                     if (nx < 0 || ny < 0 || nx >= n | ny >= m) continue;
 
-                    set.add(map[nx][ny]);
-                }
-
-                int count = 1;
-                for (int val : set) {
-                    count += sizeMap.getOrDefault(val, 0);
+                    if (set.add(map[nx][ny])) {
+                        count += sizeMap.getOrDefault(map[nx][ny], 0);
+                    }
                 }
 
                 ans = Math.max(ans, count);
