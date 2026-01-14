@@ -3,23 +3,19 @@ import java.util.*;
 public class Solution {
     public int[] solution(int []arr) {
         
-        Deque<Integer> qu = new ArrayDeque<>();
+        Deque<Integer> stack = new ArrayDeque<>();
         
-        for(int num : arr) {
-            
-            while(!qu.isEmpty() && qu.peekLast() == num){
-                qu.pollLast();
+        for (int n : arr) {
+            if (!stack.isEmpty() && stack.peek() == n) {                
+                continue;
             }
-            
-            qu.offer(num);
+            stack.push(n);
         }
         
-        int[] ans = new int[qu.size()];
+        int[] ans = new int[stack.size()];
         
-        int idx = 0;
-        
-        while(!qu.isEmpty()) {
-            ans[idx++] = qu.poll();
+        for (int i = ans.length - 1; i >= 0; i--) {
+            ans[i] = stack.pop();
         }
         
         return ans;
