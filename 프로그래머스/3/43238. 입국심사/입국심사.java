@@ -1,29 +1,27 @@
-import java.util.*;
-
 class Solution {
     public long solution(int n, int[] times) {
+        long low = 0;
+        long high = Long.MAX_VALUE;
+        long answer = 0;
         
-        long s = 1;
-        long e = (long) Arrays.stream(times).max().orElse(-1) * n;
-        
-        while (s <=  e) {
-            long mid = (s + e) / 2;
-
-            long sum = 0;
-            for (int time : times) {
-                sum += mid / time;
-                if (sum >= n) {
-                    break;
-                }
+        while (low <= high) {
+            long mid = (low + high) / 2;
+            
+            long count = 0;
+            
+            for (int t : times) {
+                count += (mid / t);
+                if (count >= n) break;
             }
-
-            if (sum >= n) {
-                e = mid - 1;
+            
+            if (count >= n) {
+                high = mid - 1;
+                answer = mid;
             } else {
-                s = mid + 1;
+                low = mid + 1;
             }
         }
-
-        return s;
+        
+        return answer;
     }
 }
