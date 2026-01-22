@@ -1,57 +1,47 @@
 import java.util.*;
 
 class Solution {
-    
-    int[] level;
-    ArrayList<Integer>[] graph;
-    boolean[] visit;
-    
     public int solution(int n, int[][] edge) {
+        int answer = 0;
         
-        graph = new ArrayList[n + 1];
-        visit = new boolean[n + 1];
-        level = new int[n + 1];
-
-        for (int i = 1; i <= n; i++) {
+        List<Integer>[] graph = new List[n];
+        int[] dist = new int[n];
+        
+        for (int i = 0; i < n; i++) {
             graph[i] = new ArrayList<>();
-        }
-
-        for (int i = 0; i < edge.length; i++) {
-            int n1 = edge[i][0];
-            int n2 = edge[i][1];
-
-            graph[n1].add(n2);
-            graph[n2].add(n1);
+            dist[i] = -1;
         }
         
-        Queue<Node> qu = new ArrayDeque<>();
-        qu.offer(new Node(1, 0));
-        visit[1] = true;
-
+        for (int[] e : edge) {
+            int a = e[0] - 1;
+            int b = e[1] - 1;
+            
+            graph[a].add(b);
+            graph[b].add(a);
+        }
+        
+        int max = 0;
+        
+        Queue<Integer> qu = new ArrayDeque<>();
+        qu.offer(0);
+        dist[0] = 0;
+        
         while (!qu.isEmpty()) {
-            Node now = qu.poll();
-
-            level[now.num] = now.depth;
-
-            for (int next : graph[now.num]) {
-                if (!visit[next]) {
-                    visit[next] = true;
-                    qu.offer(new Node(next, now.depth + 1));
+            int node = qu.poll();
+            
+            for (int next : graph[node]) {
+                if (dist[next] == -1) {
+                    dist[next] = dist[node] + 1;
+                    qu.offer(next);
+                    max = Math.max(max, dist[next]);
                 }
             }
         }
-
-        int maxLevel = Arrays.stream(level).max().getAsInt();
-
-        return (int) Arrays.stream(level).filter(d -> d == maxLevel).count();
-    }
-}
-
-class Node {
-    int num, depth;
-
-    public Node(int num, int depth) {
-        this.num = num;
-        this.depth = depth;
+        
+        for (int d : dist) {
+            if (d == max) answer++;
+        }
+        
+        return answer;
     }
 }
