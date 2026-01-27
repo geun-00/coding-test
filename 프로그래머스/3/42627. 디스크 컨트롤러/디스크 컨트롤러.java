@@ -4,8 +4,7 @@ class Solution {
     public int solution(int[][] jobs) {
         PriorityQueue<Job> waitQu = new PriorityQueue<>((a, b) -> {
             if (a.time != b.time) return a.time - b.time;
-            else if (a.start != b.start) return a.start - b.start;
-            return a.id - b.id;
+            return a.start - b.start;
         });
         
         Arrays.sort(jobs, (a, b) -> a[0] - b[0]);
@@ -14,7 +13,7 @@ class Solution {
         Job[] tasks = new Job[n];
         
         for (int i = 0; i < n; i++) {
-            tasks[i] = new Job(jobs[i][1], jobs[i][0], i);
+            tasks[i] = new Job(jobs[i][1], jobs[i][0]);
         }
         
         int index = 0;
@@ -43,12 +42,11 @@ class Solution {
     }
     
     static class Job {
-        int time, start, id;
+        int time, start;
         
-        public Job(int t, int s, int i) {
+        public Job(int t, int s) {
             time = t;
             start = s;
-            id = i;
         }
     }
 }
