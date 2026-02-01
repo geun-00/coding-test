@@ -1,4 +1,7 @@
 SELECT *
 FROM FOOD_PRODUCT
-ORDER BY PRICE DESC
-LIMIT 1
+WHERE PRODUCT_ID = (SELECT PRODUCT_ID 
+                    FROM FOOD_PRODUCT 
+                    ORDER BY PRICE DESC
+                    LIMIT 1
+                   )
