@@ -1,48 +1,46 @@
-import java.util.ArrayList;
+import java.util.*;
 
 class Solution {
-    
-    ArrayList<Integer>[] graph;
-    boolean[] visit;
-    
     public int solution(int n, int[][] computers) {
+        List<Integer>[] graph = new List[n];
+        for (int i = 0; i < n; i++) graph[i] = new ArrayList<>();
         
-        graph = new ArrayList[n];
-        visit = new boolean[n];
-        
-        for(int i = 0; i < n; i++){
-            graph[i] = new ArrayList<>();
-        }
-        
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                if(i != j){
-                    if(computers[i][j] == 1){
-                        graph[i].add(j);
-                        graph[j].add(i);
-                    }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i != j && computers[i][j] == 1) {
+                    graph[i].add(j);
+                    graph[j].add(i);
                 }
             }
         }
         
-        int count = 0;
+        boolean[] visited = new boolean[n];
+        int answer = 0;
         
-        for(int i = 0; i < n; i++){
-            if(!visit[i]){
-                count++;
-                dfs(i);
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                bfs(i, visited, graph);                
+                answer++;
             }
         }
         
-        return count;
+        return answer;
     }
     
-    public void dfs(int node){
-        visit[node] = true;
+    public void bfs(int node, boolean[] visited, List<Integer>[] graph) {
+        Queue<Integer> qu = new ArrayDeque<>();
+        qu.offer(node);
         
-        for(int next : graph[node]){
-            if(!visit[next]){
-                dfs(next);
+        visited[node] = true;
+        
+        while (!qu.isEmpty()) {
+            int cur = qu.poll();
+            
+            for (int next : graph[cur]) {
+                if (!visited[next]) {
+                    visited[next] = true;
+                    qu.offer(next);
+                }
             }
         }
     }
