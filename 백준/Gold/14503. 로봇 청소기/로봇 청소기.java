@@ -5,14 +5,11 @@ import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-
-        int[][] map = new int[n][m];
 
         st = new StringTokenizer(br.readLine());
 
@@ -20,98 +17,58 @@ public class Main {
         int c = Integer.parseInt(st.nextToken());
         int d = Integer.parseInt(st.nextToken());
 
+        int[][] arr = new int[n][m];
+
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
+
             for (int j = 0; j < m; j++) {
-                map[i][j] = Integer.parseInt(st.nextToken());
+                arr[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        int count = 0;
-
-        int x = r;
-        int y = c;
-
-        int[] dx = {-1, 1, 0, 0};
-        int[] dy = {0, 0, -1, 1};
+        int[] dx = {-1, 0, 1, 0};
+        int[] dy = {0, 1, 0, -1};
+        int clear = 0;
 
         while (true) {
-            if (map[x][y] == 0) {
-                map[x][y] = 2;
-                count++;
+            if (arr[r][c] == 0) {
+                clear++;
+                arr[r][c] = 2;
             }
 
             boolean flag = false;
             for (int i = 0; i < 4; i++) {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
+                int nr = r + dx[i];
+                int nc = c + dy[i];
 
-                if (map[nx][ny] == 0) {
+                if (arr[nr][nc] == 0) {
                     flag = true;
                     break;
                 }
             }
 
             if (!flag) {
-                int tempX = 0, tempY = 0;
+                int nr = r - dx[d];
+                int nc = c - dy[d];
 
-                switch (d) {
-                    case 0:
-                        tempX = x + 1;
-                        tempY = y;
-                        break;
-                    case 1:
-                        tempX = x;
-                        tempY = y - 1;
-                        break;
-                    case 2:
-                        tempX = x - 1;
-                        tempY = y;
-                        break;
-                    case 3:
-                        tempX = x;
-                        tempY = y + 1;
-                }
+                if (arr[nr][nc] == 1) break;
 
-                if (map[tempX][tempY] == 1) {
-                    break;
-                } else {
-                    x = tempX;
-                    y = tempY;
-                }
+                r = nr;
+                c = nc;
+
             } else {
-                for (int i = 0; i < 4; i++) {
-                    d = (d + 3) % 4;
+                d = (d - 1 + 4) % 4;
+                int nr = r + dx[d];
+                int nc = c + dy[d];
 
-                    int tempX = 0, tempY = 0;
-
-                    switch (d) {
-                        case 0:
-                            tempX = x - 1;
-                            tempY = y;
-                            break;
-                        case 1:
-                            tempX = x;
-                            tempY = y + 1;
-                            break;
-                        case 2:
-                            tempX = x + 1;
-                            tempY = y;
-                            break;
-                        case 3:
-                            tempX = x;
-                            tempY = y - 1;
-                    }
-
-                    if (map[tempX][tempY] == 0) {
-                        x = tempX;
-                        y = tempY;
-                        break;
-                    }
+                if (arr[nr][nc] == 0) {
+                    r = nr;
+                    c = nc;
                 }
             }
         }
 
-        System.out.println(count);
+        System.out.println(clear);
     }
 }
